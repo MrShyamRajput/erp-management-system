@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login
-from signal import getsignal
+
 
 # Create your views here.
 def login_page(request):
