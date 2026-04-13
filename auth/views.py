@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login
-from signal import getsignal
+
 
 # Create your views here.
 def login_page(request):
@@ -13,7 +13,7 @@ def login_page(request):
         if user is not None:
             login(request, user)  
 
-            role=getattr(user,"role",None)
+            
 
             if user.is_superuser:
                 return redirect()
