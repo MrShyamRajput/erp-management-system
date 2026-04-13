@@ -16,5 +16,5 @@ def login_page(request):
             
 
             if user.is_superuser:
-                return redirect() #added
+                return redirect() 
     return render(request,"auth/login.html")
