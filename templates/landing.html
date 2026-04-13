@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#cfdce3",
+                    "surface-container-lowest": "#ffffff",
+                    "outline-variant": "#a9b4b9",
+                    "surface-container-highest": "#d9e4ea",
+                    "tertiary-dim": "#564f6b",
+                    "on-secondary-container": "#515155",
+                    "tertiary-fixed": "#dcd2f4",
+                    "on-tertiary-container": "#4d4762",
+                    "inverse-surface": "#0b0f10",
+                    "primary-fixed": "#dbe1ff",
+                    "on-surface": "#2a3439",
+                    "surface-container-low": "#f0f4f7",
+                    "secondary-container": "#e4e2e6",
+                    "surface-tint": "#0052dc",
+                    "secondary-dim": "#535356",
+                    "primary-fixed-dim": "#c8d3ff",
+                    "on-tertiary": "#fdf7ff",
+                    "surface": "#f7f9fb",
+                    "inverse-on-surface": "#9a9d9f",
+                    "surface-variant": "#d9e4ea",
+                    "on-background": "#2a3439",
+                    "on-secondary-fixed": "#3f3f43",
+                    "on-secondary": "#faf8fc",
+                    "on-error-container": "#752121",
+                    "primary-dim": "#0048c2",
+                    "tertiary-container": "#dcd2f4",
+                    "on-secondary-fixed-variant": "#5b5b5f",
+                    "on-error": "#fff7f6",
+                    "background": "#f7f9fb",
+                    "surface-container": "#e8eff3",
+                    "on-primary-fixed-variant": "#0050d5",
+                    "secondary": "#5f5f62",
+                    "on-primary-container": "#0047c0",
+                    "surface-container-high": "#e1e9ee",
+                    "on-tertiary-fixed-variant": "#57506c",
+                    "on-tertiary-fixed": "#3a344e",
+                    "on-surface-variant": "#566166",
+                    "secondary-fixed-dim": "#d6d3d8",
+                    "error": "#9f403d",
+                    "tertiary-fixed-dim": "#cec5e5",
+                    "error-dim": "#4e0309",
+                    "tertiary": "#625b77",
+                    "on-primary-fixed": "#003798",
+                    "surface-bright": "#f7f9fb",
+                    "secondary-fixed": "#e4e2e6",
+                    "primary-container": "#dbe1ff",
+                    "primary": "#0052dc",
+                    "on-primary": "#f8f7ff",
+                    "error-container": "#fe8983",
+                    "outline": "#717c82",
+                    "inverse-primary": "#618bff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .shadow-ambient {
+            shadow-color: rgba(42, 52, 57, 0.05);
+            box-shadow: 0px 12px 32px rgba(42, 52, 57, 0.05);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0052dc 0%, #0048c2 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- TopAppBar -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-md dark:bg-slate-950/70 shadow-sm">
+<div class="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto w-full">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-blue-600 dark:text-blue-400" data-icon="architecture">architecture</span>
+<span class="text-lg font-black tracking-tighter text-slate-900 dark:text-slate-50">Architect ERP</span>
+</div>
+<div class="hidden md:flex items-center gap-8 font-['Inter'] tracking-tight antialiased text-sm font-medium">
+<a class="text-blue-600 dark:text-blue-400 font-bold border-b-2 border-blue-600 pb-1" href="#">Product</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-300" href="#">Features</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-300" href="#">Pricing</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-300" href="#">Modules</a>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-sm font-medium text-slate-500 dark:text-slate-400 active:scale-95 transition-transform duration-200" href="auth/login">Login</>
+<button class="bg-primary text-on-primary px-5 py-2.5 rounded-xl font-semibold shadow-ambient hover:bg-primary-dim transition-all"><a href="auth/login">Get Started</a></button>
+</div>
+</div>
+</nav>
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-6 py-16 lg:py-24 grid lg:grid-cols-2 gap-12 items-center">
+<div class="space-y-8">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-primary-container text-on-primary-container rounded-full text-xs font-bold tracking-wide uppercase">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                    Next-Gen Enterprise Management
+                </div>
+<h1 class="text-5xl lg:text-7xl font-extrabold tracking-tighter text-on-surface leading-[1.1]">
+                    Modern ERP System for <span class="text-primary">Smart Businesses</span>
+</h1>
+<p class="text-xl text-on-surface-variant max-w-xl leading-relaxed">
+                    Streamline your entire operation with a curated suite of modules for HR, Inventory, Sales, Procurement, Finance, and Real-time Analytics. Architected for scale.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="hero-gradient text-on-primary px-8 py-4 rounded-xl font-bold shadow-xl active:scale-95 transition-transform">Get Started Free</button>
+<button class="bg-surface-container-high text-on-surface px-8 py-4 rounded-xl font-bold hover:bg-surface-container-highest transition-colors active:scale-95">Login</button>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute -inset-4 bg-primary/10 rounded-[2rem] blur-3xl group-hover:bg-primary/20 transition-all duration-500"></div>
+<div class="relative bg-surface-container-lowest p-4 rounded-[2rem] shadow-ambient overflow-hidden border border-outline-variant/15">
+<img class="w-full rounded-xl" data-alt="Modern ERP dashboard interface showing clean graphs, financial analytics charts, and navigation sidebar in a sleek blue and white theme" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHXzdlfR002GIlkSD4d9NGBnV0OIa454wxxHi9K75Zt9P8xn2jAPM7ue0UPRqS1KzQcX8yZQUtN5vXHhwnGUQ0NOrrJN3kKVCjV53L-B-ZyvZeTKN-zkdKAnx6RiGjdRa32jZeYOskaCje95U2Gw09-gmFPih-pbLACZKzi5dWOO552dTeuBsd83hMs48Wgrck6fkihqzCzs0JAVNqTk3BEXFRO2KG1gb3JXNKQGQR6k6fay2w3YRmaik5sXboKV_nBpbKI6uPB28"/>
+</div>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="bg-surface-container-low py-24">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-16 space-y-4">
+<h2 class="text-3xl lg:text-4xl font-bold tracking-tight">Precision Performance Features</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto">Built to eliminate friction and provide complete visibility across your entire enterprise architecture.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+<!-- Feature 1 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-ambient hover:translate-y-[-4px] transition-transform duration-300">
+<div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="dashboard">dashboard</span>
+</div>
+<h3 class="font-bold text-lg mb-2">Centralized Dashboard</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Unified view of all vital business metrics in one curated space.</p>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-ambient hover:translate-y-[-4px] transition-transform duration-300">
+<div class="w-12 h-12 bg-tertiary-container rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-tertiary" data-icon="admin_panel_settings">admin_panel_settings</span>
+</div>
+<h3 class="font-bold text-lg mb-2">Role-Based Access</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Granular security permissions tailored to every organizational level.</p>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-ambient hover:translate-y-[-4px] transition-transform duration-300">
+<div class="w-12 h-12 bg-secondary-container rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-secondary" data-icon="monitoring">monitoring</span>
+</div>
+<h3 class="font-bold text-lg mb-2">Real-Time Analytics</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Instant data processing for faster, smarter business decisions.</p>
+</div>
+<!-- Feature 4 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-ambient hover:translate-y-[-4px] transition-transform duration-300">
+<div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="summarize">summarize</span>
+</div>
+<h3 class="font-bold text-lg mb-2">Automated Reporting</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Schedule and automate complex financial and operational reports.</p>
+</div>
+<!-- Feature 5 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-ambient hover:translate-y-[-4px] transition-transform duration-300">
+<div class="w-12 h-12 bg-tertiary-container rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-tertiary" data-icon="encrypted">encrypted</span>
+</div>
+<h3 class="font-bold text-lg mb-2">Secure Data</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Enterprise-grade encryption protecting your most sensitive assets.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Core Modules Grid -->
+<section class="max-w-7xl mx-auto px-6 py-24">
+<div class="flex flex-col lg:flex-row gap-16 items-start">
+<div class="lg:w-1/3 sticky top-32">
+<h2 class="text-4xl font-black tracking-tighter mb-6">The Modular Ecosystem</h2>
+<p class="text-on-surface-variant mb-8 leading-relaxed">Select the modules you need today, and scale seamlessly tomorrow. Our architecture is built to be flexible and interconnected.</p>
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-4 p-4 bg-surface-container rounded-xl">
+<span class="material-symbols-outlined text-primary">hub</span>
+<span class="font-semibold">Interconnected Database</span>
+</div>
+<div class="flex items-center gap-4 p-4 bg-surface-container rounded-xl">
+<span class="material-symbols-outlined text-primary">sync_alt</span>
+<span class="font-semibold">Seamless API Integration</span>
+</div>
+</div>
+</div>
+<div class="lg:w-2/3 grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="flex flex-col items-center text-center p-8 bg-surface-container-lowest rounded-[2rem] shadow-ambient border border-outline-variant/10">
+<span class="material-symbols-outlined text-4xl text-primary mb-4" data-icon="group">group</span>
+<span class="font-bold">User Management</span>
+</div>
+<div class="flex flex-col items-center text-center p-8 bg-surface-container-lowest rounded-[2rem] shadow-ambient border border-outline-variant/10">
+<span class="material-symbols-outlined text-4xl text-primary mb-4" data-icon="badge">badge</span>
+<span class="font-bold">HR</span>
+</div>
+<div class="flex flex-col items-center text-center p-8 bg-surface-container-lowest rounded-[2rem] shadow-ambient border border-outline-variant/10">
+<span class="material-symbols-outlined text-4xl text-primary mb-4" data-icon="inventory_2">inventory_2</span>
+<span class="font-bold">Inventory</span>
+</div>
+<div class="flex flex-col items-center text-center p-8 bg-surface-container-lowest rounded-[2rem] shadow-ambient border border-outline-variant/10">
+<span class="material-symbols-outlined text-4xl text-primary mb-4" data-icon="point_of_sale">point_of_sale</span>
+<span class="font-bold">Sales</span>
+</div>
+<div class="flex flex-col items-center text-center p-8 bg-surface-container-lowest rounded-[2rem] shadow-ambient border border-outline-variant/10">
+<span class="material-symbols-outlined text-4xl text-primary mb-4" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-bold">Procurement</span>
+</div>
+<div class="flex flex-col items-center text-center p-8 bg-surface-container-lowest rounded-[2rem] shadow-ambient border border-outline-variant/10">
+<span class="material-symbols-outlined text-4xl text-primary mb-4" data-icon="account_balance">account_balance</span>
+<span class="font-bold">Finance</span>
+</div>
+<div class="flex flex-col items-center text-center p-8 bg-surface-container-lowest rounded-[2rem] shadow-ambient border border-outline-variant/10">
+<span class="material-symbols-outlined text-4xl text-primary mb-4" data-icon="assessment">assessment</span>
+<span class="font-bold">Reports</span>
+</div>
+<div class="flex flex-col items-center text-center p-8 bg-surface-container-lowest rounded-[2rem] shadow-ambient border border-outline-variant/10">
+<span class="material-symbols-outlined text-4xl text-primary mb-4" data-icon="space_dashboard">space_dashboard</span>
+<span class="font-bold">Centralized Dashboard</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Dashboard Preview Section -->
+<section class="bg-surface-container-high py-24 overflow-hidden">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-12">
+<h2 class="text-3xl lg:text-5xl font-bold tracking-tight mb-4">Command Center Control</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto">Experience the interface that redefined enterprise efficiency.</p>
+</div>
+<div class="relative mt-16 scale-105 lg:scale-110">
+<div class="bg-surface-container-lowest rounded-3xl shadow-2xl overflow-hidden border-8 border-surface-container-highest">
+<img class="w-full" data-alt="Expansive enterprise resource planning dashboard with multiple data widgets, inventory levels bar charts, and a world map showing global sales distribution" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQWzuDHZKZbprRx_fnkM4BSv1nQNzwbrEAm0QxbesqdDYHXUAfj8zStzOpRx9PjdpqcJo2aPOUQrcTg3psyI1OJyg20FqKZ-9im_9lDMbD8axkZydHcS5RVEZu3btpbiZmfEAQRWx5eWxLUXvSnsysZHpJ9l2-5xITUOpXz-u4pKVqfPzdpfWpsGhnT7h60d1glO0ANs5U5ypDRJ-CVUvy2TRU3GlNEk73D8plCY2-M6LrfXoGBpUwEuO9CPqSIM8bOzYULoz0l7M"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Benefits Section -->
+<section class="max-w-7xl mx-auto px-6 py-24">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+<div class="space-y-4">
+<div class="w-16 h-16 bg-primary/5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-primary" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<h3 class="text-xl font-bold">Increase productivity</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Eliminate repetitive tasks and focus your team on high-impact strategic initiatives.</p>
+</div>
+<div class="space-y-4">
+<div class="w-16 h-16 bg-primary/5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-primary" data-icon="settings_suggest">settings_suggest</span>
+</div>
+<h3 class="text-xl font-bold">Automate workflows</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Smart automation chains that connect your procurement to your finance office instantly.</p>
+</div>
+<div class="space-y-4">
+<div class="w-16 h-16 bg-primary/5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-primary" data-icon="lightbulb">lightbulb</span>
+</div>
+<h3 class="text-xl font-bold">Improve decision making</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Replace guesswork with data-driven insights gathered from every corner of your business.</p>
+</div>
+<div class="space-y-4">
+<div class="w-16 h-16 bg-primary/5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-primary" data-icon="savings">savings</span>
+</div>
+<h3 class="text-xl font-bold">Reduce operational costs</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Optimize inventory levels and resource allocation to maximize your bottom line.</p>
+</div>
+</div>
+</section>
+<!-- CTA Banner -->
+<section class="max-w-7xl mx-auto px-6 pb-24">
+<div class="hero-gradient rounded-[2.5rem] p-12 lg:p-20 text-center relative overflow-hidden shadow-2xl">
+<div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+<h2 class="text-4xl lg:text-6xl font-black text-on-primary tracking-tighter mb-8 relative z-10">Ready to Architect Your Future?</h2>
+<p class="text-primary-container text-lg lg:text-xl max-w-2xl mx-auto mb-12 relative z-10 font-medium">Join 500+ enterprises that have scaled their operations with our precision-engineered platform.</p>
+<div class="flex justify-center relative z-10">
+<button class="bg-surface-container-lowest text-primary px-10 py-5 rounded-2xl font-black text-lg shadow-xl hover:bg-on-primary transition-all active:scale-95">
+                        Login to Dashboard
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-50 dark:bg-slate-900 w-full py-12 px-6 mt-24">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-left">
+<div class="md:col-span-1 space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-blue-600 dark:text-blue-400" data-icon="architecture">architecture</span>
+<span class="text-base font-bold text-slate-800 dark:text-slate-200">Architect ERP</span>
+</div>
+<p class="font-['Inter'] text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    © 2024 Architect ERP. Precision curated for enterprise scale.
+                </p>
+</div>
+<div>
+<h4 class="font-bold mb-4 text-slate-800 dark:text-slate-100">Product</h4>
+<ul class="space-y-2">
+<li><a class="font-['Inter'] text-sm text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors duration-200" href="#">Features</a></li>
+<li><a class="font-['Inter'] text-sm text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors duration-200" href="#">Pricing</a></li>
+<li><a class="font-['Inter'] text-sm text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors duration-200" href="#">Modules</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-4 text-slate-800 dark:text-slate-100">Support</h4>
+<ul class="space-y-2">
+<li><a class="font-['Inter'] text-sm text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors duration-200" href="#">Contact</a></li>
+<li><a class="font-['Inter'] text-sm text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors duration-200" href="#">Privacy</a></li>
+<li><a class="font-['Inter'] text-sm text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors duration-200" href="#">Terms</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-4 text-slate-800 dark:text-slate-100">Subscribe</h4>
+<div class="flex gap-2">
+<input class="bg-white border-none rounded-lg text-sm px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none w-full" placeholder="Work email" type="email"/>
+<button class="bg-blue-600 text-white p-2 rounded-lg material-symbols-outlined">chevron_right</button>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
