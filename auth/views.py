@@ -1,11 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login
-<<<<<<< HEAD
-=======
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
->>>>>>> 40fdde34b58531d9e98ecf34ce201a18ee96e0c3
 
 
 # Create your views here.
