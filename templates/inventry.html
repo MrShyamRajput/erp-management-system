@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inventory Management | Architect ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "surface": "#f7f9fb",
+                "surface-container-lowest": "#ffffff",
+                "on-surface-variant": "#566166",
+                "on-tertiary-fixed": "#3a344e",
+                "on-primary-container": "#0047c0",
+                "inverse-on-surface": "#9a9d9f",
+                "on-primary-fixed": "#003798",
+                "secondary-container": "#e4e2e6",
+                "primary": "#0052dc",
+                "error": "#9f403d",
+                "surface-container-low": "#f0f4f7",
+                "inverse-primary": "#618bff",
+                "background": "#f7f9fb",
+                "surface-dim": "#cfdce3",
+                "on-secondary-fixed-variant": "#5b5b5f",
+                "on-tertiary-container": "#4d4762",
+                "tertiary-container": "#dcd2f4",
+                "secondary-fixed-dim": "#d6d3d8",
+                "surface-bright": "#f7f9fb",
+                "on-error-container": "#752121",
+                "on-tertiary-fixed-variant": "#57506c",
+                "on-secondary-container": "#515155",
+                "primary-fixed": "#dbe1ff",
+                "error-container": "#fe8983",
+                "tertiary": "#625b77",
+                "on-surface": "#2a3439",
+                "tertiary-fixed": "#dcd2f4",
+                "on-background": "#2a3439",
+                "surface-container-highest": "#d9e4ea",
+                "primary-dim": "#0048c2",
+                "surface-container": "#e8eff3",
+                "tertiary-fixed-dim": "#cec5e5",
+                "primary-container": "#dbe1ff",
+                "error-dim": "#4e0309",
+                "primary-fixed-dim": "#c8d3ff",
+                "on-secondary-fixed": "#3f3f43",
+                "tertiary-dim": "#564f6b",
+                "surface-tint": "#0052dc",
+                "on-primary-fixed-variant": "#0050d5",
+                "secondary": "#5f5f62",
+                "secondary-dim": "#535356",
+                "inverse-surface": "#0b0f10",
+                "on-error": "#fff7f6",
+                "on-secondary": "#faf8fc",
+                "surface-container-high": "#e1e9ee",
+                "secondary-fixed": "#e4e2e6",
+                "outline-variant": "#a9b4b9",
+                "outline": "#717c82",
+                "surface-variant": "#d9e4ea",
+                "on-primary": "#f8f7ff",
+                "on-tertiary": "#fdf7ff"
+              },
+              "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              }
+            }
+          }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-['Inter'] antialiased">
+<!-- NavigationDrawer (Shared Component) -->
+<aside class="h-screen w-72 fixed left-0 top-0 z-50 bg-[#e1e9ee] dark:bg-slate-900 flex flex-col h-full p-6 gap-2 font-['Inter'] tracking-[-0.02em] antialiased">
+<div class="mb-10 px-4">
+<h1 class="text-xl font-bold tracking-tighter text-[#2a3439] dark:text-slate-100">Architect ERP</h1>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span>User Management</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="badge">badge</span>
+<span>HR</span>
+</a>
+<!-- Active Navigation: Inventory -->
+<a class="flex items-center gap-3 px-4 py-3 bg-[#0061FF] text-white rounded-xl shadow-lg shadow-blue-500/20 active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span>Sales</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span>Procurement</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+<span>Finance</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+<span>Reports</span>
+</a>
+<div class="mt-auto">
+<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="pl-72 min-h-screen">
+<!-- TopAppBar (Shared Component) -->
+<header class="fixed top-0 right-0 left-72 h-20 z-40 bg-[#f7f9fb]/80 backdrop-blur-lg flex items-center justify-between px-10">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-black/5 rounded-full p-2" data-icon="search">search</span>
+<h2 class="text-[#2a3439] font-semibold text-lg">Inventory Overview</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full flex items-center gap-2 font-medium shadow-lg shadow-primary/20 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                    Add Product
+                </button>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border-2 border-white shadow-sm cursor-pointer active:opacity-70">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFKs_NGHn7oh3WsZz9YgwOoZvasUVeAa4KPKnAtF6mYjZBxdxitD9tJvU5DLJ3ZArJOmSzXlXHkO9P1fhWl5lYJeOehWles4LnyrLJftacftaJb3mdOjgRNEjUoWy3q_OXV9lkWYUhpIKSLdYboTCDXAK5vZUv86cTG4-ln8e7C_DdpOFgWi20EaBu_gfwfINACjGC5BXr12QyPVUpicYcTJrlpokGRuP_fKY9jIH-nQ68zDsBLGFzR3xnZQLTHjqgb6Jn3-liXWo"/>
+</div>
+</div>
+</header>
+<div class="pt-28 px-10 pb-12 space-y-8">
+<!-- Low Stock Alerts & Warehouse Visualization (Bento Style) -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Low Stock Alert Cards -->
+<div class="col-span-8 grid grid-cols-2 gap-6">
+<div class="bg-error-container/30 border border-error-container/20 p-6 rounded-xl relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-8xl" data-icon="warning">warning</span>
+</div>
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-error" data-icon="emergency_home">emergency_home</span>
+<span class="text-on-error-container font-semibold uppercase tracking-wider text-xs">Critical Alert</span>
+</div>
+<h3 class="text-2xl font-bold text-on-error-container mb-1">12 Items</h3>
+<p class="text-on-error-container opacity-80 text-sm">Products currently below safety stock levels.</p>
+<button class="mt-4 text-xs font-bold text-error flex items-center gap-1">
+                            RESTOCK NOW <span class="material-symbols-outlined text-xs" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-4">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<span class="text-on-surface-variant text-sm font-medium">Pending Shipments</span>
+<h3 class="text-2xl font-bold">24 Orders</h3>
+</div>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg" data-icon="local_shipping">local_shipping</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[65%] rounded-full"></div>
+</div>
+<p class="text-xs text-on-surface-variant">65% of today's logistics dispatched</p>
+</div>
+</div>
+<!-- Warehouse Capacity Chart -->
+<div class="col-span-4 bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/10">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-bold text-on-surface">Warehouse Capacity</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="more_horiz">more_horiz</span>
+</div>
+<div class="flex items-end justify-between h-32 gap-3 px-2">
+<!-- Simulated Bar Chart -->
+<div class="w-full bg-primary/10 rounded-t-lg relative group h-[80%]">
+<div class="absolute bottom-0 w-full bg-primary rounded-t-lg h-[80%] group-hover:opacity-80 transition-opacity"></div>
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-on-surface-variant font-medium">WH-A</span>
+</div>
+<div class="w-full bg-primary/10 rounded-t-lg relative group h-full">
+<div class="absolute bottom-0 w-full bg-primary rounded-t-lg h-[95%] group-hover:opacity-80 transition-opacity"></div>
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-on-surface-variant font-medium">WH-B</span>
+</div>
+<div class="w-full bg-primary/10 rounded-t-lg relative group h-[60%]">
+<div class="absolute bottom-0 w-full bg-primary rounded-t-lg h-[60%] group-hover:opacity-80 transition-opacity"></div>
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-on-surface-variant font-medium">WH-C</span>
+</div>
+<div class="w-full bg-primary/10 rounded-t-lg relative group h-[40%]">
+<div class="absolute bottom-0 w-full bg-primary rounded-t-lg h-[40%] group-hover:opacity-80 transition-opacity"></div>
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-on-surface-variant font-medium">WH-D</span>
+</div>
+</div>
+<div class="mt-10 flex items-center gap-4 pt-4 border-t border-outline-variant/10">
+<div class="flex-1">
+<p class="text-[10px] uppercase font-bold text-on-surface-variant tracking-wider">Total Occupancy</p>
+<p class="text-lg font-bold">82.4%</p>
+</div>
+<span class="text-primary text-xs font-bold bg-primary-container px-2 py-1 rounded">+2.1%</span>
+</div>
+</div>
+</div>
+<!-- Filters Bar -->
+<div class="flex items-center justify-between bg-surface-container-low p-2 rounded-2xl">
+<div class="flex items-center gap-2">
+<button class="bg-surface-container-lowest px-4 py-2 rounded-xl text-sm font-medium shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="category">category</span>
+                        Category: All
+                    </button>
+<button class="px-4 py-2 rounded-xl text-sm font-medium text-on-surface-variant hover:bg-white/50 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="sell">sell</span>
+                        Brand
+                    </button>
+<button class="px-4 py-2 rounded-xl text-sm font-medium text-on-surface-variant hover:bg-white/50 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="inventory">inventory</span>
+                        Stock Status
+                    </button>
+</div>
+<div class="flex items-center gap-2 pr-2">
+<span class="text-xs font-medium text-on-surface-variant mr-2">Display:</span>
+<button class="p-2 rounded-lg bg-surface-container-highest text-primary">
+<span class="material-symbols-outlined text-xl" data-icon="grid_view" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+</button>
+<button class="p-2 rounded-lg text-on-surface-variant hover:bg-black/5">
+<span class="material-symbols-outlined text-xl" data-icon="list">list</span>
+</button>
+</div>
+</div>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Product Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Modern high-end headphones on a clean minimalist studio background with soft directional lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-dgV2cYDWDbv8lQkEG4iA5g6XC_ysPsjQqma9nWlN5VGfCEDtN0_sLAaNy38bTediiksjyD3mmeVbPk2iS0BNl6wWYBubCDUYvFBoxn-Utnfgi28bjPRq8Ne18-zB6HuhFbEFTwxm9nyRGfY41HFUDRuubn_5zh9Vymv2Quf2MwsKjeVnzO73NPhuUslXclPGbGH6DVtAy0tkJzQqtY8CxjRK_tEWzI2XaI0fkYZGrhcn4ti3U_FS5OlkfJ1Uas_Zg_nRCJlvBVg"/>
+<div class="absolute top-3 left-3">
+<span class="bg-surface-container-lowest/90 backdrop-blur px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest text-primary shadow-sm">Electronics</span>
+</div>
+<div class="absolute bottom-3 right-3">
+<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-[10px] font-bold border border-emerald-200">In Stock</span>
+</div>
+</div>
+<div class="p-5 space-y-4">
+<div>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest mb-1">Audio-Technica</p>
+<h4 class="font-bold text-on-surface truncate">M50x Professional Monitor</h4>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<p class="text-xs text-on-surface-variant">Available</p>
+<p class="text-lg font-bold">142 Units</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-on-surface-variant">Price</p>
+<p class="text-lg font-bold text-primary">$169.00</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Elegant luxury watch on a minimalist pedestal with soft shadows and premium lighting aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGig0QAySSHu1CGzNUfXsGcOfqWugZ72hsRIg2Rwx5zRmj9xkWxDTDPQ3wamJSD_d9X38YydHkjw2II7fo8DbHhVOy4MBt0E9z6Fe3wA6sMNZGRBJMDOojBK5QFsgv75-4frx8yIOx-UIdEeyjK2AkeDRr2MFrG9pZX7e4Dl_G2domBQpGOHzQqMRNuxTdQeob4gjg5ADhOV7dl4D-Y8qBfZ1X4aPfXWQc5s9dZ6S2nRC1TUnuZeA6i2V9r_aBj6iHubvFEMAWsL4"/>
+<div class="absolute top-3 left-3">
+<span class="bg-surface-container-lowest/90 backdrop-blur px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest text-primary shadow-sm">Accessories</span>
+</div>
+<div class="absolute bottom-3 right-3">
+<span class="bg-amber-100 text-amber-700 px-2 py-1 rounded-full text-[10px] font-bold border border-amber-200">Low Stock</span>
+</div>
+</div>
+<div class="p-5 space-y-4">
+<div>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest mb-1">Seiko Heritage</p>
+<h4 class="font-bold text-on-surface truncate">Alpinist Automatic Watch</h4>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<p class="text-xs text-on-surface-variant">Available</p>
+<p class="text-lg font-bold">8 Units</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-on-surface-variant">Price</p>
+<p class="text-lg font-bold text-primary">$725.00</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of premium leather sneakers in a designer setting with dramatic architectural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-WZxvfCfnRn9aJah59V8O29S8mA_G2-HPG7oApcN6E95LhlVyXiKtCIw6N5ru4a99h9cNRw2HzILcHQJ8hzzyE0i3wg2f2V5l8KQa-0D2T5tgJk1oZpAXFHV20znQdyi_YFE9wdeAjsFEqzNCs-f-GYdxmDqR94H94nvIqTHC5LwymEMGIEBtKjUilMm1uziFH_ud9enqcezS5Vs2hpUNMoWjnM-ep6Og15LFWeokmfIZnU_yeJeF9WnmazWCtvT433EOBRgKI4A"/>
+<div class="absolute top-3 left-3">
+<span class="bg-surface-container-lowest/90 backdrop-blur px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest text-primary shadow-sm">Footwear</span>
+</div>
+<div class="absolute bottom-3 right-3">
+<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-[10px] font-bold border border-emerald-200">In Stock</span>
+</div>
+</div>
+<div class="p-5 space-y-4">
+<div>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest mb-1">Common Projects</p>
+<h4 class="font-bold text-on-surface truncate">Original Achilles Low</h4>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<p class="text-xs text-on-surface-variant">Available</p>
+<p class="text-lg font-bold">45 Units</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-on-surface-variant">Price</p>
+<p class="text-lg font-bold text-primary">$410.00</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Designer home decor and minimalist clock on a textured surface with bright natural window light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTRB93bjJk6kbUHS2_9onGJJNU0KN9wOg8z2MHryCEZljE2xe1_WSw7DPFssq1LGa6ePYxmvCxOXbJrf-0x_y2waO79bHXUn3YrGsYQGL8TzcFGzNJK3FXElOGexHc7kaJYx8wM9Pswm_JnQBf89VLVTzk9EFfBVTjxBdzQA37nPPPrLYOO7fYr_-Y2HWY_fBq3evtwy2Z-vqbkJjKisS77P7u9w88mJ3Z9pCrQr_v-mi8w0SsOtU7H696yezHeJCPBgBWZJ4AGmA"/>
+<div class="absolute top-3 left-3">
+<span class="bg-surface-container-lowest/90 backdrop-blur px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest text-primary shadow-sm">Lifestyle</span>
+</div>
+<div class="absolute bottom-3 right-3">
+<span class="bg-rose-100 text-rose-700 px-2 py-1 rounded-full text-[10px] font-bold border border-rose-200">Out of Stock</span>
+</div>
+</div>
+<div class="p-5 space-y-4 opacity-75">
+<div>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest mb-1">Braun Design</p>
+<h4 class="font-bold text-on-surface truncate">BNC002 Wall Clock</h4>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<p class="text-xs text-on-surface-variant">Available</p>
+<p class="text-lg font-bold text-error">0 Units</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-on-surface-variant">Price</p>
+<p class="text-lg font-bold text-primary">$55.00</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High tech tablet device on a clean white desk with soft atmospheric office lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4S4_PCghZqZYF221HuG7jyx8SKbJpymafgvt5SZw5-0qEW6GOTxG8PEUTSQi31reFYz64yCVbzVk4lvRchZHOggVKJL6R3o0kgbXNc2aBTx7uzh2uiEeg2GRIfCp4Bgm7yXImGumm17N6rZN-l_7lva8aD3RcPhwaosUOk9duUzJFKSvArBIUsDTOW6HrRfqDr26WEGwrh8VNWs_cxutCZY0pkKHlMi7kMallZAarhWu6ILLK2b0tNDPlgtu5hxVqkZmAuhdLyrY"/>
+<div class="absolute top-3 left-3">
+<span class="bg-surface-container-lowest/90 backdrop-blur px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest text-primary shadow-sm">Tech</span>
+</div>
+<div class="absolute bottom-3 right-3">
+<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-[10px] font-bold border border-emerald-200">In Stock</span>
+</div>
+</div>
+<div class="p-5 space-y-4">
+<div>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest mb-1">Architect Pro</p>
+<h4 class="font-bold text-on-surface truncate">Tab 12 Display Kit</h4>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<p class="text-xs text-on-surface-variant">Available</p>
+<p class="text-lg font-bold">21 Units</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-on-surface-variant">Price</p>
+<p class="text-lg font-bold text-primary">$899.00</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Premium fountain pen and notebook on a dark wood desk with classic library lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvCcO1xFZ83JYG5dHTPuTQbhYPTC-T__rT6kRhygxsEuU6cQwl8ALTU4a1tIAC8XERDnu3pBKHLRiT25HZNg2sI1gZwBYpc7v9p7qmCaJWa3Jtj8CEV94pCd8Orfr48phyAdC52LBM5sLs5X5dqXhmSf3kHU9f2DhWGcqea1yXSSNLtvT0aA7ieL57-YtuF4nZCNV446MLmC8cJd8k-rVq6yLdF4yqNO5GZ19vdu7Dz9Dn6IXgoLKB6_Q0xVd6FXHTrsuGvbjsUP0"/>
+<div class="absolute top-3 left-3">
+<span class="bg-surface-container-lowest/90 backdrop-blur px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest text-primary shadow-sm">Stationery</span>
+</div>
+<div class="absolute bottom-3 right-3">
+<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-[10px] font-bold border border-emerald-200">In Stock</span>
+</div>
+</div>
+<div class="p-5 space-y-4">
+<div>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest mb-1">Lamy Studio</p>
+<h4 class="font-bold text-on-surface truncate">Stainless Steel Pen</h4>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<p class="text-xs text-on-surface-variant">Available</p>
+<p class="text-lg font-bold">120 Units</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-on-surface-variant">Price</p>
+<p class="text-lg font-bold text-primary">$95.00</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 7 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Vibrant red performance running shoes on a clean architectural floor with sleek modern shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDatKqNKayFcG74MXHAWKVbWZ9zjFunI8Su61QBPJG0GK2vboTSF9HTLfoF00Q82Cz_lnJP5yCn2agjV-ZsMjYBln4hT1oLwxRzJbzvE1rw9quLLBdas9HNVXnT1ABoNK-lijxJ4vji52pYgRcVhhfdZLB7f5HsH-bm8OQoJowsBRqGXc-dV9veonFc04883QzQg95HvEeKrJR9lElIEbXPrgkGYyCRGPZBpEvPvJO0Rl94Dkf_lSXEKLHHhL3bG_z7rvErf8kkiO8"/>
+<div class="absolute top-3 left-3">
+<span class="bg-surface-container-lowest/90 backdrop-blur px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest text-primary shadow-sm">Active</span>
+</div>
+<div class="absolute bottom-3 right-3">
+<span class="bg-amber-100 text-amber-700 px-2 py-1 rounded-full text-[10px] font-bold border border-amber-200">Low Stock</span>
+</div>
+</div>
+<div class="p-5 space-y-4">
+<div>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest mb-1">Nike Air Max</p>
+<h4 class="font-bold text-on-surface truncate">Infinity Run Pro 2</h4>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<p class="text-xs text-on-surface-variant">Available</p>
+<p class="text-lg font-bold">12 Units</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-on-surface-variant">Price</p>
+<p class="text-lg font-bold text-primary">$180.00</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Add New Product Card Shell -->
+<div class="border-2 border-dashed border-outline-variant/30 rounded-xl flex flex-col items-center justify-center gap-4 text-on-surface-variant hover:border-primary/50 hover:text-primary transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-2xl" data-icon="add_circle">add_circle</span>
+</div>
+<span class="font-bold text-sm">Add New Product</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Hidden as per rule: Suppress on Details/Transactional, but this is a Dashboard-like view) -->
+<!-- Rule says MUST only render if screen primary purpose aligns perfectly. This is an Inventory dashboard. -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-2xl shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-transform z-50">
+<span class="material-symbols-outlined text-2xl" data-icon="barcode_scanner">barcode_scanner</span>
+</button>
+</body></html>
