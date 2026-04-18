@@ -1,0 +1,317 @@
+
+<!-- Main Canvas -->
+<main class="ml-72 pt-20 p-10 min-h-screen bg-surface">
+<!-- Stats Row -->
+<div class="grid grid-cols-4 gap-6 mb-8">
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+</div>
+<span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">+12.5%</span>
+</div>
+<p class="text-on-surface-variant text-xs font-medium uppercase tracking-wider mb-1">Total Revenue</p>
+<h3 class="text-2xl font-bold text-on-surface">$1,284,500</h3>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-tertiary/10 rounded-lg text-tertiary">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</div>
+<span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">+4.2%</span>
+</div>
+<p class="text-on-surface-variant text-xs font-medium uppercase tracking-wider mb-1">Active Orders</p>
+<h3 class="text-2xl font-bold text-on-surface">342</h3>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-on-tertiary-container/10 rounded-lg text-on-tertiary-container">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+</div>
+<span class="text-xs font-bold text-primary bg-primary-container px-2 py-1 rounded-full">New</span>
+</div>
+<p class="text-on-surface-variant text-xs font-medium uppercase tracking-wider mb-1">New Customers</p>
+<h3 class="text-2xl font-bold text-on-surface">89</h3>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-error-container/20 rounded-lg text-error">
+<span class="material-symbols-outlined" data-icon="pending_actions">pending_actions</span>
+</div>
+<span class="text-xs font-bold text-error bg-error-container/20 px-2 py-1 rounded-full">Alert</span>
+</div>
+<p class="text-on-surface-variant text-xs font-medium uppercase tracking-wider mb-1">Pending Returns</p>
+<h3 class="text-2xl font-bold text-on-surface">18</h3>
+</div>
+</div>
+<!-- Middle Content Grid -->
+<div class="grid grid-cols-12 gap-8 mb-8">
+<!-- Sales Performance Chart (Placeholder Visualization) -->
+<div class="col-span-8 bg-surface-container-lowest p-8 rounded-xl shadow-sm flex flex-col">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h4 class="text-lg font-bold text-on-surface">Sales Performance</h4>
+<p class="text-on-surface-variant text-sm">Revenue growth across last 6 months</p>
+</div>
+<div class="flex gap-2">
+<button class="bg-surface-container text-on-surface text-xs px-3 py-1.5 rounded-full font-medium">Monthly</button>
+<button class="bg-primary text-white text-xs px-3 py-1.5 rounded-full font-medium">Weekly</button>
+</div>
+</div>
+<div class="flex-grow flex items-end gap-4 h-64 px-4">
+<div class="flex-1 flex flex-col justify-end group">
+<div class="w-full bg-primary-container rounded-t-lg transition-all duration-300 group-hover:bg-primary" style="height: 40%"></div>
+<span class="text-[10px] text-center mt-3 text-on-surface-variant font-medium">JAN</span>
+</div>
+<div class="flex-1 flex flex-col justify-end group">
+<div class="w-full bg-primary-container rounded-t-lg transition-all duration-300 group-hover:bg-primary" style="height: 65%"></div>
+<span class="text-[10px] text-center mt-3 text-on-surface-variant font-medium">FEB</span>
+</div>
+<div class="flex-1 flex flex-col justify-end group">
+<div class="w-full bg-primary rounded-t-lg" style="height: 85%"></div>
+<span class="text-[10px] text-center mt-3 text-on-surface font-bold">MAR</span>
+</div>
+<div class="flex-1 flex flex-col justify-end group">
+<div class="w-full bg-primary-container rounded-t-lg transition-all duration-300 group-hover:bg-primary" style="height: 55%"></div>
+<span class="text-[10px] text-center mt-3 text-on-surface-variant font-medium">APR</span>
+</div>
+<div class="flex-1 flex flex-col justify-end group">
+<div class="w-full bg-primary-container rounded-t-lg transition-all duration-300 group-hover:bg-primary" style="height: 75%"></div>
+<span class="text-[10px] text-center mt-3 text-on-surface-variant font-medium">MAY</span>
+</div>
+<div class="flex-1 flex flex-col justify-end group">
+<div class="w-full bg-primary-container rounded-t-lg transition-all duration-300 group-hover:bg-primary" style="height: 95%"></div>
+<span class="text-[10px] text-center mt-3 text-on-surface-variant font-medium">JUN</span>
+</div>
+</div>
+</div>
+<!-- Revenue per Region -->
+<div class="col-span-4 bg-surface-container-lowest p-8 rounded-xl shadow-sm">
+<h4 class="text-lg font-bold text-on-surface mb-6">Revenue per Region</h4>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-medium">North America</span>
+<span class="text-on-surface-variant">$452.1k</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 72%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-medium">Europe</span>
+<span class="text-on-surface-variant">$312.8k</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary" style="width: 58%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-medium">Asia Pacific</span>
+<span class="text-on-surface-variant">$289.4k</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-dim" style="width: 45%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-medium">Latin America</span>
+<span class="text-on-surface-variant">$112.5k</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed-dim" style="width: 22%"></div>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-3 text-primary font-semibold text-sm hover:bg-primary-container/30 rounded-xl transition-colors">
+                    View Regional Report
+                </button>
+</div>
+</div>
+<!-- Orders & Customer Overview -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Order List -->
+<div class="col-span-9 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="p-8 border-b border-outline-variant/10 flex justify-between items-center">
+<div>
+<h4 class="text-lg font-bold text-on-surface">Recent Orders</h4>
+<p class="text-on-surface-variant text-sm">Managing latest transactional flow</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 border border-outline-variant/30 px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                            Filter
+                        </button>
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow-md shadow-primary/20">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                            Create Order
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-on-surface-variant text-[11px] uppercase tracking-widest font-bold">
+<tr>
+<th class="px-8 py-4">Order ID</th>
+<th class="px-8 py-4">Customer</th>
+<th class="px-8 py-4">Date</th>
+<th class="px-8 py-4">Amount</th>
+<th class="px-8 py-4">Status</th>
+<th class="px-8 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-8 py-5 font-bold text-on-surface">#ORD-92841</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center text-[10px] font-bold">JD</div>
+<div>
+<p class="text-sm font-semibold text-on-surface leading-none">James D. Sullivan</p>
+<p class="text-xs text-on-surface-variant">sullivan@corp.com</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant">Oct 14, 2023</td>
+<td class="px-8 py-5 font-semibold text-on-surface">$2,450.00</td>
+<td class="px-8 py-5">
+<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">Delivered</span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-8 py-5 font-bold text-on-surface">#ORD-92842</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-[10px] font-bold">EL</div>
+<div>
+<p class="text-sm font-semibold text-on-surface leading-none">Elena L. Mercer</p>
+<p class="text-xs text-on-surface-variant">elena.m@tech.io</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant">Oct 14, 2023</td>
+<td class="px-8 py-5 font-semibold text-on-surface">$1,120.45</td>
+<td class="px-8 py-5">
+<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">Shipped</span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-8 py-5 font-bold text-on-surface">#ORD-92843</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-[10px] font-bold">MK</div>
+<div>
+<p class="text-sm font-semibold text-on-surface leading-none">Marcus Knight</p>
+<p class="text-xs text-on-surface-variant">m.knight@logi.com</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant">Oct 13, 2023</td>
+<td class="px-8 py-5 font-semibold text-on-surface">$890.00</td>
+<td class="px-8 py-5">
+<span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-bold">Pending</span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-8 py-5 font-bold text-on-surface">#ORD-92844</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-error-container/20 text-error flex items-center justify-center text-[10px] font-bold">SW</div>
+<div>
+<p class="text-sm font-semibold text-on-surface leading-none">Sarah West</p>
+<p class="text-xs text-on-surface-variant">swest@retail.co</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant">Oct 13, 2023</td>
+<td class="px-8 py-5 font-semibold text-on-surface">$5,670.00</td>
+<td class="px-8 py-5">
+<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">Delivered</span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Customer Segments -->
+<div class="col-span-3 bg-surface-container-lowest p-8 rounded-xl shadow-sm">
+<h4 class="text-lg font-bold text-on-surface mb-6">Segments</h4>
+<div class="space-y-4">
+<div class="p-4 bg-surface-container-low rounded-xl border border-transparent hover:border-primary/20 transition-all cursor-pointer">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-bold text-primary uppercase tracking-wider">Enterprise</span>
+<span class="text-sm font-bold">42%</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex -space-x-2">
+<img alt="Customer" class="w-6 h-6 rounded-full border-2 border-surface-container-lowest" data-alt="avatar of a corporate professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYuwRGyxmc-iGYJle4TgBjvBQ_U4rvAOJGe3e_7YMYe5QFHcBfSXft_vJZGkF47xTPaAtuZPg00J0okcFSf1Cn03hP035XF5Ap0N_zK1U2Oo2bJz7NiCeqxmVqbow2iaHXUr5bw-1al6LJIP8a7zMtEfy9PeXD3KUWBr58J0ziDqwXy1WjuU1mC5tA_rTop8-kInoKaZFRZAuoz5lHQvLUa8aertx2-enGMD6N-foy0cTR-H2wsJTbCHtDW0Wu1XYl6mvCTGGwuqc"/>
+<img alt="Customer" class="w-6 h-6 rounded-full border-2 border-surface-container-lowest" data-alt="avatar of a tech worker" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzUXpcmKMn0w_WXBUUHlxNdiPfhBB_2xEMXNJafDoZDLGUj7niiBhlf46AJmQCNXonGWLVqzjT7hYwFyHj3HSpTzVS9sKvsmH4zR_KXl8vYe00Bs8Gc8Lno-sbG8HEU2dAbFdCyM-OQiVNGS6MuKbNLsnhkz0DR6dsXP2dVjDNQAMHtCoA9_MaHCa_MB9g8xeCzFERVthJCcM-lbERtliiUqSn-WMWYcjznSuQd8qAItiYR6dABbM1o9j8xffxk-wrZbjTfnsDd7o"/>
+<div class="w-6 h-6 rounded-full bg-primary-container text-[8px] flex items-center justify-center font-bold border-2 border-surface-container-lowest">+12</div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-medium">Top Tier Clients</span>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-xl border border-transparent hover:border-tertiary/20 transition-all cursor-pointer">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-bold text-tertiary uppercase tracking-wider">Mid-Market</span>
+<span class="text-sm font-bold">35%</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex -space-x-2">
+<img alt="Customer" class="w-6 h-6 rounded-full border-2 border-surface-container-lowest" data-alt="avatar of a startup founder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDu0VhOnuAvHu4iiEatML_CEw2o5_MzLjXzYHeqrv8Z3YAb79ydu9XVbmZh-qYzi_ocOsnCSnNCZAEUx78TnFruNXQQ0_3H0E-LTMv87Sy3-vTwAXPqUlSepy0IUM23xNqOE6qWf_eiDtl3aKUhUNzFqdTqG209KIu84TyOLsTc_5Zd1Tz5KPqclyJk2S0eZdX32bc078FsuVKz1nZFxF_AxVh6kBpDAcx1051Vs-8QPhR6YT3AwsyZ-3-owEFJNVZS1wArcCLFGUM"/>
+<img alt="Customer" class="w-6 h-6 rounded-full border-2 border-surface-container-lowest" data-alt="avatar of an office manager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgh0gS5gB8JGnIGdVDHATnrbdbVf-NRLuimpmKKM7400S5Ktp3U_q9CqUt-u04iqDuRf0IG4joDC8KBeY2efWTWc_ykLWGk9b-Pfm9gAKDvcI9Lr_bJ--vUubSkBvqGLEWYks2lNayag3pieljmkS8o5QHVQzutT84aqkSLgibrhCIWI0PiGIiCsnqJYrITS3aYJ-_Vd3U9w059pLDviDlBmCi9ZDcu-akkY8yElFPRssR1fL9ghhd37GrFT7dUCt0BsNySru4_qY"/>
+<div class="w-6 h-6 rounded-full bg-tertiary-container text-[8px] flex items-center justify-center font-bold border-2 border-surface-container-lowest">+28</div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-medium">Growing Business</span>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-xl border border-transparent hover:border-secondary/20 transition-all cursor-pointer">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-bold text-secondary uppercase tracking-wider">SMB</span>
+<span class="text-sm font-bold">23%</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex -space-x-2">
+<img alt="Customer" class="w-6 h-6 rounded-full border-2 border-surface-container-lowest" data-alt="avatar of a small business owner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_rPiGIvG36rVo5pY0ZKi5dAM6ul2x8AuDUY4F-Plv9y4rJFqLlkepP-HaoYtGwwxB9k1xZ95maNWuk3_fltWEIZGNNqhG-3U8K6Y52c3gm7hw4HaEXsBDzAM1FMLN-OuNpaR-EvrIgbdTXZ_hJAVn16xgms9hMsNGt43flYKvGgUxnfcXVlXs_Dv4-VFX177MiwkjrzlqI2PDXyOPTjw6Clf-T_VWkQOwuG064iTetuNXfCzLp3qv4IMgSh2sp1XXonlkTpdz0zc"/>
+<div class="w-6 h-6 rounded-full bg-secondary-container text-[8px] flex items-center justify-center font-bold border-2 border-surface-container-lowest">+142</div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-medium">Transactional High-Vol</span>
+</div>
+</div>
+</div>
+<div class="mt-8 rounded-xl overflow-hidden relative group">
+<img alt="Sales Promotion" class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-700" data-alt="vibrant abstract digital art with flowing lines of blue and purple light representing data flow and connectivity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZsqALE1aXZrEfV5zA7iI3YUuR28x3Cc0bBl1doAu3ebch6JSISncSRZfxSGdLrWB0XCO-1KvwelvjOHmohjUWUdDU3n-UNJNRvi3ZS5IrPf3emC7gJUytn1XpZgMAgbxCHiQA4pmqDAucebIuUz9g-JfmhPfNqGkvNJd5J0J5P3Adpbfb22QwuF-fclD4w7ktG75WaL9AhOkMNaX9D9e8GyJErKHYSXOF8PgOCg4C8QAaqTzOIxRu4RUDTJN91gxH2uiSRp0INbQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex flex-col justify-end p-5">
+<h5 class="text-white font-bold text-sm">Quarterly Target</h5>
+<p class="text-white/80 text-[10px] mb-2">You are at 84% of your goal.</p>
+<div class="w-full h-1 bg-white/20 rounded-full">
+<div class="h-full bg-white" style="width: 84%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>

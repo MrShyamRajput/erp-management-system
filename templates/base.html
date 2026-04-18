@@ -1,17 +1,20 @@
-<!DOCTYPE html>
+<! DOCTYPE html>
 <html class="light" lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>{% block title %}Architect ERP{% endblock %}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Architect ERP{% endblock %}</title>
 
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
 
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
 
-<script id="tailwind-config">
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -84,138 +87,131 @@
             },
         }
     </script>
-<style>
-body {
-font-family: 'Inter', sans-serif;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-letter-spacing: -0.02em;
-}
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            letter-spacing: -0.02em;
+        }
 
-.material-symbols-outlined {
-font-variation-settings: 'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
-}
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
 
-body {
-min-height: max(884px, 100dvh);
-}
-</style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
 
 </head>
 
 <body class="bg-surface text-on-surface antialiased overflow-x-hidden">
 
-<!-- SIDEBAR -->
-<aside class="fixed left-0 top-0 h-full z-40 hidden md:flex flex-col bg-slate-50 dark:bg-slate-900 h-screen w-64 border-r-0 font-inter tracking-tight">
+    <!-- SIDEBAR -->
+    <aside
+        class="fixed left-0 top-0 h-full z-40 hidden md:flex flex-col bg-slate-50 dark:bg-slate-900 h-screen w-64 border-r-0 font-inter tracking-tight">
 
-<div class="px-6 py-8">
-<h1 class="text-xl font-bold text-slate-900 dark:text-slate-50">Architect ERP</h1>
-</div>
+        <div class="px-6 py-8">
+            <h1 class="text-xl font-bold text-slate-900 dark:text-slate-50">Architect ERP</h1>
+        </div>
 
-<nav class="flex-1 px-4 space-y-1">
+        <nav class="flex-1 px-4 space-y-1">
 
-<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<span>Dashboard</span>
-</a>
+            <a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors"
+                href="/dashboard">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span>Dashboard</span>
+            </a>
 
-<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors" href="#">
-<span class="material-symbols-outlined">group</span>
-<span>User Management</span>
-</a>
+            <a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors"
+                href="/usermanagement">
+                <span class="material-symbols-outlined">group</span>
+                <span>User Management</span>
+            </a>
 
-<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors" href="#">
-<span class="material-symbols-outlined">badge</span>
-<span>HR</span>
-</a>
+            <a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors"
+                href="/hrmanagement">
+                <span class="material-symbols-outlined">badge</span>
+                <span>HR</span>
+            </a>
 
-<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors" href="#">
-<span class="material-symbols-outlined">inventory_2</span>
-<span>Inventory</span>
-</a>
+            <a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors"
+                href="/inventory">
+                <span class="material-symbols-outlined">inventory_2</span>
+                <span>Inventory</span>
+            </a>
 
-<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors" href="#">
-<span class="material-symbols-outlined">payments</span>
-<span>Sales</span>
-</a>
+            <a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors" href="#">
+                <span class="material-symbols-outlined">payments</span>
+                <span>Sales</span>
+            </a>
 
-<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors" href="#">
-<span class="material-symbols-outlined">shopping_cart</span>
-<span>Procurement</span>
-</a>
+            <a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors" href="#">
+                <span class="material-symbols-outlined">shopping_cart</span>
+                <span>Procurement</span>
+            </a>
 
-<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors" href="#">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span>Finance</span>
-</a>
+            <a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors" href="#">
+                <span class="material-symbols-outlined">account_balance_wallet</span>
+                <span>Finance</span>
+            </a>
 
-<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors" href="#">
-<span class="material-symbols-outlined">analytics</span>
-<span>Reports</span>
-</a>
+            <a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-late-200 transition-colors" href="#">
+                <span class="material-symbols-outlined">analytics</span>
+                <span>Reports</span>
+            </a>
 
-<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span>Settings</span>
-</a>
+            <a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200 transition-colors" href="#">
+                <span class="material-symbols-outlined">settings</span>
+                <span>Settings</span>
+            </a>
 
-</nav>
+        </nav>
 
-</aside>
-
-
-<!-- PAGE WRAPPER -->
-<div class="md:ml-64 flex flex-col min-h-screen">
-
-<!-- TOP BAR -->
-<header class="w-full h-16 sticky top-0 bg-white border-b flex items-center justify-between px-6 z-30">
-
-<div class="flex items-center gap-4">
-<button class="md:hidden p-2 text-slate-600">
-<span class="material-symbols-outlined">menu</span>
-</button>
-
-<h2 class="text-lg font-semibold">ERP Dashboard</h2>
-</div>
-
-</header>
+    </aside>
 
 
-<!-- MAIN CONTENT -->
-<main class="flex-1 p-6">
-
-{% block content %}
-{% endblock %}
-
-</main>
-
-</div>
+    <!-- PAGE WRAPPER -->
+    <div class="md:ml-64 flex flex-col min-h-screen   ">
 
 
-<!-- MOBILE NAV -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t flex items-center justify-around py-3 px-2 z-40">
 
-<button class="flex flex-col items-center gap-1 text-slate-500">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="text-[10px]">Dash</span>
-</button>
+        <!-- MAIN CONTENT -->
+        {% block content %}
+        {% endblock %}
 
-<button class="flex flex-col items-center gap-1 text-primary">
-<span class="material-symbols-outlined">group</span>
-<span class="text-[10px]">Users</span>
-</button>
+        </main>
 
-<button class="flex flex-col items-center gap-1 text-slate-500">
-<span class="material-symbols-outlined">inventory_2</span>
-<span class="text-[10px]">Stock</span>
-</button>
+    </div>
 
-<button class="flex flex-col items-center gap-1 text-slate-500">
-<span class="material-symbols-outlined">settings</span>
-<span class="text-[10px]">Config</span>
-</button>
 
-</nav>
+    <!-- MOBILE NAV -->
+    <nav
+        class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t flex items-center justify-around py-3 px-2 z-40">
+
+        <button class="flex flex-col items-center gap-1 text-slate-500">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="text-[10px]">Dash</span>
+        </button>
+
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined">group</span>
+            <span class="text-[10px]">Users</span>
+        </button>
+
+        <button class="flex flex-col items-center gap-1 text-slate-500">
+            <span class="material-symbols-outlined">inventory_2</span>
+            <span class="text-[10px]">Stock</span>
+        </button>
+
+        <button class="flex flex-col items-center gap-1 text-slate-500">
+            <span class="material-symbols-outlined">settings</span>
+            <span class="text-[10px]">Config</span>
+        </button>
+
+    </nav>
 
 </body>
+
 </html>

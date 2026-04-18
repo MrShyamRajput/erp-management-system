@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.urls import path,include
 from .views import landing_page
-from user.views import userManagement,hrManagement
-
+from user.views import userManagement
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,5 +17,8 @@ urlpatterns = [
     path("inventory/",include("inventory.urls")),
 
     path('usermanagement/',userManagement,name="userManagement" ),
-    path('hrmanagement/',hrManagement,name="hrmanagement" ),
+    path('hrmanagement/',include('hr.urls') ),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,163 +1,12 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>User Management - Architect ERP</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "surface": "#f7f9fb",
-                    "surface-container-lowest": "#ffffff",
-                    "on-surface-variant": "#566166",
-                    "on-tertiary-fixed": "#3a344e",
-                    "on-primary-container": "#0047c0",
-                    "inverse-on-surface": "#9a9d9f",
-                    "on-primary-fixed": "#003798",
-                    "secondary-container": "#e4e2e6",
-                    "primary": "#0052dc",
-                    "error": "#9f403d",
-                    "surface-container-low": "#f0f4f7",
-                    "inverse-primary": "#618bff",
-                    "background": "#f7f9fb",
-                    "surface-dim": "#cfdce3",
-                    "on-secondary-fixed-variant": "#5b5b5f",
-                    "on-tertiary-container": "#4d4762",
-                    "tertiary-container": "#dcd2f4",
-                    "secondary-fixed-dim": "#d6d3d8",
-                    "surface-bright": "#f7f9fb",
-                    "on-error-container": "#752121",
-                    "on-tertiary-fixed-variant": "#57506c",
-                    "on-secondary-container": "#515155",
-                    "primary-fixed": "#dbe1ff",
-                    "error-container": "#fe8983",
-                    "tertiary": "#625b77",
-                    "on-surface": "#2a3439",
-                    "tertiary-fixed": "#dcd2f4",
-                    "on-background": "#2a3439",
-                    "surface-container-highest": "#d9e4ea",
-                    "primary-dim": "#0048c2",
-                    "surface-container": "#e8eff3",
-                    "tertiary-fixed-dim": "#cec5e5",
-                    "primary-container": "#dbe1ff",
-                    "error-dim": "#4e0309",
-                    "primary-fixed-dim": "#c8d3ff",
-                    "on-secondary-fixed": "#3f3f43",
-                    "tertiary-dim": "#564f6b",
-                    "surface-tint": "#0052dc",
-                    "on-primary-fixed-variant": "#0050d5",
-                    "secondary": "#5f5f62",
-                    "secondary-dim": "#535356",
-                    "inverse-surface": "#0b0f10",
-                    "on-error": "#fff7f6",
-                    "on-secondary": "#faf8fc",
-                    "surface-container-high": "#e1e9ee",
-                    "secondary-fixed": "#e4e2e6",
-                    "outline-variant": "#a9b4b9",
-                    "outline": "#717c82",
-                    "surface-variant": "#d9e4ea",
-                    "on-primary": "#f8f7ff",
-                    "on-tertiary": "#fdf7ff"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "fontFamily": {
-                    "headline": ["Inter"],
-                    "body": ["Inter"],
-                    "label": ["Inter"]
-            }
-          },
-        },
-      }
-    </script>
-<style>
-        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .glass-header { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-surface text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
-<!-- NavigationDrawer -->
-<aside class="h-screen w-72 fixed left-0 top-0 z-50 bg-[#e1e9ee] dark:bg-slate-900 font-['Inter'] tracking-[-0.02em] antialiased">
-<div class="flex flex-col h-full p-6 gap-2">
-<div class="mb-8 px-4">
-<span class="text-xl font-bold tracking-tighter text-[#2a3439] dark:text-slate-100">Architect ERP</span>
-</div>
-<nav class="flex flex-col gap-1 overflow-y-auto no-scrollbar">
-<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 dark:hover:bg-slate-800 transition-all duration-200 active:scale-[0.98]" href="#">
-<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-<span class="font-medium">Dashboard</span>
-</a>
-<!-- Active Item: User Management -->
-<a class="flex items-center gap-3 px-4 py-3 bg-[#0061FF] text-white rounded-xl shadow-lg shadow-blue-500/20 active:scale-[0.98] transition-transform" href="#">
-<span class="material-symbols-outlined" data-icon="group">group</span>
-<span class="font-medium">User Management</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 dark:hover:bg-slate-800 transition-all duration-200 active:scale-[0.98]" href="#">
-<span class="material-symbols-outlined" data-icon="badge">badge</span>
-<span class="font-medium">HR</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 dark:hover:bg-slate-800 transition-all duration-200 active:scale-[0.98]" href="#">
-<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
-<span class="font-medium">Inventory</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 dark:hover:bg-slate-800 transition-all duration-200 active:scale-[0.98]" href="#">
-<span class="material-symbols-outlined" data-icon="payments">payments</span>
-<span class="font-medium">Sales</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 dark:hover:bg-slate-800 transition-all duration-200 active:scale-[0.98]" href="#">
-<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
-<span class="font-medium">Procurement</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 dark:hover:bg-slate-800 transition-all duration-200 active:scale-[0.98]" href="#">
-<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
-<span class="font-medium">Finance</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 dark:hover:bg-slate-800 transition-all duration-200 active:scale-[0.98]" href="#">
-<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
-<span class="font-medium">Reports</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-[#566166] dark:text-slate-400 rounded-xl hover:bg-white/50 dark:hover:bg-slate-800 transition-all duration-200 active:scale-[0.98]" href="#">
-<span class="material-symbols-outlined" data-icon="settings">settings</span>
-<span class="font-medium">Settings</span>
-</a>
-</nav>
-</div>
-</aside>
-<!-- TopAppBar -->
-<header class="fixed top-0 right-0 left-72 h-20 z-40 bg-[#f7f9fb]/80 glass-header flex items-center justify-between px-10">
-<div class="flex items-center gap-4">
-<h1 class="font-['Inter'] font-semibold text-[#2a3439] text-xl">User Management</h1>
-</div>
-<div class="flex items-center gap-6">
-<div class="relative group">
-<span class="material-symbols-outlined cursor-pointer text-[#566166] hover:bg-black/5 rounded-full p-2 transition-colors" data-icon="search">search</span>
-</div>
-<span class="material-symbols-outlined cursor-pointer text-[#566166] hover:bg-black/5 rounded-full p-2 transition-colors" data-icon="notifications">notifications</span>
-<div class="h-10 w-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold border-2 border-white cursor-pointer active:opacity-70 transition-all">
-                JD
-            </div>
-</div>
-</header>
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
 <!-- Main Content Canvas -->
-<main class="ml-72 pt-28 pb-12 px-10 min-h-screen">
+<main class=" pt-28 pb-12 px-10 min-h-screen">
 <!-- Stats Row (Asymmetric Layout) -->
 <div class="grid grid-cols-12 gap-6 mb-10">
 <div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl p-8 flex items-center justify-between shadow-sm">
@@ -373,4 +222,5 @@
 </div>
 </div>
 </main>
-</body></html>
+
+{% endblock %}
