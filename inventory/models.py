@@ -1,4 +1,5 @@
 from django.db import models
+
 from django.db.models.fields.related import ForeignKey
 
 # Create your models here.
@@ -12,7 +13,7 @@ class Category(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
 
     def __srt__(self):
-        return
+        return self.name
     
 #For Brand Filtering in UI
 
