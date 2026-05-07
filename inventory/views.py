@@ -2,7 +2,12 @@ from django.shortcuts import render
 from django.db.models import Sum
 from .models import Product,Category, Brand,InventoryStocks,Warehouse
 from django.http import JsonResponse
+from django.shortcuts import redirect
+from django.http import HttpResponse
 import json
+
+
+
 
 LOW_STOCK_THRESHOLD=50
 
@@ -52,42 +57,87 @@ def inventory_view(request):
     
 
 def add_category(request):
-    try:
-        data = json.loads(request.body.decode('utf-8'))
-        name = data.get("name", "").strip()
+    if request.method == "POST":
+        try:
+            name = request.POST.get("name")
+            description = request.POST.get("description")
 
-        # ✅ Validation
+            if not name:
+                return JsonResponse({"success": False, "error": "Name required"})
+
+            category = Category.objects.create(
+                name=name,
+                description=description
+            )
+
+            return JsonResponse({
+                "success": True,
+                "id": category.id,
+                "name": category.name
+            })
+
+        except Exception as e:
+            return JsonResponse({
+                "success": False,
+                "error": str(e)
+            })
+
+    return JsonResponse({"success": False})
+def add_brand(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        logo = request.FILES.get("logo")
+
         if not name:
-            return JsonResponse(
-                {"error": "Category name is required"},
-                status=400
-            )
+            return JsonResponse({"success": False, "error": "Name required"})
 
-        # ✅ Duplicate check (case-insensitive)
-        if Category.objects.filter(name__iexact=name).exists():
-            return JsonResponse(
-                {"error": "Category already exists"},
-                status=409
-            )
+        brand = Brand.objects.create(
+            name=name,
+            logo=logo
+        )
 
-        # ✅ Create category
-        category = Category.objects.create(name=name)
-
-        # ✅ Success response
         return JsonResponse({
-            "id": category.id,
-            "name": category.name,
-            "message": "Category added successfully"
-        }, status=201)
+            "success": True,
+            "id": brand.id,
+            "name": brand.name
+        })
 
-    except json.JSONDecodeError:
-        return JsonResponse(
-            {"error": "Invalid JSON"},
-            status=400
-        )
+    return JsonResponse({"success": False, "error": "Invalid request"})
 
-    except Exception as e:
-        return JsonResponse(
-            {"error": "Something went wrong"},
-            status=500
-        )
+
+def add_product(request):
+    if request.method == "POST":
+        try:
+            name = request.POST.get("name")
+            sku = request.POST.get("sku")
+            category_id = request.POST.get("category")
+            brand_id = request.POST.get("brand")
+            price = request.POST.get("price")
+            description = request.POST.get("description")
+            image = request.FILES.get("image")
+
+            # ✅ Validation
+            if not all([name, sku, category_id, brand_id, price]):
+                return HttpResponse("Missing required fields")
+
+            # ✅ Get FK objects
+            category = Category.objects.get(id=category_id)
+            brand = Brand.objects.get(id=brand_id)
+
+            # ✅ Create Product
+            product = Product.objects.create(
+                name=name,
+                sku=sku,
+                category=category,
+                brand=brand,
+                price=price,
+                description=description,
+                image=image
+            )
+
+            return JsonResponse({"success": True})  # ✅ IMPORTAN
+
+        except Exception as e:
+            return HttpResponse(f"Error: {str(e)}")
+
+    return HttpResponse("Invalid Request")

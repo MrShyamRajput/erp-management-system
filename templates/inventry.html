@@ -41,59 +41,83 @@ Dashboard
 
           <h2 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Add Product</h2>
 
-          <form method="POST" enctype="multipart/form-data" action="/add-product/" class="space-y-3 sm:space-y-4">
+          <form id="productForm" class="space-y-3 sm:space-y-4">
 
             {% csrf_token %}
 
+            <!-- 🔴 Error Box -->
+            <div id="formError" class="hidden bg-red-100 text-red-700 border border-red-400 p-2 rounded text-sm">
+            </div>
+
             <!-- Name -->
-            <input type="text" name="name" placeholder="Product Name" class="w-full border p-2 rounded">
+            <input type="text" name="name" placeholder="Product Name" class="w-full border p-2 rounded" required>
 
             <!-- SKU -->
-            <input type="text" name="sku" placeholder="SKU" class="w-full border p-2 rounded">
+            <input type="text" name="sku" placeholder="SKU" class="w-full border p-2 rounded" required>
 
             <!-- Category -->
             <div>
               <label class="text-sm font-medium">Category</label>
-              <div class="flex gap-2 flex-wrap sm:flex-nowrap">
-                <select id="categoryDropdown" name="category" class="flex-1 min-w-0 border p-2 rounded text-sm">
+
+              <div class="flex items-center gap-2">
+                <select id="categoryDropdown" name="category" class="flex-1 border p-2 rounded text-sm" required>
                   {% for c in categories %}
                   <option value="{{ c.id }}">{{ c.name }}</option>
                   {% endfor %}
                 </select>
 
-                <button onclick="addCategory()" type="button" class="px-3 bg-gray-100 rounded shrink-0">+</button>
+                <button type="button" onclick="toggleCategoryInput()"
+                  class="bg-green-600 text-white px-3 py-2 rounded text-lg">+</button>
               </div>
             </div>
+            <div id="categoryInputBox" class="hidden mt-2 flex flex-wrap items-center gap-2">
 
+              <input type="text" id="newCategory" placeholder="Category"
+                class="border border-gray-300 px-2 py-1 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+              <input type="text" id="categoryDescription" placeholder="Description"
+                class="border border-gray-300 px-2 py-1 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+              <button type="button" onclick="addCategory()"
+                class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 transition">
+                Add
+              </button>
+
+            </div>
             <!-- Brand -->
             <div>
               <label class="text-sm font-medium">Brand</label>
-              <div class="flex gap-2 flex-wrap sm:flex-nowrap">
-                <select id="brandDropdown" name="brand" class="flex-1 min-w-0 border p-2 rounded text-sm">
+
+              <div class="flex items-center gap-2">
+                <select id="brandDropdown" name="brand" class="flex-1 border p-2 rounded text-sm" required>
                   {% for b in brands %}
                   <option value="{{ b.id }}">{{ b.name }}</option>
                   {% endfor %}
                 </select>
 
-                <div id="brandInputBox" class="hidden mt-2 flex flex-col gap-2">
-
-                  <input type="text" id="newBrand" placeholder="Brand name" class="border p-2 rounded">
-
-                  <input type="file" id="brandLogo" class="border p-2 rounded text-sm">
-
-                  <button type="button" onclick="addBrand()" class="bg-blue-600 text-white px-3 py-2 rounded">
-                    Save Brand
-                  </button>
-                </div>
+                <button type="button" onclick="toggleBrandInput()"
+                  class="bg-green-600 text-white px-3 py-2 rounded text-lg">+</button>
               </div>
             </div>
+            <div id="brandInputBox" class="hidden mt-2 flex flex-wrap items-center gap-2">
 
+              <input type="text" id="newBrand" placeholder="Brand"
+                class="border border-gray-300 px-2 py-1 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+              <input type="file" id="brandLogo" class="border border-gray-300 px-2 py-1 rounded text-sm">
+
+              <button type="button" onclick="addBrand()"
+                class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 transition">
+                Add
+              </button>
+
+            </div>
             <!-- Price -->
-            <input type="number" step="0.01" name="price" placeholder="Price" class="w-full border p-2 rounded">
+            <input type="number" step="0.01" name="price" placeholder="Price" class="w-full border p-2 rounded"
+              required>
 
             <!-- Description -->
-            <textarea name="description" placeholder="Description" rows="3"
-              class="w-full border p-2 rounded resize-y break-words"></textarea>
+            <textarea name="description" placeholder="Description" class="w-full border p-2 rounded"></textarea>
 
             <!-- Image -->
             <input type="file" name="image" class="w-full">
@@ -244,78 +268,112 @@ Dashboard
       .split('=')[1];
   }
 
-  // Add Category
-  function addCategory() {
-    let name = prompt("Enter Category Name");
 
-    if (!name) return;
+
+  // Show/Hide input box
+  function toggleCategoryInput() {
+    const box = document.getElementById("categoryInputBox");
+    box.classList.toggle("hidden");
+  }
+
+
+  function addCategory() {
+    const name = document.getElementById("newCategory").value.trim();
+    const description = document.getElementById("categoryDescription").value.trim();
+
+    if (!name) {
+      alert("Please enter category name");
+      return;
+    }
+
+    let formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
 
     fetch("/inventory/add-category/", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         "X-CSRFToken": getCSRFToken()
       },
-      body: JSON.stringify({ name: name })
+      body: formData
     })
-      .then(res => res.json())
+      .then(res => {
+        console.log("STATUS:", res.status);
+        return res.json();
+      })
       .then(data => {
-        let dropdown = document.getElementById("categoryDropdown");
+        if (data.success) {
+          let dropdown = document.getElementById("categoryDropdown");
 
-        let option = document.createElement("option");
-        option.value = data.id;
-        option.text = data.name;
-        option.selected = true;
+          let option = document.createElement("option");
+          option.value = data.id;
+          option.text = data.name;
+          option.selected = true;
 
-        dropdown.appendChild(option);
-      });
+          dropdown.appendChild(option);
+
+          // reset + hide
+          document.getElementById("newCategory").value = "";
+          document.getElementById("categoryDescription").value = "";
+          document.getElementById("categoryInputBox").classList.add("hidden");
+        } else {
+          alert(data.error || "Error adding category");
+        }
+      })
+      .catch(err => console.error(err));
   }
 
-  // Add Brand
+  function toggleBrandInput() {
+    const box = document.getElementById("brandInputBox");
+    box.classList.toggle("hidden");
+  }
+
+  // fuction to add new brand
   function addBrand() {
-  let name = document.getElementById("newBrand").value;
-  let logo = document.getElementById("brandLogo").files[0];
+    const name = document.getElementById("newBrand").value.trim();
+    const logo = document.getElementById("brandLogo").files[0];
 
-  if (!name) {
-    alert("Brand name required");
-    return;
-  }
-
-  let formData = new FormData();
-  formData.append("name", name);
-  if (logo) {
-    formData.append("logo", logo);
-  }
-
-  fetch("/inventory/add-brand/", {
-    method: "POST",
-    headers: {
-      "X-CSRFToken": getCSRFToken()   // ❗ Content-Type mat dena
-    },
-    body: formData
-  })
-  .then(res => res.json())
-  .then(data => {
-
-    if (data.error) {
-      alert(data.error);
+    if (!name) {
+      alert("Please enter brand name");
       return;
     }
 
-    let dropdown = document.getElementById("brandDropdown");
+    let formData = new FormData();
+    formData.append("name", name);
+    if (logo) {
+      formData.append("logo", logo);
+    }
 
-    let option = document.createElement("option");
-    option.value = data.id;
-    option.text = data.name;
-    option.selected = true;
+    fetch("/inventory/add-brand/", {
+      method: "POST",
+      body: formData,
+      headers: {
+        "X-CSRFToken": getCSRFToken()
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          // Add new option in dropdown
+          let dropdown = document.getElementById("brandDropdown");
+          let option = document.createElement("option");
+          option.value = data.id;
+          option.text = data.name;
+          option.selected = true;
+          dropdown.appendChild(option);
 
-    dropdown.appendChild(option);
+          // Reset form
+          document.getElementById("newBrand").value = "";
+          document.getElementById("brandLogo").value = "";
 
-    // reset
-    document.getElementById("newBrand").value = "";
-    document.getElementById("brandLogo").value = "";
-  });
-}
+          // Hide input box
+          document.getElementById("brandInputBox").classList.add("hidden");
+        } else {
+          alert("Error adding brand");
+        }
+      })
+      .catch(err => console.error(err));
+  }
 
   function openModal() {
     const modal = document.getElementById("productModal");
@@ -346,5 +404,85 @@ Dashboard
       modal.classList.add("hidden");
     }, 300);
   }
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("productForm");
+    const errorBox = document.getElementById("formError");
+
+    // FORM SUBMIT
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      errorBox.classList.add("hidden");
+      errorBox.innerText = "";
+
+      addProduct();
+    });
+
+    // 🔴 SHOW MESSAGE (ERROR / SUCCESS)
+    function showMessage(msg, type = "error") {
+
+      errorBox.classList.remove("hidden");
+
+      // reset colors
+      errorBox.classList.remove("bg-red-100", "text-red-700", "bg-green-100", "text-green-700");
+
+      if (type === "success") {
+        errorBox.classList.add("bg-green-100", "text-green-700");
+      } else {
+        errorBox.classList.add("bg-red-100", "text-red-700");
+      }
+
+      errorBox.innerText = msg;
+
+      // 🔥 AUTO HIDE (3 sec)
+      setTimeout(() => {
+        errorBox.classList.add("hidden");
+      }, 3000);
+    }
+
+    // 🚀 ADD PRODUCT
+    function addProduct() {
+
+      const name = form.name.value.trim();
+      const sku = form.sku.value.trim();
+      const category = form.category.value;
+      const brand = form.brand.value;
+      const price = form.price.value;
+
+      // VALIDATION
+      if (!name) return showMessage("Product name is required");
+      if (!sku) return showMessage("SKU is required");
+      if (!category) return showMessage("Select category");
+      if (!brand) return showMessage("Select brand");
+      if (!price || price <= 0) return showMessage("Enter valid price");
+
+      let formData = new FormData(form);
+
+      fetch("/inventory/add-product/", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCSRFToken()
+        },
+        body: formData
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            form.reset();
+            showMessage("✅ Product added successfully!", "success");
+          } else {
+            showMessage(data.error || "Error");
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          showMessage("Server error");
+        });
+    }
+
+  });
 </script>
 {% endblock %}

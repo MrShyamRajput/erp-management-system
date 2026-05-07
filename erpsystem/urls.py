@@ -16,7 +16,8 @@ urlpatterns = [
     
     path("inventory/",include("inventory.urls")),
 
-    path('usermanagement/',userManagement,name="userManagement" ),
+    path('usermanagement/', include("user.urls")),
+    
     path('hrmanagement/',include('hr.urls') ),
 ]
 

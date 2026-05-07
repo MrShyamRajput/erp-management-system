@@ -5,178 +5,187 @@
 
 <div class="pt-24 pb-12 px-10 bg-surface min-h-screen">
 
-<!-- Bento Stats Grid -->
-<div class="grid grid-cols-12 gap-6 mb-8">
+    <div class="grid grid-cols-12 gap-6 mb-8">
 
-<!-- Attendance Summary -->
-<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl p-8 shadow-sm">
-<div class="flex justify-between items-center mb-6">
-<div>
-<h2 class="text-lg font-bold text-on-surface tracking-tight">Attendance Overview</h2>
-<p class="text-sm text-on-surface-variant">Real-time presence monitoring</p>
-</div>
-</div>
+        <!-- Attendance -->
+        <div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl p-8 shadow-sm">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-lg font-bold text-on-surface tracking-tight">Attendance Overview</h2>
+                    <p class="text-sm text-on-surface-variant">Real-time presence monitoring</p>
+                </div>
+            </div>
 
-<div class="grid grid-cols-3 gap-6">
+            <div class="grid grid-cols-3 gap-6">
 
-<!-- Present -->
-<div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-primary">
-<span class="text-xs font-semibold text-on-surface-variant block mb-1">PRESENT TODAY</span>
-<span class="text-3xl font-extrabold text-primary">{{ present_count }}</span>
-</div>
+                <div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-primary">
+                    <span class="text-xs font-semibold text-on-surface-variant block mb-1">PRESENT TODAY</span>
+                    <span class="text-3xl font-extrabold text-primary">{{ present_count }}</span>
+                </div>
 
-<!-- Leave -->
-<div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-error">
-<span class="text-xs font-semibold text-on-surface-variant block mb-1">ON LEAVE</span>
-<span class="text-3xl font-extrabold text-on-surface">{{ leave_count }}</span>
-</div>
+                <div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-error">
+                    <span class="text-xs font-semibold text-on-surface-variant block mb-1">ON LEAVE</span>
+                    <span class="text-3xl font-extrabold text-on-surface">{{ leave_count }}</span>
+                </div>
 
-<!-- Late -->
-<div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-amber-400">
-<span class="text-xs font-semibold text-on-surface-variant block mb-1">LATE ARRIVAL</span>
-<span class="text-3xl font-extrabold text-on-surface">{{ late_count }}</span>
-</div>
+                <div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-amber-400">
+                    <span class="text-xs font-semibold text-on-surface-variant block mb-1">LATE ARRIVAL</span>
+                    <span class="text-3xl font-extrabold text-on-surface">{{ late_count }}</span>
+                </div>
 
-</div>
-</div>
+            </div>
+        </div>
 
-<!-- Department Distribution -->
-<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-xl p-8 shadow-sm flex flex-col items-center">
-<h2 class="text-lg font-bold text-on-surface tracking-tight self-start mb-6">Department Distribution</h2>
+        <!-- Department -->
+        <div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-xl p-8 shadow-sm flex flex-col items-center">
+            <h2 class="text-lg font-bold text-on-surface tracking-tight self-start mb-6">Department Distribution</h2>
 
-<div class="text-center">
-<span class="block text-2xl font-bold">{{ employees|length }}</span>
-<span class="text-xs text-on-surface-variant uppercase tracking-wider">Total</span>
-</div>
+            <div class="text-center">
+                <span class="block text-2xl font-bold">{{ employees|length }}</span>
+                <span class="text-xs text-on-surface-variant uppercase tracking-wider">Total</span>
+            </div>
 
-<div class="mt-6 w-full flex flex-wrap justify-center gap-x-4 gap-y-2">
-{% for dept in departments %}
-<div class="flex items-center gap-1.5">
-<div class="w-3 h-3 rounded-full bg-primary"></div>
-<span class="text-xs text-on-surface-variant">
-{{ dept.name }} ({{ dept.total }})
-</span>
-</div>
-{% endfor %}
-</div>
-</div>
+            <div class="mt-6 w-full flex flex-wrap justify-center gap-x-4 gap-y-2">
+                {% for dept in departments %}
+                <div class="flex items-center gap-1.5">
+                    <div class="w-3 h-3 rounded-full bg-primary"></div>
+                    <span class="text-xs text-on-surface-variant">
+                        {{ dept.name }} ({{ dept.total }})
+                    </span>
+                </div>
+                {% empty %}
+                <span class="text-xs text-gray-400">No departments</span>
+                {% endfor %}
+            </div>
+        </div>
 
-</div>
+    </div>
 
-<div class="grid grid-cols-12 gap-6">
+    <div class="grid grid-cols-12 gap-6">
 
-<!-- Employee Table -->
-<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+        <!-- Employee Table -->
+        <div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
 
-<div class="p-8 pb-4 flex justify-between items-center">
-<h2 class="text-lg font-bold text-on-surface tracking-tight">Employee Directory</h2>
-</div>
+            <div class="p-8 pb-4 flex justify-between items-center">
+                <h2 class="text-lg font-bold text-on-surface tracking-tight">Employee Directory</h2>
+            </div>
 
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
 
-<thead>
-<tr class="bg-surface-container-low/50">
-<th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase">Employee</th>
-<th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase">Department</th>
-<th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase">Role</th>
-<th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase">Status</th>
-<th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase text-right">Actions</th>
-</tr>
-</thead>
+                    <thead>
+                        <tr class="bg-surface-container-low/50">
+                            <th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase">Employee</th>
+                            <th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase">Department</th>
+                            <th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase">Role</th>
+                            <th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase">Status</th>
+                            <th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase text-right">Actions</th>
+                        </tr>
+                    </thead>
 
-<tbody class="divide-y divide-surface-container-low">
+                    <tbody class="divide-y divide-surface-container-low">
 
-{% for emp in employees %}
-<tr class="hover:bg-surface-container-low/30 transition-colors">
+                        {% for emp in employees %}
+                        <tr class="hover:bg-surface-container-low/30 transition-colors">
 
-<td class="px-8 py-4">
-<div class="flex items-center gap-3">
-<img class="w-10 h-10 rounded-full object-cover"
-src="{% if emp.profile_image %}{{ emp.profile_image.url }}{% else %}https://via.placeholder.com/40{% endif %}">
-<div>
-<div class="font-semibold text-on-surface">
-{{ emp.user.first_name }} {{ emp.user.last_name }}
-</div>
-<div class="text-xs text-on-surface-variant">
-{{ emp.user.email }}
-</div>
-</div>
-</div>
-</td>
+                            <td class="px-8 py-4">
+                                <div class="flex items-center gap-3">
+                                    <img class="w-10 h-10 rounded-full object-cover"
+                                        src="{% if emp.user.profile_image %}{{ emp.user.profile_image.url }}{% else %}https://via.placeholder.com/40{% endif %}">
+                                    <div>
+                                        <div class="font-semibold text-on-surface">
+                                            {{ emp.user.first_name }} {{ emp.user.last_name }}
+                                        </div>
+                                        <div class="text-xs text-on-surface-variant">
+                                            {{ emp.user.email }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
 
-<td class="px-8 py-4 text-sm">{{ emp.department.name }}</td>
-<td class="px-8 py-4 text-sm">{{ emp.role }}</td>
+                            <td class="px-8 py-4 text-sm">
+                                {{ emp.department.name|default:"-" }}
+                            </td>
 
-<td class="px-8 py-4">
-{% if emp.status == "ACTIVE" %}
-<span class="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs rounded-full">Active</span>
-{% else %}
-<span class="px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded-full">Inactive</span>
-{% endif %}
-</td>
+                            <td class="px-8 py-4 text-sm">
+                                {{ emp.user.role }}
+                            </td>
 
-<td class="px-8 py-4 text-right">
-<span class="material-symbols-outlined">more_horiz</span>
-</td>
+                            <td class="px-8 py-4">
+                                {% if emp.status == "ACTIVE" %}
+                                <span class="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs rounded-full">Active</span>
+                                {% else %}
+                                <span class="px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded-full">Inactive</span>
+                                {% endif %}
+                            </td>
 
-</tr>
-{% endfor %}
+                            <td class="px-8 py-4 text-right">
+                                <span class="material-symbols-outlined">more_horiz</span>
+                            </td>
 
-</tbody>
-</table>
-</div>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-6 text-gray-400">No employees found</td>
+                        </tr>
+                        {% endfor %}
 
-<div class="p-6 border-t">
-Showing {{ employees|length }} employees
-</div>
+                    </tbody>
+                </table>
+            </div>
 
-</div>
+            <div class="p-6 border-t">
+                Showing {{ employees|length }} employees
+            </div>
 
-<!-- Leave Requests -->
-<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-xl p-8 shadow-sm">
+        </div>
 
-<h2 class="text-lg font-bold mb-6">Leave Requests</h2>
+        <!-- Leave Requests -->
+        <div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-xl p-8 shadow-sm">
 
-<div class="space-y-4">
+            <h2 class="text-lg font-bold mb-6">Leave Requests</h2>
 
-{% for req in leave_requests %}
-<div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-primary/40">
+            <div class="space-y-4">
 
-<div class="flex justify-between mb-2">
+                {% for req in leave_requests %}
+                <div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-primary/40">
 
-<div>
-<div class="text-sm font-semibold">
-{{ req.employee.user.first_name }} {{ req.employee.user.last_name }}
-</div>
-<div class="text-xs text-on-surface-variant">
-{{ req.leave_type }}
-</div>
-</div>
+                    <div class="flex justify-between mb-2">
 
-<span class="text-xs">
-{{ req.created_at|timesince }} ago
-</span>
+                        <div>
+                            <div class="text-sm font-semibold">
+                                {{ req.employee.user.first_name }} {{ req.employee.user.last_name }}
+                            </div>
+                            <div class="text-xs text-on-surface-variant">
+                                {{ req.leave_type }}
+                            </div>
+                        </div>
 
-</div>
+                        <span class="text-xs">
+                            {{ req.created_at|timesince }} ago
+                        </span>
 
-<p class="text-xs mb-3">
-"{{ req.reason }}"
-</p>
+                    </div>
 
-<div class="grid grid-cols-2 gap-2">
-<button class="bg-gray-200 text-xs py-1 rounded">Decline</button>
-<button class="bg-primary text-white text-xs py-1 rounded">Approve</button>
-</div>
+                    <p class="text-xs mb-3">
+                        "{{ req.reason }}"
+                    </p>
 
-</div>
-{% endfor %}
+                    <div class="grid grid-cols-2 gap-2">
+                        <button class="bg-gray-200 text-xs py-1 rounded">Decline</button>
+                        <button class="bg-primary text-white text-xs py-1 rounded">Approve</button>
+                    </div>
 
-</div>
+                </div>
+                {% empty %}
+                <p class="text-sm text-gray-400">No leave requests</p>
+                {% endfor %}
 
-</div>
+            </div>
 
-</div>
+        </div>
+
+    </div>
 </div>
 
 {% endblock %}

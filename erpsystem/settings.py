@@ -28,12 +28,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dashboard',
     'finance',
-    'hr',
+    
     'inventory',
     'procurement',
     'reports',
     'sales',
     'user',
+    'hr.apps.HrConfig'
 ]
 
 MIDDLEWARE = [
@@ -76,7 +77,9 @@ DATABASES = {
     }
 }
 
-
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 

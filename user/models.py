@@ -11,7 +11,7 @@ class User(AbstractUser):
 
     role=models.CharField(max_length=20,choices=ROLES_CHOICES)
     phone=models.CharField(max_length=15,blank=True)
-    profile_image=models.ImageField(upload_to="progiles")
+    profile_image=models.ImageField(upload_to="profiles")
 
     def __str__(self):
         return self.username

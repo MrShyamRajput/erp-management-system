@@ -141,19 +141,19 @@
 
 
                 <!-- Login Form -->
-                <form  action="/auth/login/" class="space-y-6" method="POST">
+                <form action="{% url 'loginpage' %}" class="space-y-6" method="POST">
                     <!-- Email Field -->{% csrf_token %}
                     <div class="space-y-2">
                         <label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant ml-1"
-                            for="email">Email Address</label>
+                            for="name">Username</label>
                         <div class="relative group">
                             <div
                                 class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-outline group-focus-within:text-primary transition-colors">
-                                <span class="material-symbols-outlined text-[20px]">mail</span>
+                                <span class="material-symbols-outlined text-[20px]"></span>
                             </div>
                             <input
                                 class="block w-full pl-11 pr-4 py-3.5 bg-surface-container-lowest border-none rounded-lg text-on-surface text-sm placeholder-outline-variant focus:ring-2 focus:ring-primary/20 focus:outline-none transition-all shadow-sm"
-                                id="email" name="email" placeholder="name@company.com" required="" type="email" />
+                                id="username" name="username" placeholder="mrshyam" required="" type="text" />
                         </div>
                     </div>
                     <!-- Password Field -->
@@ -170,10 +170,10 @@
                             <input
                                 class="block w-full pl-11 pr-11 py-3.5 bg-surface-container-lowest border-none rounded-lg text-on-surface text-sm placeholder-outline-variant focus:ring-2 focus:ring-primary/20 focus:outline-none transition-all shadow-sm"
                                 id="password" name="password" placeholder="••••••••" required="" type="password" />
-                            <button
-                                class="absolute inset-y-0 right-0 pr-4 flex items-center text-outline hover:text-on-surface transition-colors"
-                                type="button">
-                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                            <button type="button" onclick="togglePassword()"
+                                class="absolute inset-y-0 right-0 pr-4 flex items-center text-outline hover:text-on-surface transition-colors">
+
+                                <span id="eyeIcon" class="material-symbols-outlined text-[20px]">visibility</span>
                             </button>
                         </div>
                     </div>
@@ -244,5 +244,18 @@
         </div>
     </footer>
 </body>
+<script>
+function togglePassword() {
+    const pass = document.getElementById("password");
+    const icon = document.getElementById("eyeIcon");
 
+    if (pass.type === "password") {
+        pass.type = "text";
+        icon.innerText = "visibility_off";
+    } else {
+        pass.type = "password";
+        icon.innerText = "visibility";
+    }
+}
+</script>
 </html>

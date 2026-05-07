@@ -8,13 +8,16 @@ from django.contrib import messages
 # Create your views here.
 def login_page(request):
     if request.method == "POST":
-        email = request.POST.get("email")
+        username = request.POST.get("username")
         password = request.POST.get("password")
-        print(email, password)
+        print(username, password)
 
-        user = authenticate(request, username="shyam", password=password)
-        print(user)
+        user = authenticate(request, username=username, password=password)
+        print("user",user)
+        print("AUTH RESULT:", user)
+        User = get_user_model()
 
+        print("USER EXISTS:", User.objects.filter(username=username).exists())
         if user is not None:
             login(request, user)
             return redirect("/dashboard")
@@ -29,34 +32,48 @@ User = get_user_model()
 
 
 @login_required
-def register(request):
+def create_user(request):
+    users = User.objects.all()
+    show_modal = False  # 🔥 default
+
+    # 🔐 Permission check
+    if request.user.role not in ["admin", "hr"] and not request.user.is_superuser:
+        messages.error(request, "❌ No permission to create user")
+        return render("usermanagement.html")
+
     if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        role = request.POST.get("role")
-        password = request.get("password")
-        confirn_password = request.get("confirm_password")
+        show_modal = True  # 🔥 keep modal open on error
+
+        username = request.POST.get("username")
+
+        # ✅ Duplicate check
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "❌ Username already exists")
+        else:
+            user = User.objects.create_user(
+                username=username,
+                email=request.POST.get("email"),
+                first_name=request.POST.get("first_name"),
+                last_name=request.POST.get("last_name"),
+                password=request.POST.get("password"),
+                role=request.POST.get("role"),
+                phone=request.POST.get("phone"),
+            )
+            print("name",username)
+            user.is_active = request.POST.get("is_active") == "on"
+
+            if request.FILES.get("profile_image"):
+                user.profile_image = request.FILES["profile_image"]
+
+            user.save()
+
+            messages.success(request, "✅ User created successfully")
         
-        if password != confirn_password:
-            messages.error(request, "Password do not match")
-            return redirect("register")
-            
-        if User.objects.filter(email=email).exist():
-            messages.error(request, "User already exists")
-            return redirect(register)
+            return redirect("userManagement",)  # 🔥 success → reload & close modal
 
-        user = User.objects.create(username=email,
-        email=email,
-        password=password
-        )
+    context = {
+        "users": users,
+        "show_modal": show_modal
+    }
 
-        user.first_name = name
-        user.role = role
-        user.save()
-        messages.success("User Created successfully")
-
-        return redirect("dashboard")
-    return render(request, "auth/register.html")            
-
-
-
+    return render(request, "usermanagement.html", context)

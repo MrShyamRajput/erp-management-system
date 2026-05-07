@@ -11,8 +11,13 @@ class Department(models.Model):
 
 class Employee(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    department = models.ForeignKey('Department', on_delete=models.SET_NULL, null=True)
-    role = models.CharField(max_length=100)
+
+    department = models.ForeignKey(
+        'Department',
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="employee"   # 👈 ADD THIS (matches your query)
+    )
 
     STATUS_CHOICES = (
         ("ACTIVE", "Active"),
@@ -22,7 +27,6 @@ class Employee(models.Model):
 
     def __str__(self):
         return str(self.user)
-
 
 class Attendance(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
@@ -35,6 +39,8 @@ class Attendance(models.Model):
     )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
 
+    class Meta:
+        unique_together = ('employee', 'date')
     def __str__(self):
         return f"{self.employee} - {self.date}"
 
