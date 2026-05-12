@@ -1,0 +1,368 @@
+<!-- templates/finance/dashboard.html -->
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="min-h-screen bg-gray-100">
+
+    <!-- MOBILE TOPBAR -->
+    <div class="lg:hidden fixed top-0 left-0 right-0 bg-white shadow z-50 px-4 py-4 flex justify-between items-center">
+
+        <h2 class="font-bold text-lg">
+            Architect ERP
+        </h2>
+
+        <button id="menuBtn">
+
+            <span class="material-symbols-outlined">
+                menu
+            </span>
+
+        </button>
+
+    </div>
+
+
+    <!-- MAIN -->
+    <main class=" p-4 lg:p-10 pt-24 lg:pt-10">
+
+        <!-- HEADER -->
+        <div class="flex flex-col lg:flex-row justify-between gap-4 mb-8">
+
+            <div>
+
+                <h1 class="text-3xl font-bold">
+                    Finance Dashboard
+                </h1>
+
+                <p class="text-gray-500">
+                    Finance & Accounting Management
+                </p>
+
+            </div>
+
+            <a href="{% url 'create_invoice' %}"
+                class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition text-center">
+
+                Generate Invoice
+
+            </a>
+
+        </div>
+
+        <!-- MESSAGES -->
+        {% if messages %}
+
+        {% for message in messages %}
+
+        <div class="mb-4 p-4 rounded-xl bg-green-100 text-green-700">
+
+            {{ message }}
+
+        </div>
+
+        {% endfor %}
+
+        {% endif %}
+
+        <!-- STATS -->
+        <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+
+            <div class="bg-white p-6 rounded-2xl shadow">
+
+                <p class="text-gray-500 mb-2">
+                    Total Revenue
+                </p>
+
+                <h2 class="text-3xl font-bold text-blue-600">
+                    ₹{{ total_revenue }}
+                </h2>
+
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow">
+
+                <p class="text-gray-500 mb-2">
+                    Total Expenses
+                </p>
+
+                <h2 class="text-3xl font-bold text-red-500">
+                    ₹{{ total_expenses }}
+                </h2>
+
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow">
+
+                <p class="text-gray-500 mb-2">
+                    Net Profit
+                </p>
+
+                <h2 class="text-3xl font-bold text-green-600">
+                    ₹{{ net_profit }}
+                </h2>
+
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow">
+
+                <p class="text-gray-500 mb-2">
+                    Pending Invoices
+                </p>
+
+                <h2 class="text-3xl font-bold">
+                    {{ pending_invoices }}
+                </h2>
+
+            </div>
+
+        </section>
+
+        <!-- CREATE INVOICE FORM -->
+        <section class="bg-white rounded-2xl shadow p-8 mb-8">
+
+            <div class="flex justify-between items-center mb-6">
+
+                <h2 class="text-2xl font-bold">
+                    Create Invoice
+                </h2>
+
+            </div>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div>
+
+                        <label class="block mb-2 font-medium">
+                            Client Name
+                        </label>
+
+                        {{ form.client_name }}
+
+                    </div>
+
+                    <div>
+
+                        <label class="block mb-2 font-medium">
+                            Invoice Number
+                        </label>
+
+                        {{ form.invoice_number }}
+
+                    </div>
+
+                    <div>
+
+                        <label class="block mb-2 font-medium">
+                            Amount
+                        </label>
+
+                        {{ form.amount }}
+
+                    </div>
+
+                    <div>
+
+                        <label class="block mb-2 font-medium">
+                            Due Date
+                        </label>
+
+                        {{ form.due_date }}
+
+                    </div>
+
+                    <div>
+
+                        <label class="block mb-2 font-medium">
+                            Status
+                        </label>
+
+                        {{ form.status }}
+
+                    </div>
+
+                </div>
+
+                <button type="submit"
+                    class="mt-6 bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
+
+                    Create Invoice
+
+                </button>
+
+            </form>
+
+        </section>
+
+        <!-- INVOICE TABLE -->
+        <section class="bg-white rounded-2xl shadow overflow-hidden">
+
+            <div class="p-6 border-b">
+
+                <h2 class="text-2xl font-bold">
+                    Recent Invoices
+                </h2>
+
+            </div>
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full min-w-[800px]">
+
+                    <thead class="bg-gray-100">
+
+                        <tr>
+
+                            <th class="px-6 py-4 text-left">
+                                Invoice No
+                            </th>
+
+                            <th class="px-6 py-4 text-left">
+                                Client
+                            </th>
+
+                            <th class="px-6 py-4 text-left">
+                                Amount
+                            </th>
+
+                            <th class="px-6 py-4 text-left">
+                                Due Date
+                            </th>
+
+                            <th class="px-6 py-4 text-left">
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for invoice in invoices %}
+
+                        <tr class="border-b hover:bg-gray-50">
+
+                            <td class="px-6 py-4 font-semibold text-blue-600">
+
+                                {{ invoice.invoice_number }}
+
+                            </td>
+
+                            <td class="px-6 py-4">
+
+                                {{ invoice.client_name }}
+
+                            </td>
+
+                            <td class="px-6 py-4 font-bold">
+
+                                ₹{{ invoice.amount }}
+
+                            </td>
+
+                            <td class="px-6 py-4">
+
+                                {{ invoice.due_date }}
+
+                            </td>
+
+                            <td class="px-6 py-4">
+
+                                {% if invoice.status == 'paid' %}
+
+                                <span
+                                    class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">
+
+                                    Paid
+
+                                </span>
+
+                                {% elif invoice.status == 'pending' %}
+
+                                <span
+                                    class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-bold">
+
+                                    Pending
+
+                                </span>
+
+                                {% else %}
+
+                                <span
+                                    class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold">
+
+                                    Overdue
+
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="5" class="text-center py-10 text-gray-500">
+
+                                No invoices found
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- SCRIPTS -->
+<script>
+
+    const menuBtn = document.getElementById('menuBtn')
+
+    const closeBtn = document.getElementById('closeBtn')
+
+    const sidebar = document.getElementById('sidebar')
+
+    if (menuBtn) {
+
+        menuBtn.addEventListener('click', () => {
+
+            sidebar.classList.remove('-translate-x-full')
+
+        })
+
+    }
+
+    if (closeBtn) {
+
+        closeBtn.addEventListener('click', () => {
+
+            sidebar.classList.add('-translate-x-full')
+
+        })
+
+    }
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,444 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Reports &amp; Business Analytics | Architect ERP</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f7f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#566166",
+                        "on-tertiary-fixed": "#3a344e",
+                        "on-primary-container": "#0047c0",
+                        "inverse-on-surface": "#9a9d9f",
+                        "on-primary-fixed": "#003798",
+                        "secondary-container": "#e4e2e6",
+                        "primary": "#0052dc",
+                        "error": "#9f403d",
+                        "surface-container-low": "#f0f4f7",
+                        "inverse-primary": "#618bff",
+                        "background": "#f7f9fb",
+                        "surface-dim": "#cfdce3",
+                        "on-secondary-fixed-variant": "#5b5b5f",
+                        "on-tertiary-container": "#4d4762",
+                        "tertiary-container": "#dcd2f4",
+                        "secondary-fixed-dim": "#d6d3d8",
+                        "surface-bright": "#f7f9fb",
+                        "on-error-container": "#752121",
+                        "on-tertiary-fixed-variant": "#57506c",
+                        "on-secondary-container": "#515155",
+                        "primary-fixed": "#dbe1ff",
+                        "error-container": "#fe8983",
+                        "tertiary": "#625b77",
+                        "on-surface": "#2a3439",
+                        "tertiary-fixed": "#dcd2f4",
+                        "on-background": "#2a3439",
+                        "surface-container-highest": "#d9e4ea",
+                        "primary-dim": "#0048c2",
+                        "surface-container": "#e8eff3",
+                        "tertiary-fixed-dim": "#cec5e5",
+                        "primary-container": "#dbe1ff",
+                        "error-dim": "#4e0309",
+                        "primary-fixed-dim": "#c8d3ff",
+                        "on-secondary-fixed": "#3f3f43",
+                        "tertiary-dim": "#564f6b",
+                        "surface-tint": "#0052dc",
+                        "on-primary-fixed-variant": "#0050d5",
+                        "secondary": "#5f5f62",
+                        "secondary-dim": "#535356",
+                        "inverse-surface": "#0b0f10",
+                        "on-error": "#fff7f6",
+                        "on-secondary": "#faf8fc",
+                        "surface-container-high": "#e1e9ee",
+                        "secondary-fixed": "#e4e2e6",
+                        "outline-variant": "#a9b4b9",
+                        "outline": "#717c82",
+                        "surface-variant": "#d9e4ea",
+                        "on-primary": "#f8f7ff",
+                        "on-tertiary": "#fdf7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: -0.02em;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface">
+   
+    <!-- Main Content Wrapper -->
+    <main class=" min-h-screen">
+        <!-- TopAppBar (Shared Component) -->
+        <header
+            class="fixed top-0 right-0 left-72 h-20 z-40 bg-[#f7f9fb]/80 backdrop-blur-lg dark:bg-slate-950/80 flex items-center justify-between px-10">
+            <div class="flex items-center gap-4">
+                <div
+                    class="hover:bg-black/5 dark:hover:bg-white/5 rounded-full p-2 transition-colors cursor-pointer active:opacity-70">
+                    <span class="material-symbols-outlined text-[#0061FF]">search</span>
+                </div>
+                <h1 class="font-['Inter'] font-semibold text-[#2a3439] dark:text-slate-100 text-xl tracking-tight">
+                    Reports &amp; Business Analytics</h1>
+            </div>
+            <div class="flex items-center gap-6">
+                <div
+                    class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full cursor-pointer hover:bg-surface-container transition-colors">
+                    <span class="material-symbols-outlined text-on-surface-variant text-sm">calendar_today</span>
+                    <span class="text-sm font-medium text-on-surface-variant">Last 30 Days</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div
+                        class="h-10 w-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold shadow-sm">
+                        JD
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Page Content: Analytics Canvas -->
+        <div class="pt-24 px-10 pb-12">
+            <!-- Filter & Action Bar -->
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex gap-4">
+                    <div
+                        class="flex items-center gap-2 bg-secondary-container text-on-secondary-container px-4 py-2 rounded-xl text-sm font-medium cursor-pointer">
+                        <span class="material-symbols-outlined text-base">filter_list</span>
+                        <span>Data Source: All Entities</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-2 bg-surface-container-lowest text-on-surface px-4 py-2 rounded-xl text-sm font-medium shadow-sm cursor-pointer border border-transparent hover:border-outline-variant/30 transition-all">
+                        <span>Comparison: Previous Period</span>
+                        <span class="material-symbols-outlined text-base">expand_more</span>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button
+                        class="flex items-center gap-2 bg-surface-container-lowest text-on-surface px-4 py-2 rounded-xl text-sm font-semibold shadow-sm hover:shadow-md transition-all active:scale-[0.98]">
+                        <span class="material-symbols-outlined text-base">csv</span>
+                        <span>CSV</span>
+                    </button>
+                    <button
+                        class="flex items-center gap-2 bg-primary text-on-primary px-5 py-2 rounded-xl text-sm font-semibold shadow-lg shadow-primary/20 hover:primary-dim transition-all active:scale-[0.98]">
+                        <span class="material-symbols-outlined text-base">picture_as_pdf</span>
+                        <span>Export PDF</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Business Performance Index Summary (Asymmetric Grid) -->
+            <div class="grid grid-cols-12 gap-6 mb-8">
+                <!-- Hero Metric Card -->
+                <div
+                    class="col-span-12 lg:col-span-4 bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/10 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <span class="text-on-surface-variant text-sm font-medium uppercase tracking-wider">Business
+                            Performance Index</span>
+                        <div class="mt-4 flex items-end gap-3">
+                            <h2 class="text-5xl font-extrabold tracking-tight text-primary">84.2</h2>
+                            <div
+                                class="mb-2 flex items-center text-error bg-error-container/20 px-2 py-0.5 rounded-full text-xs font-bold">
+                                <span class="material-symbols-outlined text-xs">trending_down</span>
+                                2.1%
+                            </div>
+                        </div>
+                        <p class="mt-4 text-on-surface-variant leading-relaxed text-sm">
+                            Aggregate health score based on liquidity, sales velocity, and operational efficiency.
+                        </p>
+                    </div>
+                    <!-- Background aesthetic element -->
+                    <div class="absolute -right-8 -bottom-8 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
+                </div>
+                <!-- Bento Metrics Grid -->
+                <div class="col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5">
+                        <span class="material-symbols-outlined text-primary mb-4"
+                            style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+                        <h4 class="text-on-surface-variant text-xs font-semibold uppercase">Total Revenue</h4>
+                        <div class="mt-2 text-2xl font-bold text-on-surface">$1,420,900</div>
+                        <div class="mt-2 flex items-center text-primary text-xs font-bold">
+                            <span class="material-symbols-outlined text-xs">trending_up</span>
+                            +12.4% vs last mo.
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5">
+                        <span class="material-symbols-outlined text-tertiary mb-4"
+                            style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
+                        <h4 class="text-on-surface-variant text-xs font-semibold uppercase">Gross Margin</h4>
+                        <div class="mt-2 text-2xl font-bold text-on-surface">32.8%</div>
+                        <div class="mt-2 flex items-center text-on-surface-variant text-xs font-medium">
+                            <span class="material-symbols-outlined text-xs">horizontal_rule</span>
+                            Stable
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5">
+                        <span class="material-symbols-outlined text-error mb-4"
+                            style="font-variation-settings: 'FILL' 1;">speed</span>
+                        <h4 class="text-on-surface-variant text-xs font-semibold uppercase">Op. Expenses</h4>
+                        <div class="mt-2 text-2xl font-bold text-on-surface">$284,500</div>
+                        <div class="mt-2 flex items-center text-error text-xs font-bold">
+                            <span class="material-symbols-outlined text-xs">trending_up</span>
+                            +4.1% increase
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Visualization Grid -->
+            <div class="grid grid-cols-12 gap-6 mb-8">
+                <!-- Line Chart: Trend Analysis (7 columns) -->
+                <div class="col-span-12 lg:col-span-7 bg-surface-container-lowest p-8 rounded-xl shadow-sm">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-lg font-bold text-on-surface">Revenue Growth &amp; Projections</h3>
+                            <p class="text-xs text-on-surface-variant">Daily snapshot of revenue against forecast.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <div
+                                class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">
+                                <span class="w-2 h-2 rounded-full bg-primary"></span> Actual
+                            </div>
+                            <div
+                                class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-outline-variant/20 text-on-surface-variant text-xs font-semibold">
+                                <span class="w-2 h-2 rounded-full bg-outline-variant"></span> Forecast
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Chart Placeholder UI -->
+                    <div class="h-64 flex items-end gap-3 px-2">
+                        <div class="flex-1 bg-primary/5 h-32 rounded-t-sm relative group">
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-24 rounded-t-sm"></div>
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-16 rounded-t-sm"></div>
+                        </div>
+                        <div class="flex-1 bg-primary/5 h-40 rounded-t-sm relative">
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-32 rounded-t-sm"></div>
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-20 rounded-t-sm"></div>
+                        </div>
+                        <div class="flex-1 bg-primary/5 h-36 rounded-t-sm relative">
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-28 rounded-t-sm"></div>
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-24 rounded-t-sm"></div>
+                        </div>
+                        <div class="flex-1 bg-primary/5 h-48 rounded-t-sm relative">
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-40 rounded-t-sm"></div>
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-32 rounded-t-sm"></div>
+                        </div>
+                        <div class="flex-1 bg-primary/5 h-56 rounded-t-sm relative">
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-48 rounded-t-sm"></div>
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-40 rounded-t-sm"></div>
+                        </div>
+                        <div class="flex-1 bg-primary/5 h-44 rounded-t-sm relative">
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-36 rounded-t-sm"></div>
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-28 rounded-t-sm"></div>
+                        </div>
+                        <div class="flex-1 bg-primary/5 h-64 rounded-t-sm relative">
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-56 rounded-t-sm"></div>
+                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-48 rounded-t-sm"></div>
+                        </div>
+                    </div>
+                    <div
+                        class="flex justify-between mt-4 text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">
+                        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                    </div>
+                </div>
+                <!-- Pie Chart: Distribution (5 columns) -->
+                <div
+                    class="col-span-12 lg:col-span-5 bg-surface-container-lowest p-8 rounded-xl shadow-sm flex flex-col">
+                    <h3 class="text-lg font-bold text-on-surface mb-6">Revenue by Division</h3>
+                    <div class="flex-1 flex items-center justify-center relative">
+                        <!-- Custom CSS SVG Pie Chart simulation -->
+                        <div
+                            class="w-48 h-48 rounded-full border-[16px] border-primary flex items-center justify-center relative">
+                            <div
+                                class="absolute inset-0 rounded-full border-[16px] border-tertiary border-t-transparent border-l-transparent -rotate-45">
+                            </div>
+                            <div
+                                class="absolute inset-0 rounded-full border-[16px] border-secondary-container border-t-transparent border-r-transparent rotate-90">
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-extrabold text-on-surface">$1.4M</div>
+                                <div class="text-[10px] font-bold text-on-surface-variant uppercase">Total</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-full bg-primary"></div>
+                                <span class="text-sm font-medium">Enterprise Software</span>
+                            </div>
+                            <span class="text-sm font-bold">58%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-full bg-tertiary"></div>
+                                <span class="text-sm font-medium">Consulting Services</span>
+                            </div>
+                            <span class="text-sm font-bold">24%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-full bg-secondary-container"></div>
+                                <span class="text-sm font-medium">Hardware Leasing</span>
+                            </div>
+                            <span class="text-sm font-bold">18%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Lower Section: Trend Analysis & Multi-Bar Chart -->
+            <div class="grid grid-cols-12 gap-6">
+                <!-- Bar Chart (8 columns) -->
+                <div class="col-span-12 lg:col-span-8 bg-surface-container-lowest p-8 rounded-xl shadow-sm">
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="text-lg font-bold text-on-surface">Regional Sales Performance</h3>
+                        <div class="flex items-center gap-4">
+                            <select
+                                class="bg-surface-container-low border-none text-xs font-semibold rounded-lg focus:ring-primary/20">
+                                <option>Quarter 3</option>
+                                <option>Quarter 2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <!-- Bar Row -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs font-bold">
+                                <span>North America</span>
+                                <span class="text-on-surface-variant">$480k</span>
+                            </div>
+                            <div class="h-3 w-full bg-surface-container-low rounded-full overflow-hidden">
+                                <div class="h-full bg-primary rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <!-- Bar Row -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs font-bold">
+                                <span>European Union</span>
+                                <span class="text-on-surface-variant">$312k</span>
+                            </div>
+                            <div class="h-3 w-full bg-surface-container-low rounded-full overflow-hidden">
+                                <div class="h-full bg-tertiary rounded-full" style="width: 62%"></div>
+                            </div>
+                        </div>
+                        <!-- Bar Row -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs font-bold">
+                                <span>Asia-Pacific</span>
+                                <span class="text-on-surface-variant">$204k</span>
+                            </div>
+                            <div class="h-3 w-full bg-surface-container-low rounded-full overflow-hidden">
+                                <div class="h-full bg-on-tertiary-fixed-variant rounded-full" style="width: 44%"></div>
+                            </div>
+                        </div>
+                        <!-- Bar Row -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs font-bold">
+                                <span>Latin America</span>
+                                <span class="text-on-surface-variant">$118k</span>
+                            </div>
+                            <div class="h-3 w-full bg-surface-container-low rounded-full overflow-hidden">
+                                <div class="h-full bg-primary-dim rounded-full" style="width: 28%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Insights Section (4 columns) -->
+                <div class="col-span-12 lg:col-span-4 space-y-6">
+                    <div class="bg-primary p-6 rounded-xl text-on-primary shadow-lg shadow-primary/20">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="material-symbols-outlined">auto_awesome</span>
+                            <h4 class="text-sm font-bold uppercase tracking-wider">AI Insights</h4>
+                        </div>
+                        <p class="text-sm leading-relaxed opacity-90">
+                            Growth in the <span class="font-bold underline">North America</span> region is outpacing
+                            projections by 14%. Recommendation: Increase marketing spend for SaaS tier by 5%.
+                        </p>
+                        <button
+                            class="mt-6 w-full py-2 bg-on-primary text-primary rounded-lg text-xs font-extrabold uppercase hover:bg-opacity-90 transition-all">
+                            Review Analysis
+                        </button>
+                    </div>
+                    <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/10">
+                        <h4 class="text-sm font-bold text-on-surface mb-4">Upcoming Benchmarks</h4>
+                        <div class="space-y-4">
+                            <div class="flex gap-4">
+                                <div class="w-1 bg-primary rounded-full"></div>
+                                <div>
+                                    <p class="text-xs font-bold">End of Quarter Review</p>
+                                    <p class="text-[10px] text-on-surface-variant">In 12 days • High Priority</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-1 bg-tertiary rounded-full"></div>
+                                <div>
+                                    <p class="text-xs font-bold">Annual Compliance Audit</p>
+                                    <p class="text-[10px] text-on-surface-variant">Oct 24, 2023 • Automated</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Floating Action Button: New Report -->
+    <button
+        class="fixed bottom-10 right-10 w-16 h-16 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+        <span class="material-symbols-outlined text-3xl">add</span>
+    </button>
+</body>
+
+</html>
+
+{% endblock %}

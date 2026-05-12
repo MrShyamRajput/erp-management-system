@@ -19,6 +19,11 @@ urlpatterns = [
     path('usermanagement/', include("user.urls")),
     
     path('hrmanagement/',include('hr.urls') ),
+    path('sales/',include('sales.urls') ),
+    path('procurement/',include('procurement.urls') ),
+     path('finance/',include('finance.urls')),
+     path('reports/',include('reports.urls')),
+
 ]
 
 if settings.DEBUG:
