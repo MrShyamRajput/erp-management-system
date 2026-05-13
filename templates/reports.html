@@ -2,443 +2,1260 @@
 {% load static %}
 
 {% block content %}
-
 <!DOCTYPE html>
-
-<html class="light" lang="en">
-
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Reports &amp; Business Analytics | Architect ERP</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
+    <title>Reports & Analytics | Architect ERP</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
-                    "colors": {
+                    colors: {
                         "surface": "#f7f9fb",
                         "surface-container-lowest": "#ffffff",
                         "on-surface-variant": "#566166",
-                        "on-tertiary-fixed": "#3a344e",
                         "on-primary-container": "#0047c0",
-                        "inverse-on-surface": "#9a9d9f",
-                        "on-primary-fixed": "#003798",
                         "secondary-container": "#e4e2e6",
                         "primary": "#0052dc",
                         "error": "#9f403d",
                         "surface-container-low": "#f0f4f7",
                         "inverse-primary": "#618bff",
-                        "background": "#f7f9fb",
                         "surface-dim": "#cfdce3",
-                        "on-secondary-fixed-variant": "#5b5b5f",
-                        "on-tertiary-container": "#4d4762",
-                        "tertiary-container": "#dcd2f4",
-                        "secondary-fixed-dim": "#d6d3d8",
-                        "surface-bright": "#f7f9fb",
-                        "on-error-container": "#752121",
-                        "on-tertiary-fixed-variant": "#57506c",
-                        "on-secondary-container": "#515155",
-                        "primary-fixed": "#dbe1ff",
                         "error-container": "#fe8983",
                         "tertiary": "#625b77",
                         "on-surface": "#2a3439",
-                        "tertiary-fixed": "#dcd2f4",
-                        "on-background": "#2a3439",
-                        "surface-container-highest": "#d9e4ea",
-                        "primary-dim": "#0048c2",
-                        "surface-container": "#e8eff3",
-                        "tertiary-fixed-dim": "#cec5e5",
                         "primary-container": "#dbe1ff",
-                        "error-dim": "#4e0309",
+                        "surface-container": "#e8eff3",
                         "primary-fixed-dim": "#c8d3ff",
-                        "on-secondary-fixed": "#3f3f43",
-                        "tertiary-dim": "#564f6b",
-                        "surface-tint": "#0052dc",
-                        "on-primary-fixed-variant": "#0050d5",
+                        "on-secondary-container": "#515155",
                         "secondary": "#5f5f62",
-                        "secondary-dim": "#535356",
-                        "inverse-surface": "#0b0f10",
-                        "on-error": "#fff7f6",
-                        "on-secondary": "#faf8fc",
                         "surface-container-high": "#e1e9ee",
                         "secondary-fixed": "#e4e2e6",
                         "outline-variant": "#a9b4b9",
                         "outline": "#717c82",
                         "surface-variant": "#d9e4ea",
                         "on-primary": "#f8f7ff",
-                        "on-tertiary": "#fdf7ff"
+                        "tertiary-container": "#dcd2f4",
                     },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
+                    fontFamily: {
+                        sans: ["DM Sans", "sans-serif"],
+                        mono: ["DM Mono", "monospace"],
                     },
-                    "fontFamily": {
-                        "headline": ["Inter"],
-                        "body": ["Inter"],
-                        "label": ["Inter"]
-                    }
-                },
-            },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        "2xl": "1rem",
+                        full: "9999px",
+                    },
+                }
+            }
         }
     </script>
+
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            letter-spacing: -0.02em;
+        * { font-family: 'DM Sans', sans-serif; }
+        body { -webkit-font-smoothing: antialiased; background: #f7f9fb; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #a9b4b9; border-radius: 999px; }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.85); }
+        }
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
 
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        .card-anim { animation: fadeUp 0.45s ease both; }
+        .card-anim:nth-child(1) { animation-delay: 0.05s; }
+        .card-anim:nth-child(2) { animation-delay: 0.10s; }
+        .card-anim:nth-child(3) { animation-delay: 0.15s; }
+        .card-anim:nth-child(4) { animation-delay: 0.20s; }
+        .card-anim:nth-child(5) { animation-delay: 0.25s; }
+        .card-anim:nth-child(6) { animation-delay: 0.30s; }
+
+        .stat-value { animation: countUp 0.5s ease both; }
+
+        .skeleton {
+            background: linear-gradient(90deg, #e8eff3 25%, #f0f4f7 50%, #e8eff3 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
         }
 
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
+        /* Tab active */
+        .tab-btn.active {
+            background: #0052dc;
+            color: #f8f7ff;
+            box-shadow: 0 4px 14px rgba(0,82,220,0.25);
+        }
+        .tab-btn { transition: all 0.2s ease; }
+
+        /* KPI card hover */
+        .kpi-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .kpi-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.08); }
+
+        /* Chart container */
+        .chart-wrap { position: relative; }
+
+        /* Status badges */
+        .badge-paid, .badge-delivered, .badge-approved { background: #dcfce7; color: #166534; }
+        .badge-pending { background: #fef9c3; color: #854d0e; }
+        .badge-overdue, .badge-rejected { background: #fee2e2; color: #991b1b; }
+        .badge-shipped, .badge-in_transit { background: #dbeafe; color: #1e40af; }
+        .badge-draft { background: #f3f4f6; color: #374151; }
+
+        /* Tooltip */
+        .tooltip-card {
+            position: absolute;
+            background: #1e2d35;
+            color: #f7f9fb;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 100;
+            white-space: nowrap;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
         }
 
-        .glass-panel {
-            backdrop-filter: blur(12px);
-            background-color: rgba(255, 255, 255, 0.8);
+        /* Date range pill active */
+        .range-pill.active { background: #0052dc; color: #f8f7ff; }
+        .range-pill { cursor: pointer; transition: all 0.15s; }
+
+        /* Progress bar animated */
+        .prog-bar-fill {
+            height: 100%;
+            border-radius: 999px;
+            transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-    </style>
-    <style>
-        body {
-            min-height: max(884px, 100dvh);
+
+        /* Scrollable table */
+        .data-table-wrap { max-height: 320px; overflow-y: auto; }
+
+        /* Live dot */
+        .live-dot { animation: pulse-dot 1.5s ease-in-out infinite; }
+
+        /* Export menu */
+        #export-menu { transition: all 0.15s ease; transform-origin: top right; }
+        #export-menu.hidden { transform: scale(0.95); opacity: 0; pointer-events: none; }
+
+        /* Mobile sidebar collapse handled by base.html, but ensure main shift */
+        @media (max-width: 1024px) {
+            .main-header { left: 0 !important; }
+            .page-content { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
         }
+
+        .trend-up { color: #16a34a; }
+        .trend-down { color: #dc2626; }
+        .trend-flat { color: #566166; }
+
+        /* Segment pills for report type tabs */
+        .seg-pill { cursor: pointer; border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem; font-weight: 600; transition: all 0.2s; }
+        .seg-pill.active { background: #0052dc; color: white; }
+        .seg-pill:not(.active) { background: #e8eff3; color: #566166; }
+        .seg-pill:not(.active):hover { background: #d9e4ea; }
     </style>
 </head>
+<body class="bg-surface text-on-surface min-h-screen">
 
-<body class="bg-surface text-on-surface">
-   
-    <!-- Main Content Wrapper -->
-    <main class=" min-h-screen">
-        <!-- TopAppBar (Shared Component) -->
-        <header
-            class="fixed top-0 right-0 left-72 h-20 z-40 bg-[#f7f9fb]/80 backdrop-blur-lg dark:bg-slate-950/80 flex items-center justify-between px-10">
-            <div class="flex items-center gap-4">
-                <div
-                    class="hover:bg-black/5 dark:hover:bg-white/5 rounded-full p-2 transition-colors cursor-pointer active:opacity-70">
-                    <span class="material-symbols-outlined text-[#0061FF]">search</span>
-                </div>
-                <h1 class="font-['Inter'] font-semibold text-[#2a3439] dark:text-slate-100 text-xl tracking-tight">
-                    Reports &amp; Business Analytics</h1>
-            </div>
-            <div class="flex items-center gap-6">
-                <div
-                    class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full cursor-pointer hover:bg-surface-container transition-colors">
-                    <span class="material-symbols-outlined text-on-surface-variant text-sm">calendar_today</span>
-                    <span class="text-sm font-medium text-on-surface-variant">Last 30 Days</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div
-                        class="h-10 w-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold shadow-sm">
-                        JD
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- Page Content: Analytics Canvas -->
-        <div class="pt-24 px-10 pb-12">
-            <!-- Filter & Action Bar -->
-            <div class="flex items-center justify-between mb-8">
-                <div class="flex gap-4">
-                    <div
-                        class="flex items-center gap-2 bg-secondary-container text-on-secondary-container px-4 py-2 rounded-xl text-sm font-medium cursor-pointer">
-                        <span class="material-symbols-outlined text-base">filter_list</span>
-                        <span>Data Source: All Entities</span>
-                    </div>
-                    <div
-                        class="flex items-center gap-2 bg-surface-container-lowest text-on-surface px-4 py-2 rounded-xl text-sm font-medium shadow-sm cursor-pointer border border-transparent hover:border-outline-variant/30 transition-all">
-                        <span>Comparison: Previous Period</span>
-                        <span class="material-symbols-outlined text-base">expand_more</span>
-                    </div>
-                </div>
-                <div class="flex gap-3">
-                    <button
-                        class="flex items-center gap-2 bg-surface-container-lowest text-on-surface px-4 py-2 rounded-xl text-sm font-semibold shadow-sm hover:shadow-md transition-all active:scale-[0.98]">
-                        <span class="material-symbols-outlined text-base">csv</span>
-                        <span>CSV</span>
-                    </button>
-                    <button
-                        class="flex items-center gap-2 bg-primary text-on-primary px-5 py-2 rounded-xl text-sm font-semibold shadow-lg shadow-primary/20 hover:primary-dim transition-all active:scale-[0.98]">
-                        <span class="material-symbols-outlined text-base">picture_as_pdf</span>
-                        <span>Export PDF</span>
-                    </button>
-                </div>
-            </div>
-            <!-- Business Performance Index Summary (Asymmetric Grid) -->
-            <div class="grid grid-cols-12 gap-6 mb-8">
-                <!-- Hero Metric Card -->
-                <div
-                    class="col-span-12 lg:col-span-4 bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/10 relative overflow-hidden">
-                    <div class="relative z-10">
-                        <span class="text-on-surface-variant text-sm font-medium uppercase tracking-wider">Business
-                            Performance Index</span>
-                        <div class="mt-4 flex items-end gap-3">
-                            <h2 class="text-5xl font-extrabold tracking-tight text-primary">84.2</h2>
-                            <div
-                                class="mb-2 flex items-center text-error bg-error-container/20 px-2 py-0.5 rounded-full text-xs font-bold">
-                                <span class="material-symbols-outlined text-xs">trending_down</span>
-                                2.1%
-                            </div>
-                        </div>
-                        <p class="mt-4 text-on-surface-variant leading-relaxed text-sm">
-                            Aggregate health score based on liquidity, sales velocity, and operational efficiency.
-                        </p>
-                    </div>
-                    <!-- Background aesthetic element -->
-                    <div class="absolute -right-8 -bottom-8 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
-                </div>
-                <!-- Bento Metrics Grid -->
-                <div class="col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5">
-                        <span class="material-symbols-outlined text-primary mb-4"
-                            style="font-variation-settings: 'FILL' 1;">monetization_on</span>
-                        <h4 class="text-on-surface-variant text-xs font-semibold uppercase">Total Revenue</h4>
-                        <div class="mt-2 text-2xl font-bold text-on-surface">$1,420,900</div>
-                        <div class="mt-2 flex items-center text-primary text-xs font-bold">
-                            <span class="material-symbols-outlined text-xs">trending_up</span>
-                            +12.4% vs last mo.
-                        </div>
-                    </div>
-                    <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5">
-                        <span class="material-symbols-outlined text-tertiary mb-4"
-                            style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
-                        <h4 class="text-on-surface-variant text-xs font-semibold uppercase">Gross Margin</h4>
-                        <div class="mt-2 text-2xl font-bold text-on-surface">32.8%</div>
-                        <div class="mt-2 flex items-center text-on-surface-variant text-xs font-medium">
-                            <span class="material-symbols-outlined text-xs">horizontal_rule</span>
-                            Stable
-                        </div>
-                    </div>
-                    <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5">
-                        <span class="material-symbols-outlined text-error mb-4"
-                            style="font-variation-settings: 'FILL' 1;">speed</span>
-                        <h4 class="text-on-surface-variant text-xs font-semibold uppercase">Op. Expenses</h4>
-                        <div class="mt-2 text-2xl font-bold text-on-surface">$284,500</div>
-                        <div class="mt-2 flex items-center text-error text-xs font-bold">
-                            <span class="material-symbols-outlined text-xs">trending_up</span>
-                            +4.1% increase
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Visualization Grid -->
-            <div class="grid grid-cols-12 gap-6 mb-8">
-                <!-- Line Chart: Trend Analysis (7 columns) -->
-                <div class="col-span-12 lg:col-span-7 bg-surface-container-lowest p-8 rounded-xl shadow-sm">
-                    <div class="flex items-center justify-between mb-8">
-                        <div>
-                            <h3 class="text-lg font-bold text-on-surface">Revenue Growth &amp; Projections</h3>
-                            <p class="text-xs text-on-surface-variant">Daily snapshot of revenue against forecast.</p>
-                        </div>
-                        <div class="flex gap-2">
-                            <div
-                                class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">
-                                <span class="w-2 h-2 rounded-full bg-primary"></span> Actual
-                            </div>
-                            <div
-                                class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-outline-variant/20 text-on-surface-variant text-xs font-semibold">
-                                <span class="w-2 h-2 rounded-full bg-outline-variant"></span> Forecast
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Chart Placeholder UI -->
-                    <div class="h-64 flex items-end gap-3 px-2">
-                        <div class="flex-1 bg-primary/5 h-32 rounded-t-sm relative group">
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-24 rounded-t-sm"></div>
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-16 rounded-t-sm"></div>
-                        </div>
-                        <div class="flex-1 bg-primary/5 h-40 rounded-t-sm relative">
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-32 rounded-t-sm"></div>
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-20 rounded-t-sm"></div>
-                        </div>
-                        <div class="flex-1 bg-primary/5 h-36 rounded-t-sm relative">
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-28 rounded-t-sm"></div>
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-24 rounded-t-sm"></div>
-                        </div>
-                        <div class="flex-1 bg-primary/5 h-48 rounded-t-sm relative">
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-40 rounded-t-sm"></div>
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-32 rounded-t-sm"></div>
-                        </div>
-                        <div class="flex-1 bg-primary/5 h-56 rounded-t-sm relative">
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-48 rounded-t-sm"></div>
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-40 rounded-t-sm"></div>
-                        </div>
-                        <div class="flex-1 bg-primary/5 h-44 rounded-t-sm relative">
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-36 rounded-t-sm"></div>
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-28 rounded-t-sm"></div>
-                        </div>
-                        <div class="flex-1 bg-primary/5 h-64 rounded-t-sm relative">
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/20 h-56 rounded-t-sm"></div>
-                            <div class="absolute inset-x-0 bottom-0 bg-primary/40 h-48 rounded-t-sm"></div>
-                        </div>
-                    </div>
-                    <div
-                        class="flex justify-between mt-4 text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">
-                        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-                    </div>
-                </div>
-                <!-- Pie Chart: Distribution (5 columns) -->
-                <div
-                    class="col-span-12 lg:col-span-5 bg-surface-container-lowest p-8 rounded-xl shadow-sm flex flex-col">
-                    <h3 class="text-lg font-bold text-on-surface mb-6">Revenue by Division</h3>
-                    <div class="flex-1 flex items-center justify-center relative">
-                        <!-- Custom CSS SVG Pie Chart simulation -->
-                        <div
-                            class="w-48 h-48 rounded-full border-[16px] border-primary flex items-center justify-center relative">
-                            <div
-                                class="absolute inset-0 rounded-full border-[16px] border-tertiary border-t-transparent border-l-transparent -rotate-45">
-                            </div>
-                            <div
-                                class="absolute inset-0 rounded-full border-[16px] border-secondary-container border-t-transparent border-r-transparent rotate-90">
-                            </div>
-                            <div class="text-center">
-                                <div class="text-3xl font-extrabold text-on-surface">$1.4M</div>
-                                <div class="text-[10px] font-bold text-on-surface-variant uppercase">Total</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-8 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div class="w-3 h-3 rounded-full bg-primary"></div>
-                                <span class="text-sm font-medium">Enterprise Software</span>
-                            </div>
-                            <span class="text-sm font-bold">58%</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div class="w-3 h-3 rounded-full bg-tertiary"></div>
-                                <span class="text-sm font-medium">Consulting Services</span>
-                            </div>
-                            <span class="text-sm font-bold">24%</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div class="w-3 h-3 rounded-full bg-secondary-container"></div>
-                                <span class="text-sm font-medium">Hardware Leasing</span>
-                            </div>
-                            <span class="text-sm font-bold">18%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Lower Section: Trend Analysis & Multi-Bar Chart -->
-            <div class="grid grid-cols-12 gap-6">
-                <!-- Bar Chart (8 columns) -->
-                <div class="col-span-12 lg:col-span-8 bg-surface-container-lowest p-8 rounded-xl shadow-sm">
-                    <div class="flex items-center justify-between mb-8">
-                        <h3 class="text-lg font-bold text-on-surface">Regional Sales Performance</h3>
-                        <div class="flex items-center gap-4">
-                            <select
-                                class="bg-surface-container-low border-none text-xs font-semibold rounded-lg focus:ring-primary/20">
-                                <option>Quarter 3</option>
-                                <option>Quarter 2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="space-y-6">
-                        <!-- Bar Row -->
-                        <div class="space-y-2">
-                            <div class="flex justify-between text-xs font-bold">
-                                <span>North America</span>
-                                <span class="text-on-surface-variant">$480k</span>
-                            </div>
-                            <div class="h-3 w-full bg-surface-container-low rounded-full overflow-hidden">
-                                <div class="h-full bg-primary rounded-full" style="width: 85%"></div>
-                            </div>
-                        </div>
-                        <!-- Bar Row -->
-                        <div class="space-y-2">
-                            <div class="flex justify-between text-xs font-bold">
-                                <span>European Union</span>
-                                <span class="text-on-surface-variant">$312k</span>
-                            </div>
-                            <div class="h-3 w-full bg-surface-container-low rounded-full overflow-hidden">
-                                <div class="h-full bg-tertiary rounded-full" style="width: 62%"></div>
-                            </div>
-                        </div>
-                        <!-- Bar Row -->
-                        <div class="space-y-2">
-                            <div class="flex justify-between text-xs font-bold">
-                                <span>Asia-Pacific</span>
-                                <span class="text-on-surface-variant">$204k</span>
-                            </div>
-                            <div class="h-3 w-full bg-surface-container-low rounded-full overflow-hidden">
-                                <div class="h-full bg-on-tertiary-fixed-variant rounded-full" style="width: 44%"></div>
-                            </div>
-                        </div>
-                        <!-- Bar Row -->
-                        <div class="space-y-2">
-                            <div class="flex justify-between text-xs font-bold">
-                                <span>Latin America</span>
-                                <span class="text-on-surface-variant">$118k</span>
-                            </div>
-                            <div class="h-3 w-full bg-surface-container-low rounded-full overflow-hidden">
-                                <div class="h-full bg-primary-dim rounded-full" style="width: 28%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Insights Section (4 columns) -->
-                <div class="col-span-12 lg:col-span-4 space-y-6">
-                    <div class="bg-primary p-6 rounded-xl text-on-primary shadow-lg shadow-primary/20">
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="material-symbols-outlined">auto_awesome</span>
-                            <h4 class="text-sm font-bold uppercase tracking-wider">AI Insights</h4>
-                        </div>
-                        <p class="text-sm leading-relaxed opacity-90">
-                            Growth in the <span class="font-bold underline">North America</span> region is outpacing
-                            projections by 14%. Recommendation: Increase marketing spend for SaaS tier by 5%.
-                        </p>
-                        <button
-                            class="mt-6 w-full py-2 bg-on-primary text-primary rounded-lg text-xs font-extrabold uppercase hover:bg-opacity-90 transition-all">
-                            Review Analysis
-                        </button>
-                    </div>
-                    <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/10">
-                        <h4 class="text-sm font-bold text-on-surface mb-4">Upcoming Benchmarks</h4>
-                        <div class="space-y-4">
-                            <div class="flex gap-4">
-                                <div class="w-1 bg-primary rounded-full"></div>
-                                <div>
-                                    <p class="text-xs font-bold">End of Quarter Review</p>
-                                    <p class="text-[10px] text-on-surface-variant">In 12 days • High Priority</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-4">
-                                <div class="w-1 bg-tertiary rounded-full"></div>
-                                <div>
-                                    <p class="text-xs font-bold">Annual Compliance Audit</p>
-                                    <p class="text-[10px] text-on-surface-variant">Oct 24, 2023 • Automated</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- ===================== HEADER ===================== -->
+<header class="main-header fixed top-0 right-0 left-56 h-16 z-40 bg-white/80 backdrop-blur-xl border-b border-outline-variant/20 flex items-center justify-between px-6 md:px-8">
+    <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary text-xl">analytics</span>
+        <h1 class="font-bold text-on-surface text-base tracking-tight">Reports &amp; Analytics</h1>
+        <span class="ml-2 text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary px-2 py-0.5 rounded-full flex items-center gap-1">
+            <span class="live-dot w-1.5 h-1.5 rounded-full bg-primary inline-block"></span> Live
+        </span>
+    </div>
+    <div class="flex items-center gap-3">
+        <!-- Date Range Selector -->
+        <div class="hidden md:flex items-center gap-1 bg-surface-container-low rounded-full p-1">
+            <span class="range-pill active text-xs px-3 py-1 rounded-full" data-range="7">7D</span>
+            <span class="range-pill text-xs px-3 py-1 rounded-full" data-range="30">30D</span>
+            <span class="range-pill text-xs px-3 py-1 rounded-full" data-range="90">90D</span>
+        </div>
+        <!-- Export -->
+        <div class="relative">
+            <button id="export-btn" class="flex items-center gap-1.5 bg-primary text-on-primary text-xs font-semibold px-4 py-2 rounded-full shadow-md shadow-primary/20 hover:bg-blue-700 transition-all active:scale-95">
+                <span class="material-symbols-outlined text-sm">download</span>
+                Export
+                <span class="material-symbols-outlined text-sm">expand_more</span>
+            </button>
+            <div id="export-menu" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-xl border border-outline-variant/20 overflow-hidden z-50">
+                <a href="{% url 'reports:export_csv' %}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-surface-container-low transition-colors">
+                    <span class="material-symbols-outlined text-base text-on-surface-variant">table_view</span> Export CSV
+                </a>
+                <a href="{% url 'reports:export_pdf' %}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-surface-container-low transition-colors">
+                    <span class="material-symbols-outlined text-base text-on-surface-variant">picture_as_pdf</span> Export PDF
+                </a>
+                <button onclick="window.print()" class="w-full flex items-center gap-2 px-4 py-3 text-sm hover:bg-surface-container-low transition-colors">
+                    <span class="material-symbols-outlined text-base text-on-surface-variant">print</span> Print Report
+                </button>
             </div>
         </div>
-    </main>
-    <!-- Floating Action Button: New Report -->
-    <button
-        class="fixed bottom-10 right-10 w-16 h-16 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
-        <span class="material-symbols-outlined text-3xl">add</span>
-    </button>
-</body>
+        <!-- Avatar -->
+        <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container font-bold text-xs flex items-center justify-center">
+            {{ request.user.get_initials|default:"AD" }}
+        </div>
+    </div>
+</header>
 
-</html>
+<!-- ===================== MAIN ===================== -->
+<main class="pt-16">
+    <div class="page-content  pr-6 md:pr-8 py-8 max-w-[1600px]">
+
+        <!-- ── SEGMENT TABS ── -->
+        <div class="flex items-center gap-2 mb-7 flex-wrap">
+            <button class="seg-pill active" data-tab="overview">Overview</button>
+            <button class="seg-pill" data-tab="finance">Finance</button>
+            <button class="seg-pill" data-tab="sales">Sales</button>
+            <button class="seg-pill" data-tab="inventory">Inventory</button>
+            <button class="seg-pill" data-tab="hr">HR</button>
+            <button class="seg-pill" data-tab="procurement">Procurement</button>
+        </div>
+
+        <!-- ═══════════════ OVERVIEW TAB ═══════════════ -->
+        <div id="tab-overview" class="tab-content">
+
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
+
+                <!-- Total Revenue -->
+                <div class="kpi-card card-anim bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Total Revenue</p>
+                            <p class="stat-value text-2xl font-extrabold mt-1 text-on-surface font-mono" id="kpi-revenue">
+                                ${{ total_revenue|default:"0"|floatformat:0 }}
+                            </p>
+                        </div>
+                        <span class="material-symbols-outlined filled text-primary text-3xl opacity-80">payments</span>
+                    </div>
+                    <div class="mt-3 flex items-center gap-1 text-xs font-semibold
+                        {% if revenue_growth >= 0 %}trend-up{% else %}trend-down{% endif %}">
+                        <span class="material-symbols-outlined text-sm">{% if revenue_growth >= 0 %}trending_up{% else %}trending_down{% endif %}</span>
+                        {{ revenue_growth|default:"+0" }}% vs last period
+                    </div>
+                </div>
+
+                <!-- Total Orders -->
+                <div class="kpi-card card-anim bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Total Orders</p>
+                            <p class="stat-value text-2xl font-extrabold mt-1 text-on-surface font-mono">{{ total_orders|default:"0" }}</p>
+                        </div>
+                        <span class="material-symbols-outlined filled text-tertiary text-3xl opacity-80">shopping_cart</span>
+                    </div>
+                    <div class="mt-3 flex items-center gap-2">
+                        <span class="text-xs px-2 py-0.5 rounded-full badge-delivered">{{ delivered_orders|default:0 }} Delivered</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full badge-pending">{{ pending_orders|default:0 }} Pending</span>
+                    </div>
+                </div>
+
+                <!-- Invoices -->
+                <div class="kpi-card card-anim bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Invoices</p>
+                            <p class="stat-value text-2xl font-extrabold mt-1 text-on-surface font-mono">{{ total_invoices|default:"0" }}</p>
+                        </div>
+                        <span class="material-symbols-outlined filled text-[#e67e22] text-3xl opacity-80">receipt_long</span>
+                    </div>
+                    <div class="mt-3 flex items-center gap-2">
+                        <span class="text-xs px-2 py-0.5 rounded-full badge-paid">{{ paid_invoices|default:0 }} Paid</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full badge-overdue">{{ overdue_invoices|default:0 }} Overdue</span>
+                    </div>
+                </div>
+
+                <!-- Inventory Value -->
+                <div class="kpi-card card-anim bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Stock Items</p>
+                            <p class="stat-value text-2xl font-extrabold mt-1 text-on-surface font-mono">{{ total_stock_items|default:"0" }}</p>
+                        </div>
+                        <span class="material-symbols-outlined filled text-[#0891b2] text-3xl opacity-80">inventory_2</span>
+                    </div>
+                    <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-on-surface-variant">
+                        <span class="material-symbols-outlined text-sm">warehouse</span>
+                        {{ warehouse_count|default:0 }} Warehouses active
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row 1 -->
+            <div class="grid grid-cols-12 gap-5 mb-5">
+
+                <!-- Revenue Trend Chart -->
+                <div class="col-span-12 lg:col-span-7 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                    <div class="flex items-center justify-between mb-5">
+                        <div>
+                            <h3 class="font-bold text-on-surface">Revenue Trend</h3>
+                            <p class="text-xs text-on-surface-variant mt-0.5">Monthly sales revenue</p>
+                        </div>
+                        <div class="flex gap-3 text-xs font-semibold">
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span> Revenue</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-tertiary inline-block"></span> Orders</span>
+                        </div>
+                    </div>
+                    <div class="chart-wrap h-56">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Order Status Donut -->
+                <div class="col-span-12 lg:col-span-5 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm flex flex-col">
+                    <h3 class="font-bold text-on-surface mb-1">Order Status</h3>
+                    <p class="text-xs text-on-surface-variant mb-5">Distribution of all orders</p>
+                    <div class="flex-1 flex items-center justify-center">
+                        <div class="chart-wrap w-48 h-48">
+                            <canvas id="orderDonut"></canvas>
+                        </div>
+                    </div>
+                    <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+                        <div>
+                            <div class="text-lg font-bold text-on-surface">{{ pending_orders|default:0 }}</div>
+                            <div class="text-[10px] text-on-surface-variant font-medium">Pending</div>
+                        </div>
+                        <div>
+                            <div class="text-lg font-bold text-on-surface">{{ shipped_orders|default:0 }}</div>
+                            <div class="text-[10px] text-on-surface-variant font-medium">Shipped</div>
+                        </div>
+                        <div>
+                            <div class="text-lg font-bold text-on-surface">{{ delivered_orders|default:0 }}</div>
+                            <div class="text-[10px] text-on-surface-variant font-medium">Delivered</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row 2 -->
+            <div class="grid grid-cols-12 gap-5 mb-5">
+
+                <!-- Supplier Performance -->
+                <div class="col-span-12 lg:col-span-4 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                    <h3 class="font-bold text-on-surface mb-1">Supplier Performance</h3>
+                    <p class="text-xs text-on-surface-variant mb-5">By rating segment</p>
+                    <div class="chart-wrap h-48">
+                        <canvas id="supplierChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Warehouse Capacity -->
+                <div class="col-span-12 lg:col-span-4 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                    <h3 class="font-bold text-on-surface mb-5">Warehouse Utilization</h3>
+                    <div class="space-y-4" id="warehouse-bars">
+                        {% for wh in warehouse_utilization %}
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1.5">
+                                <span class="text-on-surface truncate max-w-[120px]">{{ wh.name }}</span>
+                                <span class="text-on-surface-variant font-mono">{{ wh.used }}/{{ wh.capacity }}</span>
+                            </div>
+                            <div class="h-2 bg-surface-container-low rounded-full overflow-hidden">
+                                <div class="prog-bar-fill {% if wh.pct >= 90 %}bg-error{% elif wh.pct >= 70 %}bg-[#e67e22]{% else %}bg-primary{% endif %}"
+                                     style="width: 0%"
+                                     data-target="{{ wh.pct }}"></div>
+                            </div>
+                            <span class="text-[10px] text-on-surface-variant font-semibold">{{ wh.pct }}% used</span>
+                        </div>
+                        {% empty %}
+                        <p class="text-sm text-on-surface-variant">No warehouse data available.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- HR Attendance Summary -->
+                <div class="col-span-12 lg:col-span-4 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                    <h3 class="font-bold text-on-surface mb-1">HR Overview</h3>
+                    <p class="text-xs text-on-surface-variant mb-4">Attendance & Leave Status</p>
+                    <div class="chart-wrap h-36">
+                        <canvas id="hrDonut"></canvas>
+                    </div>
+                    <div class="mt-4 grid grid-cols-3 gap-1 text-center">
+                        <div class="bg-surface-container-low rounded-xl p-2">
+                            <div class="text-base font-bold text-on-surface">{{ present_today|default:0 }}</div>
+                            <div class="text-[10px] text-on-surface-variant">Present</div>
+                        </div>
+                        <div class="bg-surface-container-low rounded-xl p-2">
+                            <div class="text-base font-bold text-on-surface">{{ absent_today|default:0 }}</div>
+                            <div class="text-[10px] text-on-surface-variant">Absent</div>
+                        </div>
+                        <div class="bg-surface-container-low rounded-xl p-2">
+                            <div class="text-base font-bold text-on-surface">{{ leave_pending|default:0 }}</div>
+                            <div class="text-[10px] text-on-surface-variant">On Leave</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity: Invoices + Orders Tables -->
+            <div class="grid grid-cols-12 gap-5">
+
+                <!-- Recent Invoices -->
+                <div class="col-span-12 lg:col-span-6 card-anim bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/10">
+                        <h3 class="font-bold text-on-surface text-sm">Recent Invoices</h3>
+                        <a href="#" class="text-xs font-semibold text-primary hover:underline flex items-center gap-1">
+                            View all <span class="material-symbols-outlined text-sm">chevron_right</span>
+                        </a>
+                    </div>
+                    <div class="data-table-wrap">
+                        <table class="w-full text-xs">
+                            <thead class="bg-surface-container-low sticky top-0">
+                                <tr>
+                                    <th class="text-left px-6 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Invoice</th>
+                                    <th class="text-left px-3 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Client</th>
+                                    <th class="text-right px-3 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Amount</th>
+                                    <th class="text-right px-6 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-outline-variant/10">
+                                {% for inv in recent_invoices %}
+                                <tr class="hover:bg-surface-container-low/50 transition-colors">
+                                    <td class="px-6 py-3 font-mono font-semibold text-on-surface">#{{ inv.invoice_number }}</td>
+                                    <td class="px-3 py-3 text-on-surface truncate max-w-[120px]">{{ inv.client_name }}</td>
+                                    <td class="px-3 py-3 text-right font-semibold font-mono text-on-surface">${{ inv.amount|floatformat:0 }}</td>
+                                    <td class="px-6 py-3 text-right">
+                                        <span class="badge-{{ inv.status }} px-2 py-0.5 rounded-full font-semibold capitalize">{{ inv.status }}</span>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="4" class="px-6 py-8 text-center text-on-surface-variant">No invoices found.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="col-span-12 lg:col-span-6 card-anim bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/10">
+                        <h3 class="font-bold text-on-surface text-sm">Recent Orders</h3>
+                        <a href="#" class="text-xs font-semibold text-primary hover:underline flex items-center gap-1">
+                            View all <span class="material-symbols-outlined text-sm">chevron_right</span>
+                        </a>
+                    </div>
+                    <div class="data-table-wrap">
+                        <table class="w-full text-xs">
+                            <thead class="bg-surface-container-low sticky top-0">
+                                <tr>
+                                    <th class="text-left px-6 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Customer</th>
+                                    <th class="text-left px-3 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Product</th>
+                                    <th class="text-right px-3 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Total</th>
+                                    <th class="text-right px-6 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-outline-variant/10">
+                                {% for order in recent_orders %}
+                                <tr class="hover:bg-surface-container-low/50 transition-colors">
+                                    <td class="px-6 py-3 font-semibold text-on-surface truncate max-w-[120px]">{{ order.full_name }}</td>
+                                    <td class="px-3 py-3 text-on-surface-variant truncate max-w-[120px]">{{ order.product }}</td>
+                                    <td class="px-3 py-3 text-right font-semibold font-mono">${{ order.price|floatformat:0 }}</td>
+                                    <td class="px-6 py-3 text-right">
+                                        <span class="badge-{{ order.status }} px-2 py-0.5 rounded-full font-semibold capitalize">{{ order.status }}</span>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="4" class="px-6 py-8 text-center text-on-surface-variant">No orders found.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /tab-overview -->
+
+
+        <!-- ═══════════════ FINANCE TAB ═══════════════ -->
+        <div id="tab-finance" class="tab-content hidden">
+            <div class="grid grid-cols-12 gap-5">
+                <!-- Invoice Status Chart -->
+                <div class="col-span-12 lg:col-span-5 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                    <h3 class="font-bold text-on-surface mb-1">Invoice Status Breakdown</h3>
+                    <p class="text-xs text-on-surface-variant mb-5">By count and amount</p>
+                    <div class="chart-wrap h-56">
+                        <canvas id="invoiceStatusChart"></canvas>
+                    </div>
+                </div>
+                <!-- Finance KPIs -->
+                <div class="col-span-12 lg:col-span-7 grid grid-cols-2 gap-4">
+                    <div class="kpi-card bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm">
+                        <p class="text-[11px] font-semibold text-on-surface-variant uppercase">Paid Amount</p>
+                        <p class="text-2xl font-extrabold mt-1 font-mono text-[#16a34a]">${{ paid_amount|default:"0"|floatformat:0 }}</p>
+                        <p class="text-xs text-on-surface-variant mt-2">{{ paid_invoices|default:0 }} invoices paid</p>
+                    </div>
+                    <div class="kpi-card bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm">
+                        <p class="text-[11px] font-semibold text-on-surface-variant uppercase">Pending</p>
+                        <p class="text-2xl font-extrabold mt-1 font-mono text-[#d97706]">${{ pending_amount|default:"0"|floatformat:0 }}</p>
+                        <p class="text-xs text-on-surface-variant mt-2">{{ pending_invoices|default:0 }} invoices pending</p>
+                    </div>
+                    <div class="kpi-card bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm">
+                        <p class="text-[11px] font-semibold text-on-surface-variant uppercase">Overdue</p>
+                        <p class="text-2xl font-extrabold mt-1 font-mono text-error">${{ overdue_amount|default:"0"|floatformat:0 }}</p>
+                        <p class="text-xs text-on-surface-variant mt-2">{{ overdue_invoices|default:0 }} invoices overdue</p>
+                    </div>
+                    <div class="kpi-card bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm">
+                        <p class="text-[11px] font-semibold text-on-surface-variant uppercase">Collection Rate</p>
+                        <p class="text-2xl font-extrabold mt-1 font-mono text-primary">{{ collection_rate|default:"0" }}%</p>
+                        <p class="text-xs text-on-surface-variant mt-2">Invoices collected on time</p>
+                    </div>
+                </div>
+                <!-- Full Invoices Table -->
+                <div class="col-span-12 bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/10">
+                        <h3 class="font-bold text-on-surface text-sm">All Invoices</h3>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="invoice-search" placeholder="Search invoice…" class="text-xs border border-outline-variant/30 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                        </div>
+                    </div>
+                    <div class="data-table-wrap" style="max-height:400px;">
+                        <table class="w-full text-xs" id="invoice-table">
+                            <thead class="bg-surface-container-low sticky top-0">
+                                <tr>
+                                    <th class="text-left px-6 py-3 text-on-surface-variant font-semibold">Invoice #</th>
+                                    <th class="text-left px-3 py-3 text-on-surface-variant font-semibold">Client</th>
+                                    <th class="text-right px-3 py-3 text-on-surface-variant font-semibold">Amount</th>
+                                    <th class="text-center px-3 py-3 text-on-surface-variant font-semibold">Due Date</th>
+                                    <th class="text-right px-6 py-3 text-on-surface-variant font-semibold">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-outline-variant/10">
+                                {% for inv in all_invoices %}
+                                <tr class="hover:bg-surface-container-low/50 transition-colors">
+                                    <td class="px-6 py-3 font-mono font-semibold">#{{ inv.invoice_number }}</td>
+                                    <td class="px-3 py-3">{{ inv.client_name }}</td>
+                                    <td class="px-3 py-3 text-right font-mono font-semibold">${{ inv.amount|floatformat:2 }}</td>
+                                    <td class="px-3 py-3 text-center text-on-surface-variant">{{ inv.due_date }}</td>
+                                    <td class="px-6 py-3 text-right"><span class="badge-{{ inv.status }} px-2 py-0.5 rounded-full font-semibold capitalize">{{ inv.status }}</span></td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="5" class="px-6 py-8 text-center text-on-surface-variant">No invoices found.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /tab-finance -->
+
+
+        <!-- ═══════════════ SALES TAB ═══════════════ -->
+        <div id="tab-sales" class="tab-content hidden">
+            <div class="grid grid-cols-12 gap-5">
+                <div class="col-span-12 lg:col-span-8 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                    <h3 class="font-bold text-on-surface mb-5">Sales Over Time</h3>
+                    <div class="chart-wrap h-64">
+                        <canvas id="salesLineChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-span-12 lg:col-span-4 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                    <h3 class="font-bold text-on-surface mb-5">Top Products</h3>
+                    <div class="space-y-3">
+                        {% for prod in top_products %}
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="truncate max-w-[140px]">{{ prod.product }}</span>
+                                <span class="font-mono text-on-surface-variant">{{ prod.qty }}</span>
+                            </div>
+                            <div class="h-1.5 bg-surface-container-low rounded-full overflow-hidden">
+                                <div class="prog-bar-fill bg-primary" style="width:0%" data-target="{{ prod.pct }}"></div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="text-xs text-on-surface-variant">No data available.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-span-12 bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+                    <div class="px-6 py-4 border-b border-outline-variant/10">
+                        <h3 class="font-bold text-on-surface text-sm">All Orders</h3>
+                    </div>
+                    <div class="data-table-wrap" style="max-height:380px">
+                        <table class="w-full text-xs">
+                            <thead class="bg-surface-container-low sticky top-0">
+                                <tr>
+                                    <th class="text-left px-6 py-3 text-on-surface-variant font-semibold">Customer</th>
+                                    <th class="text-left px-3 py-3 text-on-surface-variant font-semibold">Email</th>
+                                    <th class="text-left px-3 py-3 text-on-surface-variant font-semibold">Product</th>
+                                    <th class="text-right px-3 py-3 text-on-surface-variant font-semibold">Qty</th>
+                                    <th class="text-right px-3 py-3 text-on-surface-variant font-semibold">Total</th>
+                                    <th class="text-right px-6 py-3 text-on-surface-variant font-semibold">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-outline-variant/10">
+                                {% for order in all_orders %}
+                                <tr class="hover:bg-surface-container-low/50 transition-colors">
+                                    <td class="px-6 py-3 font-semibold">{{ order.full_name }}</td>
+                                    <td class="px-3 py-3 text-on-surface-variant">{{ order.email }}</td>
+                                    <td class="px-3 py-3 text-on-surface-variant truncate max-w-[140px]">{{ order.product }}</td>
+                                    <td class="px-3 py-3 text-right font-mono">{{ order.quantity }}</td>
+                                    <td class="px-3 py-3 text-right font-mono font-semibold">${{ order.price|floatformat:2 }}</td>
+                                    <td class="px-6 py-3 text-right"><span class="badge-{{ order.status }} px-2 py-0.5 rounded-full font-semibold capitalize">{{ order.status }}</span></td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="6" class="px-6 py-8 text-center text-on-surface-variant">No orders found.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /tab-sales -->
+
+
+        <!-- ═══════════════ INVENTORY TAB ═══════════════ -->
+        <div id="tab-inventory" class="tab-content hidden">
+            <div class="grid grid-cols-12 gap-5">
+                <!-- Stock by Category -->
+                <div class="col-span-12 lg:col-span-5 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                    <h3 class="font-bold text-on-surface mb-5">Stock by Category</h3>
+                    <div class="chart-wrap h-56">
+                        <canvas id="stockCategoryChart"></canvas>
+                    </div>
+                </div>
+                <!-- Stock Transactions -->
+                <div class="col-span-12 lg:col-span-7 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                    <h3 class="font-bold text-on-surface mb-5">Stock Transactions (Last 30 Days)</h3>
+                    <div class="chart-wrap h-56">
+                        <canvas id="stockTxnChart"></canvas>
+                    </div>
+                </div>
+                <!-- Inventory Table -->
+                <div class="col-span-12 bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+                    <div class="px-6 py-4 border-b border-outline-variant/10">
+                        <h3 class="font-bold text-on-surface text-sm">Current Inventory</h3>
+                    </div>
+                    <div class="data-table-wrap" style="max-height:360px">
+                        <table class="w-full text-xs">
+                            <thead class="bg-surface-container-low sticky top-0">
+                                <tr>
+                                    <th class="text-left px-6 py-3 text-on-surface-variant font-semibold">Product</th>
+                                    <th class="text-left px-3 py-3 text-on-surface-variant font-semibold">SKU</th>
+                                    <th class="text-left px-3 py-3 text-on-surface-variant font-semibold">Category</th>
+                                    <th class="text-left px-3 py-3 text-on-surface-variant font-semibold">Warehouse</th>
+                                    <th class="text-right px-3 py-3 text-on-surface-variant font-semibold">Qty</th>
+                                    <th class="text-right px-6 py-3 text-on-surface-variant font-semibold">Last Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-outline-variant/10">
+                                {% for item in inventory_items %}
+                                <tr class="hover:bg-surface-container-low/50 transition-colors">
+                                    <td class="px-6 py-3 font-semibold">{{ item.product.name }}</td>
+                                    <td class="px-3 py-3 font-mono text-on-surface-variant">{{ item.product.sku }}</td>
+                                    <td class="px-3 py-3 text-on-surface-variant">{{ item.product.category.name }}</td>
+                                    <td class="px-3 py-3 text-on-surface-variant">{{ item.warehouse.name }}</td>
+                                    <td class="px-3 py-3 text-right font-mono font-semibold {% if item.quantity < 10 %}text-error{% endif %}">{{ item.quantity }}</td>
+                                    <td class="px-6 py-3 text-right text-on-surface-variant">{{ item.updated_at|date:"M d, Y" }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="6" class="px-6 py-8 text-center text-on-surface-variant">No inventory data.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /tab-inventory -->
+
+
+        <!-- ═══════════════ HR TAB ═══════════════ -->
+        <div id="tab-hr" class="tab-content hidden">
+            <div class="grid grid-cols-12 gap-5">
+                <!-- Department Distribution -->
+                <div class="col-span-12 lg:col-span-4 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                    <h3 class="font-bold text-on-surface mb-5">Employees by Dept.</h3>
+                    <div class="chart-wrap h-52">
+                        <canvas id="deptChart"></canvas>
+                    </div>
+                </div>
+                <!-- Leave Overview -->
+                <div class="col-span-12 lg:col-span-4 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                    <h3 class="font-bold text-on-surface mb-5">Leave Requests</h3>
+                    <div class="chart-wrap h-52">
+                        <canvas id="leaveChart"></canvas>
+                    </div>
+                </div>
+                <!-- HR KPIs -->
+                <div class="col-span-12 lg:col-span-4 grid grid-rows-3 gap-4">
+                    <div class="kpi-card bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm flex items-center gap-4">
+                        <span class="material-symbols-outlined filled text-primary text-3xl">group</span>
+                        <div>
+                            <p class="text-[11px] font-semibold text-on-surface-variant uppercase">Total Employees</p>
+                            <p class="text-xl font-extrabold font-mono">{{ total_employees|default:0 }}</p>
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm flex items-center gap-4">
+                        <span class="material-symbols-outlined filled text-[#16a34a] text-3xl">check_circle</span>
+                        <div>
+                            <p class="text-[11px] font-semibold text-on-surface-variant uppercase">Active</p>
+                            <p class="text-xl font-extrabold font-mono">{{ active_employees|default:0 }}</p>
+                        </div>
+                    </div>
+                    <div class="kpi-card bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm flex items-center gap-4">
+                        <span class="material-symbols-outlined filled text-[#d97706] text-3xl">pending</span>
+                        <div>
+                            <p class="text-[11px] font-semibold text-on-surface-variant uppercase">Pending Leaves</p>
+                            <p class="text-xl font-extrabold font-mono">{{ leave_pending|default:0 }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Leave Requests Table -->
+                <div class="col-span-12 bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+                    <div class="px-6 py-4 border-b border-outline-variant/10">
+                        <h3 class="font-bold text-on-surface text-sm">Recent Leave Requests</h3>
+                    </div>
+                    <div class="data-table-wrap" style="max-height:320px">
+                        <table class="w-full text-xs">
+                            <thead class="bg-surface-container-low sticky top-0">
+                                <tr>
+                                    <th class="text-left px-6 py-3 text-on-surface-variant font-semibold">Employee</th>
+                                    <th class="text-left px-3 py-3 text-on-surface-variant font-semibold">Type</th>
+                                    <th class="text-left px-3 py-3 text-on-surface-variant font-semibold">Duration</th>
+                                    <th class="text-right px-6 py-3 text-on-surface-variant font-semibold">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-outline-variant/10">
+                                {% for lr in leave_requests %}
+                                <tr class="hover:bg-surface-container-low/50 transition-colors">
+                                    <td class="px-6 py-3 font-semibold">{{ lr.employee }}</td>
+                                    <td class="px-3 py-3 text-on-surface-variant">{{ lr.get_leave_type_display }}</td>
+                                    <td class="px-3 py-3 text-on-surface-variant">{{ lr.start_date }} → {{ lr.end_date }}</td>
+                                    <td class="px-6 py-3 text-right"><span class="badge-{{ lr.status|lower }} px-2 py-0.5 rounded-full font-semibold">{{ lr.get_status_display }}</span></td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="4" class="px-6 py-8 text-center text-on-surface-variant">No leave requests.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /tab-hr -->
+
+
+        <!-- ═══════════════ PROCUREMENT TAB ═══════════════ -->
+        <div id="tab-procurement" class="tab-content hidden">
+            <div class="grid grid-cols-12 gap-5">
+                <!-- PO Status -->
+                <div class="col-span-12 lg:col-span-5 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                    <h3 class="font-bold text-on-surface mb-5">Purchase Order Status</h3>
+                    <div class="chart-wrap h-56">
+                        <canvas id="poStatusChart"></canvas>
+                    </div>
+                </div>
+                <!-- Supplier Segment -->
+                <div class="col-span-12 lg:col-span-7 card-anim bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                    <h3 class="font-bold text-on-surface mb-5">Suppliers by Segment</h3>
+                    <div class="chart-wrap h-56">
+                        <canvas id="supplierSegChart"></canvas>
+                    </div>
+                </div>
+                <!-- PO Table -->
+                <div class="col-span-12 bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+                    <div class="px-6 py-4 border-b border-outline-variant/10">
+                        <h3 class="font-bold text-on-surface text-sm">Purchase Orders</h3>
+                    </div>
+                    <div class="data-table-wrap" style="max-height:360px">
+                        <table class="w-full text-xs">
+                            <thead class="bg-surface-container-low sticky top-0">
+                                <tr>
+                                    <th class="text-left px-6 py-3 text-on-surface-variant font-semibold">PO #</th>
+                                    <th class="text-left px-3 py-3 text-on-surface-variant font-semibold">Supplier</th>
+                                    <th class="text-left px-3 py-3 text-on-surface-variant font-semibold">Item</th>
+                                    <th class="text-right px-3 py-3 text-on-surface-variant font-semibold">Amount</th>
+                                    <th class="text-center px-3 py-3 text-on-surface-variant font-semibold">Est. Delivery</th>
+                                    <th class="text-right px-6 py-3 text-on-surface-variant font-semibold">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-outline-variant/10">
+                                {% for po in purchase_orders %}
+                                <tr class="hover:bg-surface-container-low/50 transition-colors">
+                                    <td class="px-6 py-3 font-mono font-semibold">PO-{{ po.id }}</td>
+                                    <td class="px-3 py-3 font-semibold">{{ po.supplier.name }}</td>
+                                    <td class="px-3 py-3 text-on-surface-variant truncate max-w-[160px]">{{ po.item_name }}</td>
+                                    <td class="px-3 py-3 text-right font-mono font-semibold">${{ po.amount|floatformat:0 }}</td>
+                                    <td class="px-3 py-3 text-center text-on-surface-variant">{{ po.estimated_delivery }}</td>
+                                    <td class="px-6 py-3 text-right"><span class="badge-{{ po.status }} px-2 py-0.5 rounded-full font-semibold capitalize">{{ po.get_status_display }}</span></td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="6" class="px-6 py-8 text-center text-on-surface-variant">No purchase orders found.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /tab-procurement -->
+
+    </div><!-- /page-content -->
+</main>
+
+<!-- FAB -->
+<button onclick="document.getElementById('new-report-modal').classList.remove('hidden')"
+    class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl shadow-primary/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+    <span class="material-symbols-outlined text-2xl">add</span>
+</button>
+
+<!-- New Report Modal -->
+<div id="new-report-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center bg-black/40 backdrop-blur-sm">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/20">
+            <h3 class="font-bold text-on-surface">New Report Entry</h3>
+            <button onclick="document.getElementById('new-report-modal').classList.add('hidden')" class="text-on-surface-variant hover:text-on-surface">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <form method="POST" action="{% url 'reports:create' %}" class="p-6 space-y-4">
+            {% csrf_token %}
+            <div>
+                <label class="block text-xs font-semibold text-on-surface-variant mb-1.5">Report Title</label>
+                <input type="text" name="title" required class="w-full border border-outline-variant/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="e.g. Q3 Finance Summary" />
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-on-surface-variant mb-1.5">Report Type</label>
+                <select name="report_type" class="w-full border border-outline-variant/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                    <option value="finance">Finance</option>
+                    <option value="sales">Sales</option>
+                    <option value="procurement">Procurement</option>
+                    <option value="inventory">Inventory</option>
+                </select>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button type="button" onclick="document.getElementById('new-report-modal').classList.add('hidden')"
+                    class="flex-1 py-2.5 rounded-xl border border-outline-variant/40 text-sm font-semibold text-on-surface-variant hover:bg-surface-container-low transition-colors">
+                    Cancel
+                </button>
+                <button type="submit"
+                    class="flex-1 py-2.5 rounded-xl bg-primary text-on-primary text-sm font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-primary/20">
+                    Save Report
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- ===================== SCRIPTS ===================== -->
+<script>
+// ─── Context from Django ───
+const CTX = {
+    revenue_by_month_labels: {{ revenue_by_month_labels|safe|default:"['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']" }},
+    revenue_by_month_data:   {{ revenue_by_month_data|safe|default:"[0,0,0,0,0,0,0,0,0,0,0,0]" }},
+    orders_by_month_data:    {{ orders_by_month_data|safe|default:"[0,0,0,0,0,0,0,0,0,0,0,0]" }},
+    order_status_labels:     {{ order_status_labels|safe|default:"['Pending','Shipped','Delivered']" }},
+    order_status_data:       {{ order_status_data|safe|default:"[0,0,0]" }},
+    supplier_perf_labels:    {{ supplier_perf_labels|safe|default:"['Excellent','Good','Average']" }},
+    supplier_perf_data:      {{ supplier_perf_data|safe|default:"[0,0,0]" }},
+    invoice_status_labels:   {{ invoice_status_labels|safe|default:"['Paid','Pending','Overdue']" }},
+    invoice_status_data:     {{ invoice_status_data|safe|default:"[0,0,0]" }},
+    stock_category_labels:   {{ stock_category_labels|safe|default:"[]" }},
+    stock_category_data:     {{ stock_category_data|safe|default:"[]" }},
+    stock_txn_labels:        {{ stock_txn_labels|safe|default:"[]" }},
+    stock_txn_in:            {{ stock_txn_in|safe|default:"[]" }},
+    stock_txn_out:           {{ stock_txn_out|safe|default:"[]" }},
+    dept_labels:             {{ dept_labels|safe|default:"[]" }},
+    dept_data:               {{ dept_data|safe|default:"[]" }},
+    leave_status_labels:     {{ leave_status_labels|safe|default:"['Pending','Approved','Rejected']" }},
+    leave_status_data:       {{ leave_status_data|safe|default:"[0,0,0]" }},
+    hr_attendance_data:      {{ hr_attendance_data|safe|default:"[0,0,0]" }},
+    po_status_labels:        {{ po_status_labels|safe|default:"[]" }},
+    po_status_data:          {{ po_status_data|safe|default:"[]" }},
+    supplier_seg_labels:     {{ supplier_seg_labels|safe|default:"[]" }},
+    supplier_seg_data:       {{ supplier_seg_data|safe|default:"[]" }},
+};
+
+// ─── Color Palette ───
+const COLORS = {
+    primary:   '#0052dc',
+    tertiary:  '#625b77',
+    green:     '#16a34a',
+    amber:     '#d97706',
+    red:       '#dc2626',
+    cyan:      '#0891b2',
+    violet:    '#7c3aed',
+    rose:      '#e11d48',
+};
+const PALETTE = [COLORS.primary, COLORS.tertiary, COLORS.green, COLORS.amber, COLORS.red, COLORS.cyan, COLORS.violet, COLORS.rose];
+
+Chart.defaults.font.family = 'DM Sans';
+Chart.defaults.color = '#566166';
+
+function makeGradient(ctx, color) {
+    const g = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+    g.addColorStop(0, color + '33');
+    g.addColorStop(1, color + '00');
+    return g;
+}
+
+// ─── Revenue Chart ───
+(function() {
+    const ctx = document.getElementById('revenueChart');
+    if (!ctx) return;
+    const c = ctx.getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: CTX.revenue_by_month_labels,
+            datasets: [
+                {
+                    label: 'Revenue ($)',
+                    data: CTX.revenue_by_month_data,
+                    borderColor: COLORS.primary,
+                    backgroundColor: makeGradient(c, COLORS.primary),
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: COLORS.primary,
+                    borderWidth: 2.5,
+                    yAxisID: 'y',
+                },
+                {
+                    label: 'Orders',
+                    data: CTX.orders_by_month_data,
+                    borderColor: COLORS.tertiary,
+                    backgroundColor: 'transparent',
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointHoverRadius: 6,
+                    borderWidth: 2,
+                    borderDash: [5, 3],
+                    yAxisID: 'y1',
+                }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: { legend: { display: false }, tooltip: { cornerRadius: 8 } },
+            scales: {
+                x: { grid: { display: false }, ticks: { font: { size: 11, weight: '600' } } },
+                y: {
+                    position: 'left', grid: { color: '#e8eff3' },
+                    ticks: { font: { size: 10 }, callback: v => '$' + (v >= 1000 ? (v/1000).toFixed(0)+'k' : v) }
+                },
+                y1: {
+                    position: 'right', grid: { display: false },
+                    ticks: { font: { size: 10 } }
+                }
+            }
+        }
+    });
+})();
+
+// ─── Order Donut ───
+(function() {
+    const ctx = document.getElementById('orderDonut');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: CTX.order_status_labels,
+            datasets: [{ data: CTX.order_status_data, backgroundColor: [COLORS.amber, COLORS.cyan, COLORS.green], borderWidth: 0, hoverOffset: 6 }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false, cutout: '72%',
+            plugins: {
+                legend: { position: 'bottom', labels: { padding: 16, font: { size: 11, weight: '600' } } },
+                tooltip: { cornerRadius: 8 }
+            }
+        }
+    });
+})();
+
+// ─── Supplier Performance ───
+(function() {
+    const ctx = document.getElementById('supplierChart');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: CTX.supplier_perf_labels,
+            datasets: [{ label: 'Suppliers', data: CTX.supplier_perf_data, backgroundColor: [COLORS.green, COLORS.primary, COLORS.amber], borderRadius: 8, borderSkipped: false }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false } },
+                y: { grid: { color: '#e8eff3' }, ticks: { precision: 0, font: { size: 10 } } }
+            }
+        }
+    });
+})();
+
+// ─── HR Donut ───
+(function() {
+    const ctx = document.getElementById('hrDonut');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Present','Absent','Late'],
+            datasets: [{ data: CTX.hr_attendance_data, backgroundColor: [COLORS.green, COLORS.red, COLORS.amber], borderWidth: 0, hoverOffset: 4 }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false, cutout: '65%',
+            plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 10, weight: '600' } } } }
+        }
+    });
+})();
+
+// ─── Invoice Status (Finance Tab) ───
+(function() {
+    const ctx = document.getElementById('invoiceStatusChart');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: CTX.invoice_status_labels,
+            datasets: [{ data: CTX.invoice_status_data, backgroundColor: [COLORS.green, COLORS.amber, COLORS.red], borderWidth: 0, hoverOffset: 6 }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false, cutout: '68%',
+            plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 11, weight: '600' } } } }
+        }
+    });
+})();
+
+// ─── Sales Line (Sales Tab) ───
+(function() {
+    const ctx = document.getElementById('salesLineChart');
+    if (!ctx) return;
+    const c = ctx.getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: CTX.revenue_by_month_labels,
+            datasets: [{
+                label: 'Sales ($)',
+                data: CTX.revenue_by_month_data,
+                borderColor: COLORS.primary,
+                backgroundColor: makeGradient(c, COLORS.primary),
+                fill: true, tension: 0.4, pointRadius: 4, borderWidth: 2.5
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false } },
+                y: { grid: { color: '#e8eff3' }, ticks: { callback: v => '$' + (v >= 1000 ? (v/1000).toFixed(0)+'k' : v), font: { size: 10 } } }
+            }
+        }
+    });
+})();
+
+// ─── Stock Category Bar ───
+(function() {
+    const ctx = document.getElementById('stockCategoryChart');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: CTX.stock_category_labels,
+            datasets: [{ label: 'Stock Qty', data: CTX.stock_category_data, backgroundColor: PALETTE.map(c => c + 'cc'), borderRadius: 8, borderSkipped: false }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false } },
+                y: { grid: { color: '#e8eff3' }, ticks: { precision: 0, font: { size: 10 } } }
+            }
+        }
+    });
+})();
+
+// ─── Stock Transactions ───
+(function() {
+    const ctx = document.getElementById('stockTxnChart');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: CTX.stock_txn_labels,
+            datasets: [
+                { label: 'Stock In', data: CTX.stock_txn_in, backgroundColor: COLORS.green + 'cc', borderRadius: 4 },
+                { label: 'Stock Out', data: CTX.stock_txn_out, backgroundColor: COLORS.red + 'cc', borderRadius: 4 }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { position: 'top', labels: { font: { size: 11, weight: '600' }, padding: 12 } } },
+            scales: {
+                x: { grid: { display: false }, stacked: false },
+                y: { grid: { color: '#e8eff3' }, ticks: { precision: 0, font: { size: 10 } } }
+            }
+        }
+    });
+})();
+
+// ─── Dept Chart ───
+(function() {
+    const ctx = document.getElementById('deptChart');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: CTX.dept_labels,
+            datasets: [{ label: 'Employees', data: CTX.dept_data, backgroundColor: COLORS.primary + 'cc', borderRadius: 8, borderSkipped: false }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { color: '#e8eff3' }, ticks: { precision: 0, font: { size: 10 } } },
+                y: { grid: { display: false } }
+            }
+        }
+    });
+})();
+
+// ─── Leave Chart ───
+(function() {
+    const ctx = document.getElementById('leaveChart');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: CTX.leave_status_labels,
+            datasets: [{ data: CTX.leave_status_data, backgroundColor: [COLORS.amber, COLORS.green, COLORS.red], borderWidth: 0, hoverOffset: 6 }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11, weight: '600' } } } }
+        }
+    });
+})();
+
+// ─── PO Status ───
+(function() {
+    const ctx = document.getElementById('poStatusChart');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: CTX.po_status_labels,
+            datasets: [{ data: CTX.po_status_data, backgroundColor: PALETTE, borderWidth: 0, hoverOffset: 6 }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false, cutout: '65%',
+            plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 10, weight: '600' } } } }
+        }
+    });
+})();
+
+// ─── Supplier Segment ───
+(function() {
+    const ctx = document.getElementById('supplierSegChart');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: CTX.supplier_seg_labels,
+            datasets: [{ label: 'Suppliers', data: CTX.supplier_seg_data, backgroundColor: PALETTE.map(c => c + 'cc'), borderRadius: 8, borderSkipped: false }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false } },
+                y: { grid: { color: '#e8eff3' }, ticks: { precision: 0, font: { size: 10 } } }
+            }
+        }
+    });
+})();
+
+
+// ─── Tab Switching ───
+document.querySelectorAll('.seg-pill').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.seg-pill').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const tab = this.dataset.tab;
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+        document.getElementById('tab-' + tab).classList.remove('hidden');
+    });
+});
+
+// ─── Export Menu ───
+document.getElementById('export-btn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.getElementById('export-menu').classList.toggle('hidden');
+});
+document.addEventListener('click', () => document.getElementById('export-menu').classList.add('hidden'));
+
+// ─── Progress Bar Animation ───
+function animateBars() {
+    document.querySelectorAll('.prog-bar-fill[data-target]').forEach(bar => {
+        const target = parseFloat(bar.dataset.target) || 0;
+        setTimeout(() => { bar.style.width = Math.min(target, 100) + '%'; }, 200);
+    });
+}
+animateBars();
+
+// ─── Invoice Search (Finance Tab) ───
+const searchInput = document.getElementById('invoice-search');
+if (searchInput) {
+    searchInput.addEventListener('input', function() {
+        const q = this.value.toLowerCase();
+        document.querySelectorAll('#invoice-table tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+    });
+}
+
+// ─── Date Range Pills ───
+document.querySelectorAll('.range-pill').forEach(pill => {
+    pill.addEventListener('click', function() {
+        document.querySelectorAll('.range-pill').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        const range = this.dataset.range;
+        // Reload with filter — update URL param or trigger HTMX / fetch
+        const url = new URL(window.location.href);
+        url.searchParams.set('range', range);
+        window.location.href = url.toString();
+    });
+});
+
+// ─── Set active range pill from URL ───
+(function() {
+    const params = new URLSearchParams(window.location.search);
+    const r = params.get('range');
+    if (r) {
+        document.querySelectorAll('.range-pill').forEach(p => {
+            p.classList.toggle('active', p.dataset.range === r);
+        });
+    }
+})();
+
+</script>
 
 {% endblock %}

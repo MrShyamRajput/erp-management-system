@@ -21,9 +21,8 @@ urlpatterns = [
     path('hrmanagement/',include('hr.urls') ),
     path('sales/',include('sales.urls') ),
     path('procurement/',include('procurement.urls') ),
-     path('finance/',include('finance.urls')),
-     path('reports/',include('reports.urls')),
-
+    path('finance/',include('finance.urls')),
+    path('reports/', include('reports.urls', namespace='reports'))
 ]
 
 if settings.DEBUG:

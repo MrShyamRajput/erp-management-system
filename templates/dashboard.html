@@ -1,250 +1,713 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}
-Dashboard
-{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<!-- Main Content Canvas -->
-<main class=" mt-20 p-10 space-y-8">
-<!-- KPI Cards Bento Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-<!-- Revenue KPI -->
-<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow group">
-<div class="flex justify-between items-start mb-4">
-<div class="p-3 bg-primary-container/30 text-primary rounded-xl">
-<span class="material-symbols-outlined" data-icon="payments">payments</span>
-</div>
-<span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full flex items-center gap-1">
-                        +12.5% <span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
-</span>
-</div>
-<h3 class="text-on-surface-variant text-sm font-medium mb-1">Total Revenue</h3>
-<p class="text-2xl font-bold text-on-surface">$1,284,500</p>
-</div>
-<!-- Orders KPI -->
-<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow group">
-<div class="flex justify-between items-start mb-4">
-<div class="p-3 bg-tertiary-container/30 text-tertiary rounded-xl">
-<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
-</div>
-<span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full flex items-center gap-1">
-                        +8.2% <span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
-</span>
-</div>
-<h3 class="text-on-surface-variant text-sm font-medium mb-1">Active Orders</h3>
-<p class="text-2xl font-bold text-on-surface">3,842</p>
-</div>
-<!-- Employees KPI -->
-<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow group">
-<div class="flex justify-between items-start mb-4">
-<div class="p-3 bg-secondary-container/30 text-secondary rounded-xl">
-<span class="material-symbols-outlined" data-icon="group">group</span>
-</div>
-<span class="text-xs font-bold text-on-surface-variant bg-surface-container px-2 py-1 rounded-full flex items-center gap-1">
-                        0.0% <span class="material-symbols-outlined text-sm" data-icon="horizontal_rule">horizontal_rule</span>
-</span>
-</div>
-<h3 class="text-on-surface-variant text-sm font-medium mb-1">Total Employees</h3>
-<p class="text-2xl font-bold text-on-surface">156</p>
-</div>
-<!-- Inventory KPI -->
-<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow group">
-<div class="flex justify-between items-start mb-4">
-<div class="p-3 bg-error-container/20 text-error rounded-xl">
-<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
-</div>
-<span class="text-xs font-bold text-error bg-error-container/10 px-2 py-1 rounded-full flex items-center gap-1">
-                        -2.4% <span class="material-symbols-outlined text-sm" data-icon="trending_down">trending_down</span>
-</span>
-</div>
-<h3 class="text-on-surface-variant text-sm font-medium mb-1">Stock Value</h3>
-<p class="text-2xl font-bold text-on-surface">$428,900</p>
-</div>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-<!-- Main Analytics Card -->
-<div class="lg:col-span-2 space-y-8">
-<!-- Sales Analytics Chart Placeholder -->
-<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm">
-<div class="flex justify-between items-center mb-8">
-<div>
-<h3 class="text-lg font-bold text-on-surface">Sales Performance</h3>
-<p class="text-sm text-on-surface-variant">Monthly revenue breakdown for Q3</p>
-</div>
-<div class="flex gap-2">
-<button class="px-4 py-2 text-xs font-semibold bg-surface-container rounded-lg hover:bg-surface-container-high transition-colors">Daily</button>
-<button class="px-4 py-2 text-xs font-semibold bg-primary text-white rounded-lg shadow-md shadow-primary/20">Monthly</button>
-</div>
-</div>
-<div class="h-64 w-full relative flex items-end gap-2 px-4">
-<!-- Simulated Chart Grid -->
-<div class="absolute inset-0 border-b border-outline-variant/10 flex flex-col justify-between py-2">
-<div class="w-full border-t border-outline-variant/5"></div>
-<div class="w-full border-t border-outline-variant/5"></div>
-<div class="w-full border-t border-outline-variant/5"></div>
-<div class="w-full border-t border-outline-variant/5"></div>
-</div>
-<!-- Bar chart elements with different heights for visualization -->
-<div class="relative flex-1 bg-primary/10 rounded-t-md hover:bg-primary/20 transition-all h-[40%] group">
-<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$120k</div>
-</div>
-<div class="relative flex-1 bg-primary/20 rounded-t-md hover:bg-primary/30 transition-all h-[60%] group"></div>
-<div class="relative flex-1 bg-primary/40 rounded-t-md hover:bg-primary/50 transition-all h-[85%] group"></div>
-<div class="relative flex-1 bg-primary/30 rounded-t-md hover:bg-primary/40 transition-all h-[70%] group"></div>
-<div class="relative flex-1 bg-primary/60 rounded-t-md hover:bg-primary/70 transition-all h-[55%] group"></div>
-<div class="relative flex-1 bg-primary rounded-t-md hover:brightness-110 transition-all h-[95%] group">
-<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$284k</div>
-</div>
-<div class="relative flex-1 bg-primary/20 rounded-t-md hover:bg-primary/30 transition-all h-[35%] group"></div>
-<div class="relative flex-1 bg-primary/15 rounded-t-md hover:bg-primary/25 transition-all h-[50%] group"></div>
-</div>
-<div class="flex justify-between mt-4 px-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">
-<span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span>
-</div>
-</div>
-<!-- Recent Transactions Table -->
-<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
-<div class="p-6 border-b border-surface-container-low flex justify-between items-center">
-<h3 class="text-lg font-bold text-on-surface">Recent Transactions</h3>
-<button class="text-primary text-sm font-bold hover:underline">View All</button>
-</div>
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="bg-surface-container-low/50">
-<th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Reference</th>
-<th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Client</th>
-<th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Amount</th>
-<th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Status</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-surface-container-low">
-<tr class="hover:bg-surface-container-low/30 transition-colors cursor-pointer">
-<td class="px-6 py-4 font-medium text-on-surface">INV-84920</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">TC</div>
-<span class="text-sm">TechCorp Solutions</span>
-</div>
-</td>
-<td class="px-6 py-4 text-sm font-bold">$12,400.00</td>
-<td class="px-6 py-4">
-<span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-md">Paid</span>
-</td>
-</tr>
-<tr class="hover:bg-surface-container-low/30 transition-colors cursor-pointer">
-<td class="px-6 py-4 font-medium text-on-surface">INV-84921</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary text-xs font-bold">GL</div>
-<span class="text-sm">Global Logistics</span>
-</div>
-</td>
-<td class="px-6 py-4 text-sm font-bold">$8,250.00</td>
-<td class="px-6 py-4">
-<span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-bold rounded-md">Pending</span>
-</td>
-</tr>
-<tr class="hover:bg-surface-container-low/30 transition-colors cursor-pointer">
-<td class="px-6 py-4 font-medium text-on-surface">INV-84922</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary text-xs font-bold">NM</div>
-<span class="text-sm">Next Media Ltd.</span>
-</div>
-</td>
-<td class="px-6 py-4 text-sm font-bold">$4,100.00</td>
-<td class="px-6 py-4">
-<span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-md">Paid</span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<!-- Right Column Widgets -->
-<div class="space-y-8">
-<!-- Inventory Alerts -->
-<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border-l-4 border-error">
-<div class="flex items-center gap-3 mb-6">
-<div class="p-2 bg-error-container/20 text-error rounded-lg">
-<span class="material-symbols-outlined" data-icon="warning">warning</span>
-</div>
-<h3 class="text-lg font-bold text-on-surface">Inventory Alerts</h3>
-</div>
-<p class="text-sm text-on-surface-variant mb-6">3 items are currently below safety stock levels.</p>
-<div class="space-y-4">
-<div class="flex items-center justify-between p-3 bg-error-container/5 rounded-lg border border-error/10 hover:bg-error-container/10 transition-colors">
-<div>
-<p class="text-sm font-bold text-on-surface">Steel Girders X4</p>
-<p class="text-[10px] text-error">Only 2 units left</p>
-</div>
-<button class="p-2 hover:bg-error/10 text-error rounded-full transition-colors">
-<span class="material-symbols-outlined text-lg" data-icon="shopping_cart_checkout">shopping_cart_checkout</span>
-</button>
-</div>
-<div class="flex items-center justify-between p-3 bg-error-container/5 rounded-lg border border-error/10 hover:bg-error-container/10 transition-colors">
-<div>
-<p class="text-sm font-bold text-on-surface">Precision Valves</p>
-<p class="text-[10px] text-error">Only 5 units left</p>
-</div>
-<button class="p-2 hover:bg-error/10 text-error rounded-full transition-colors">
-<span class="material-symbols-outlined text-lg" data-icon="shopping_cart_checkout">shopping_cart_checkout</span>
-</button>
-</div>
-<div class="flex items-center justify-between p-3 bg-error-container/5 rounded-lg border border-error/10 hover:bg-error-container/10 transition-colors">
-<div>
-<p class="text-sm font-bold text-on-surface">Insulation Rolls</p>
-<p class="text-[10px] text-error">Only 8 units left</p>
-</div>
-<button class="p-2 hover:bg-error/10 text-error rounded-full transition-colors">
-<span class="material-symbols-outlined text-lg" data-icon="shopping_cart_checkout">shopping_cart_checkout</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Activity Feed -->
-<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm">
-<h3 class="text-lg font-bold text-on-surface mb-6">Recent Activity</h3>
-<div class="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-z-10 before:h-full before:w-0.5 before:bg-surface-container">
-<!-- Activity Item -->
-<div class="flex gap-4">
-<div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary z-10">
-<span class="material-symbols-outlined text-lg" data-icon="check_circle" data-weight="fill">check_circle</span>
-</div>
-<div>
-<p class="text-sm font-medium text-on-surface">Invoice INV-84920 approved</p>
-<p class="text-xs text-on-surface-variant mt-1">2 hours ago • Sarah Jenkins</p>
-</div>
-</div>
-<!-- Activity Item -->
-<div class="flex gap-4">
-<div class="flex-shrink-0 w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center text-tertiary z-10">
-<span class="material-symbols-outlined text-lg" data-icon="local_shipping" data-weight="fill">local_shipping</span>
-</div>
-<div>
-<p class="text-sm font-medium text-on-surface">New shipment dispatched</p>
-<p class="text-xs text-on-surface-variant mt-1">5 hours ago • Warehouse A</p>
-</div>
-</div>
-<!-- Activity Item -->
-<div class="flex gap-4">
-<div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary z-10">
-<span class="material-symbols-outlined text-lg" data-icon="person_add" data-weight="fill">person_add</span>
-</div>
-<div>
-<p class="text-sm font-medium text-on-surface">New employee onboarded</p>
-<p class="text-xs text-on-surface-variant mt-1">Yesterday • HR Department</p>
-</div>
-</div>
-</div>
-<button class="w-full mt-8 py-3 text-sm font-bold text-primary bg-primary/5 rounded-xl hover:bg-primary/10 transition-colors">View Timeline</button>
-</div>
-</div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "surface": "#f7f9fb",
+                "surface-container-lowest": "#ffffff",
+                "on-surface-variant": "#566166",
+                "secondary-container": "#e4e2e6",
+                "primary": "#0052dc",
+                "error": "#9f403d",
+                "surface-container-low": "#f0f4f7",
+                "error-container": "#fee2e2",
+                "tertiary": "#625b77",
+                "on-surface": "#2a3439",
+                "primary-container": "#dbe1ff",
+                "surface-container": "#e8eff3",
+                "on-secondary-container": "#515155",
+                "secondary": "#5f5f62",
+                "surface-container-high": "#e1e9ee",
+                "outline-variant": "#a9b4b9",
+                "outline": "#717c82",
+                "on-primary": "#f8f7ff",
+                "tertiary-container": "#dcd2f4",
+            },
+            fontFamily: {
+                sans: ["Sora", "sans-serif"],
+                mono: ["JetBrains Mono", "monospace"],
+            },
+            borderRadius: {
+                DEFAULT: "0.375rem",
+                lg: "0.625rem",
+                xl: "0.875rem",
+                "2xl": "1.125rem",
+                "3xl": "1.5rem",
+                full: "9999px",
+            },
+        }
+    }
+}
+</script>
+
+<style>
+* { font-family: 'Sora', sans-serif; }
+body { -webkit-font-smoothing: antialiased; background: #f7f9fb; }
+.material-symbols-outlined { font-variation-settings: 'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; vertical-align: middle; }
+.filled { font-variation-settings: 'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c5d0d5; border-radius: 999px; }
+
+/* Animations */
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes countUp {
+    from { opacity: 0; transform: translateY(6px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes pulseRing {
+    0%   { box-shadow: 0 0 0 0 rgba(0,82,220,0.3); }
+    70%  { box-shadow: 0 0 0 8px rgba(0,82,220,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,82,220,0); }
+}
+@keyframes shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+}
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+}
+
+.card { animation: fadeSlideUp 0.5s ease both; }
+.card:nth-child(1) { animation-delay: 0.04s; }
+.card:nth-child(2) { animation-delay: 0.09s; }
+.card:nth-child(3) { animation-delay: 0.14s; }
+.card:nth-child(4) { animation-delay: 0.19s; }
+.card:nth-child(5) { animation-delay: 0.24s; }
+.card:nth-child(6) { animation-delay: 0.29s; }
+.card:nth-child(7) { animation-delay: 0.34s; }
+.card:nth-child(8) { animation-delay: 0.39s; }
+
+.num { animation: countUp 0.6s cubic-bezier(0.34,1.56,0.64,1) both; animation-delay: 0.3s; }
+
+.kpi-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+}
+.kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.09);
+}
+
+.pulse-ring { animation: pulseRing 2s ease-out infinite; }
+
+.live-dot { animation: blink 1.6s ease-in-out infinite; }
+
+/* Progress bar */
+.prog { transition: width 1.2s cubic-bezier(0.34,1.56,0.64,1); }
+
+/* Status badges */
+.s-paid, .s-delivered, .s-approved, .s-active { background:#dcfce7; color:#166534; }
+.s-pending { background:#fef9c3; color:#854d0e; }
+.s-overdue, .s-rejected, .s-inactive { background:#fee2e2; color:#991b1b; }
+.s-shipped, .s-in_transit { background:#dbeafe; color:#1e40af; }
+.s-draft { background:#f3f4f6; color:#374151; }
+.s-late { background:#ffedd5; color:#9a3412; }
+
+/* Alert card */
+.alert-row { transition: background 0.15s; }
+.alert-row:hover { background: rgba(159,64,61,0.06); }
+
+/* Timeline line */
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #dbe1ff, #e8eff3);
+}
+
+/* Scrollable */
+.scroll-area { max-height: 340px; overflow-y: auto; }
+
+/* Quick action btn */
+.qa-btn {
+    transition: all 0.18s ease;
+}
+.qa-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,82,220,0.18); }
+.qa-btn:active { transform: scale(0.97); }
+
+/* Chart tooltip override */
+canvas { max-width: 100%; }
+
+@media (max-width:1024px) {
+    .sidebar-offset { padding-left: 1.25rem !important; }
+}
+</style>
+</head>
+
+<body class="bg-surface text-on-surface">
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header class="fixed top-0 right-0 left-56 h-16 z-40 bg-white/80 backdrop-blur-xl border-b border-outline-variant/20 flex items-center justify-between px-6 md:px-8">
+    <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined filled text-primary">dashboard</span>
+        <h1 class="font-bold text-on-surface tracking-tight">Overview</h1>
+        <span class="text-[10px] font-bold uppercase tracking-widest bg-primary/10 text-primary px-2 py-0.5 rounded-full flex items-center gap-1 ml-1">
+            <span class="live-dot w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+            Live
+        </span>
+    </div>
+    <div class="flex items-center gap-3">
+        <span class="hidden md:block text-xs text-on-surface-variant font-medium">
+            {{ today|date:"l, F j, Y" }}
+        </span>
+        <button class="relative p-2 rounded-full hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+            {% if low_stock_count > 0 %}
+            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full pulse-ring"></span>
+            {% endif %}
+        </button>
+        <a href="{% url 'reports:dashboard' %}" class="hidden md:flex items-center gap-1.5 text-xs font-semibold text-primary bg-primary/8 px-3 py-1.5 rounded-full hover:bg-primary/15 transition-colors">
+            <span class="material-symbols-outlined text-sm">analytics</span>
+            Reports
+        </a>
+        <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container font-bold text-xs flex items-center justify-center shadow-sm">
+            {{ request.user.get_initials|default:"AD" }}
+        </div>
+    </div>
+</header>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<main class="pt-16">
+<div class="sidebar-offset  pr-6 md:pr-8 py-7 max-w-[1600px]">
+
+    <!-- Welcome + Quick Actions -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-7 card">
+        <div>
+            <h2 class="text-xl font-bold text-on-surface">Good {% now "G" as hour %}{% if hour < 12 %}morning{% elif hour < 17 %}afternoon{% else %}evening{% endif %}, {{ request.user.first_name|default:"Admin" }} 👋</h2>
+            <p class="text-sm text-on-surface-variant mt-0.5">Here's what's happening across your business today.</p>
+        </div>
+        <div class="flex gap-2 flex-wrap">
+            <a href="#" class="qa-btn flex items-center gap-1.5 bg-primary text-on-primary text-xs font-semibold px-4 py-2 rounded-full shadow-md shadow-primary/25">
+                <span class="material-symbols-outlined text-sm">add</span> New Invoice
+            </a>
+            <a href="#" class="qa-btn flex items-center gap-1.5 bg-white border border-outline-variant/30 text-on-surface text-xs font-semibold px-4 py-2 rounded-full shadow-sm">
+                <span class="material-symbols-outlined text-sm">shopping_cart</span> New Order
+            </a>
+            <a href="#" class="qa-btn flex items-center gap-1.5 bg-white border border-outline-variant/30 text-on-surface text-xs font-semibold px-4 py-2 rounded-full shadow-sm">
+                <span class="material-symbols-outlined text-sm">person_add</span> Add Employee
+            </a>
+        </div>
+    </div>
+
+    <!-- ── KPI CARDS ── -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+
+        <!-- Revenue -->
+        <div class="kpi-card card bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm relative overflow-hidden">
+            <div class="absolute -right-4 -top-4 w-20 h-20 bg-primary/5 rounded-full blur-xl"></div>
+            <div class="flex items-start justify-between mb-4">
+                <div class="p-2.5 bg-primary/10 rounded-xl">
+                    <span class="material-symbols-outlined filled text-primary text-xl">payments</span>
+                </div>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-full flex items-center gap-0.5
+                    {% if revenue_growth >= 0 %}bg-green-50 text-green-700{% else %}bg-red-50 text-red-700{% endif %}">
+                    <span class="material-symbols-outlined text-xs">{% if revenue_growth >= 0 %}trending_up{% else %}trending_down{% endif %}</span>
+                    {{ revenue_growth|default:"+0" }}%
+                </span>
+            </div>
+            <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Total Revenue</p>
+            <p class="num text-2xl font-bold text-on-surface mt-1 font-mono">${{ total_revenue|default:"0"|floatformat:0 }}</p>
+            <p class="text-[11px] text-on-surface-variant mt-2">Paid invoices, last 30d</p>
+        </div>
+
+        <!-- Orders -->
+        <div class="kpi-card card bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm relative overflow-hidden">
+            <div class="absolute -right-4 -top-4 w-20 h-20 bg-tertiary/5 rounded-full blur-xl"></div>
+            <div class="flex items-start justify-between mb-4">
+                <div class="p-2.5 bg-tertiary/10 rounded-xl">
+                    <span class="material-symbols-outlined filled text-tertiary text-xl">shopping_cart</span>
+                </div>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 flex items-center gap-0.5">
+                    <span class="material-symbols-outlined text-xs">inventory</span>
+                    {{ active_orders|default:0 }} active
+                </span>
+            </div>
+            <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Total Orders</p>
+            <p class="num text-2xl font-bold text-on-surface mt-1 font-mono">{{ total_orders|default:"0" }}</p>
+            <div class="flex gap-2 mt-2">
+                <span class="text-[10px] s-pending px-1.5 py-0.5 rounded-full font-semibold">{{ pending_orders|default:0 }} pending</span>
+                <span class="text-[10px] s-delivered px-1.5 py-0.5 rounded-full font-semibold">{{ delivered_orders|default:0 }} done</span>
+            </div>
+        </div>
+
+        <!-- Employees -->
+        <div class="kpi-card card bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm relative overflow-hidden">
+            <div class="absolute -right-4 -top-4 w-20 h-20 bg-secondary/5 rounded-full blur-xl"></div>
+            <div class="flex items-start justify-between mb-4">
+                <div class="p-2.5 bg-secondary-container/60 rounded-xl">
+                    <span class="material-symbols-outlined filled text-secondary text-xl">group</span>
+                </div>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700 flex items-center gap-0.5">
+                    <span class="material-symbols-outlined text-xs">check_circle</span>
+                    {{ active_employees|default:0 }} active
+                </span>
+            </div>
+            <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Employees</p>
+            <p class="num text-2xl font-bold text-on-surface mt-1 font-mono">{{ total_employees|default:"0" }}</p>
+            <p class="text-[11px] text-on-surface-variant mt-2">{{ dept_count|default:0 }} departments</p>
+        </div>
+
+        <!-- Inventory -->
+        <div class="kpi-card card bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm relative overflow-hidden">
+            <div class="absolute -right-4 -top-4 w-20 h-20 bg-error/5 rounded-full blur-xl"></div>
+            <div class="flex items-start justify-between mb-4">
+                <div class="p-2.5 bg-error-container/30 rounded-xl">
+                    <span class="material-symbols-outlined filled text-error text-xl">inventory_2</span>
+                </div>
+                {% if low_stock_count > 0 %}
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-red-50 text-red-700 flex items-center gap-0.5">
+                    <span class="material-symbols-outlined text-xs">warning</span>
+                    {{ low_stock_count }} low
+                </span>
+                {% else %}
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700">✓ Healthy</span>
+                {% endif %}
+            </div>
+            <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Stock Items</p>
+            <p class="num text-2xl font-bold text-on-surface mt-1 font-mono">{{ total_stock|default:"0" }}</p>
+            <p class="text-[11px] text-on-surface-variant mt-2">Across {{ warehouse_count|default:0 }} warehouses</p>
+        </div>
+    </div>
+
+    <!-- ── SECONDARY KPI ROW ── -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="card bg-white rounded-xl p-4 border border-outline-variant/10 shadow-sm flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#fef3c7] flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined filled text-[#d97706] text-xl">receipt_long</span>
+            </div>
+            <div>
+                <p class="text-[10px] font-semibold text-on-surface-variant uppercase">Overdue Invoices</p>
+                <p class="text-lg font-bold font-mono text-error">{{ overdue_invoices|default:0 }}</p>
+            </div>
+        </div>
+        <div class="card bg-white rounded-xl p-4 border border-outline-variant/10 shadow-sm flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#ede9fe] flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined filled text-[#7c3aed] text-xl">local_shipping</span>
+            </div>
+            <div>
+                <p class="text-[10px] font-semibold text-on-surface-variant uppercase">Purchase Orders</p>
+                <p class="text-lg font-bold font-mono text-on-surface">{{ total_purchase_orders|default:0 }}</p>
+            </div>
+        </div>
+        <div class="card bg-white rounded-xl p-4 border border-outline-variant/10 shadow-sm flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#dcfce7] flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined filled text-[#16a34a] text-xl">event_available</span>
+            </div>
+            <div>
+                <p class="text-[10px] font-semibold text-on-surface-variant uppercase">Present Today</p>
+                <p class="text-lg font-bold font-mono text-on-surface">{{ present_today|default:0 }}</p>
+            </div>
+        </div>
+        <div class="card bg-white rounded-xl p-4 border border-outline-variant/10 shadow-sm flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#dbeafe] flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined filled text-[#1d4ed8] text-xl">business</span>
+            </div>
+            <div>
+                <p class="text-[10px] font-semibold text-on-surface-variant uppercase">Suppliers</p>
+                <p class="text-lg font-bold font-mono text-on-surface">{{ total_suppliers|default:0 }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── MAIN CONTENT GRID ── -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+
+        <!-- LEFT COL (2/3) -->
+        <div class="lg:col-span-2 space-y-5">
+
+            <!-- Sales Chart -->
+            <div class="card bg-white rounded-2xl p-6 border border-outline-variant/10 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                    <div>
+                        <h3 class="font-bold text-on-surface">Sales Performance</h3>
+                        <p class="text-xs text-on-surface-variant mt-0.5">Monthly revenue & order volume</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="flex items-center gap-1.5 text-xs font-semibold text-on-surface-variant"><span class="w-3 h-3 rounded-sm bg-primary inline-block"></span>Revenue</span>
+                        <span class="flex items-center gap-1.5 text-xs font-semibold text-on-surface-variant"><span class="w-3 h-3 rounded-sm bg-tertiary/60 inline-block"></span>Orders</span>
+                    </div>
+                </div>
+                <div class="relative h-56">
+                    <canvas id="salesChart"></canvas>
+                </div>
+                <div class="grid grid-cols-3 gap-3 mt-5 pt-4 border-t border-outline-variant/10">
+                    <div class="text-center">
+                        <p class="text-[10px] font-semibold text-on-surface-variant uppercase">This Month</p>
+                        <p class="text-base font-bold font-mono text-on-surface mt-0.5">${{ this_month_revenue|default:"0"|floatformat:0 }}</p>
+                    </div>
+                    <div class="text-center border-x border-outline-variant/10">
+                        <p class="text-[10px] font-semibold text-on-surface-variant uppercase">Avg / Month</p>
+                        <p class="text-base font-bold font-mono text-on-surface mt-0.5">${{ avg_monthly_revenue|default:"0"|floatformat:0 }}</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-[10px] font-semibold text-on-surface-variant uppercase">Best Month</p>
+                        <p class="text-base font-bold font-mono text-on-surface mt-0.5">{{ best_month|default:"—" }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="card bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+                <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/10">
+                    <h3 class="font-bold text-on-surface text-sm">Recent Transactions</h3>
+                    <a href="{% url 'reports:dashboard' %}" class="text-xs font-semibold text-primary hover:underline flex items-center gap-1">
+                        View all <span class="material-symbols-outlined text-sm">chevron_right</span>
+                    </a>
+                </div>
+                <div class="scroll-area">
+                    <table class="w-full text-xs">
+                        <thead class="bg-surface-container-low sticky top-0">
+                            <tr>
+                                <th class="text-left px-6 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Reference</th>
+                                <th class="text-left px-3 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Client</th>
+                                <th class="text-right px-3 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Amount</th>
+                                <th class="text-right px-6 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-outline-variant/10">
+                            {% for inv in recent_invoices %}
+                            <tr class="hover:bg-surface-container-low/40 transition-colors">
+                                <td class="px-6 py-3">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-[10px] font-bold flex-shrink-0">
+                                            {{ inv.client_name|slice:":2"|upper }}
+                                        </div>
+                                        <span class="font-mono font-semibold text-on-surface">#{{ inv.invoice_number }}</span>
+                                    </div>
+                                </td>
+                                <td class="px-3 py-3 text-on-surface truncate max-w-[140px]">{{ inv.client_name }}</td>
+                                <td class="px-3 py-3 text-right font-mono font-bold text-on-surface">${{ inv.amount|floatformat:0 }}</td>
+                                <td class="px-6 py-3 text-right">
+                                    <span class="s-{{ inv.status }} px-2 py-0.5 rounded-full font-semibold capitalize text-[10px]">{{ inv.status }}</span>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="4" class="px-6 py-10 text-center text-on-surface-variant">No transactions yet.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <div class="card bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+                <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/10">
+                    <h3 class="font-bold text-on-surface text-sm">Recent Orders</h3>
+                    <div class="flex gap-1.5">
+                        <span class="text-[10px] font-semibold s-pending px-2 py-0.5 rounded-full">{{ pending_orders|default:0 }} Pending</span>
+                        <span class="text-[10px] font-semibold s-shipped px-2 py-0.5 rounded-full">{{ shipped_orders|default:0 }} Shipped</span>
+                    </div>
+                </div>
+                <div class="scroll-area">
+                    <table class="w-full text-xs">
+                        <thead class="bg-surface-container-low sticky top-0">
+                            <tr>
+                                <th class="text-left px-6 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Customer</th>
+                                <th class="text-left px-3 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Product</th>
+                                <th class="text-right px-3 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Total</th>
+                                <th class="text-right px-6 py-3 text-on-surface-variant font-semibold uppercase tracking-wider">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-outline-variant/10">
+                            {% for order in recent_orders %}
+                            <tr class="hover:bg-surface-container-low/40 transition-colors">
+                                <td class="px-6 py-3 font-semibold text-on-surface">{{ order.full_name }}</td>
+                                <td class="px-3 py-3 text-on-surface-variant truncate max-w-[140px]">{{ order.product }}</td>
+                                <td class="px-3 py-3 text-right font-mono font-bold">${{ order.price|floatformat:0 }}</td>
+                                <td class="px-6 py-3 text-right">
+                                    <span class="s-{{ order.status }} px-2 py-0.5 rounded-full font-semibold capitalize text-[10px]">{{ order.status }}</span>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="4" class="px-6 py-10 text-center text-on-surface-variant">No orders yet.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COL (1/3) -->
+        <div class="space-y-5">
+
+            <!-- Business Health Score -->
+            <div class="card bg-gradient-to-br from-primary to-blue-700 rounded-2xl p-6 text-on-primary shadow-lg shadow-primary/25 relative overflow-hidden">
+                <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+                <div class="absolute right-4 top-4 w-16 h-16 bg-white/5 rounded-full"></div>
+                <div class="relative z-10">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="material-symbols-outlined filled text-white/80 text-lg">auto_awesome</span>
+                        <span class="text-[11px] font-bold uppercase tracking-widest text-white/70">Business Health</span>
+                    </div>
+                    <div class="flex items-end gap-3 mb-2">
+                        <span class="text-5xl font-extrabold font-mono">{{ health_score|default:"—" }}</span>
+                        <span class="text-white/60 mb-2 text-sm font-medium">/ 100</span>
+                    </div>
+                    <p class="text-white/70 text-xs leading-relaxed">
+                        Based on invoice collection, order fulfillment, and stock levels.
+                    </p>
+                    <div class="mt-4 h-1.5 bg-white/20 rounded-full overflow-hidden">
+                        <div class="h-full bg-white rounded-full prog" style="width:0%" data-target="{{ health_score|default:0 }}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory Alerts -->
+            <div class="card bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+                <div class="flex items-center gap-2 px-5 py-4 border-b border-outline-variant/10">
+                    <div class="w-7 h-7 bg-error-container/30 rounded-lg flex items-center justify-center">
+                        <span class="material-symbols-outlined filled text-error text-base">warning</span>
+                    </div>
+                    <h3 class="font-bold text-on-surface text-sm">Inventory Alerts</h3>
+                    {% if low_stock_count > 0 %}
+                    <span class="ml-auto text-[10px] font-bold bg-red-50 text-red-700 px-2 py-0.5 rounded-full">{{ low_stock_count }} items</span>
+                    {% endif %}
+                </div>
+                <div class="p-4 space-y-2">
+                    {% for item in low_stock_items %}
+                    <div class="alert-row flex items-center justify-between p-3 rounded-xl border border-error/10 cursor-pointer">
+                        <div>
+                            <p class="text-xs font-bold text-on-surface">{{ item.product.name }}</p>
+                            <p class="text-[10px] text-error font-semibold mt-0.5">{{ item.quantity }} units left · {{ item.warehouse.name }}</p>
+                        </div>
+                        <button class="w-7 h-7 rounded-lg bg-error/8 hover:bg-error/15 transition-colors flex items-center justify-center text-error">
+                            <span class="material-symbols-outlined text-base">shopping_cart_checkout</span>
+                        </button>
+                    </div>
+                    {% empty %}
+                    <div class="flex flex-col items-center justify-center py-6 gap-2">
+                        <span class="material-symbols-outlined filled text-green-500 text-3xl">check_circle</span>
+                        <p class="text-xs font-semibold text-on-surface-variant">All stock levels healthy</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Leave Requests -->
+            <div class="card bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+                <div class="flex items-center justify-between px-5 py-4 border-b border-outline-variant/10">
+                    <h3 class="font-bold text-on-surface text-sm">Pending Leaves</h3>
+                    <span class="text-[10px] font-bold bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded-full">{{ leave_pending|default:0 }} pending</span>
+                </div>
+                <div class="p-4 space-y-2">
+                    {% for lr in pending_leave_requests %}
+                    <div class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-surface-container-low transition-colors">
+                        <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-[10px] font-bold flex-shrink-0">
+                            {{ lr.employee|stringformat:"s"|slice:":2"|upper }}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-xs font-semibold text-on-surface truncate">{{ lr.employee }}</p>
+                            <p class="text-[10px] text-on-surface-variant">{{ lr.get_leave_type_display }} · {{ lr.start_date }}</p>
+                        </div>
+                        <span class="text-[10px] s-pending px-2 py-0.5 rounded-full font-semibold flex-shrink-0">Pending</span>
+                    </div>
+                    {% empty %}
+                    <p class="text-xs text-on-surface-variant text-center py-4">No pending leave requests.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Activity Feed -->
+            <div class="card bg-white rounded-2xl border border-outline-variant/10 shadow-sm overflow-hidden">
+                <div class="px-5 py-4 border-b border-outline-variant/10">
+                    <h3 class="font-bold text-on-surface text-sm">Recent Activity</h3>
+                </div>
+                <div class="p-5">
+                    <div class="relative timeline space-y-5">
+
+                        {% for inv in activity_invoices %}
+                        <div class="flex gap-3 relative z-10">
+                            <div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-primary flex-shrink-0 shadow-sm">
+                                <span class="material-symbols-outlined filled text-base">receipt</span>
+                            </div>
+                            <div class="pt-1">
+                                <p class="text-xs font-semibold text-on-surface">Invoice #{{ inv.invoice_number }} <span class="s-{{ inv.status }} px-1.5 py-0.5 rounded-full font-bold capitalize text-[9px]">{{ inv.status }}</span></p>
+                                <p class="text-[10px] text-on-surface-variant mt-0.5">{{ inv.client_name }} · ${{ inv.amount|floatformat:0 }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        {% for order in activity_orders %}
+                        <div class="flex gap-3 relative z-10">
+                            <div class="w-9 h-9 rounded-full bg-tertiary-container/60 flex items-center justify-center text-tertiary flex-shrink-0 shadow-sm">
+                                <span class="material-symbols-outlined filled text-base">local_shipping</span>
+                            </div>
+                            <div class="pt-1">
+                                <p class="text-xs font-semibold text-on-surface">Order by {{ order.full_name }}</p>
+                                <p class="text-[10px] text-on-surface-variant mt-0.5">{{ order.product }} · <span class="s-{{ order.status }} px-1.5 py-0.5 rounded-full font-bold capitalize text-[9px]">{{ order.status }}</span></p>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        {% if not activity_invoices and not activity_orders %}
+                        <p class="text-xs text-on-surface-variant text-center py-4">No recent activity.</p>
+                        {% endif %}
+                    </div>
+
+                    <a href="{% url 'reports:dashboard' %}" class="mt-5 w-full py-2.5 flex items-center justify-center gap-1.5 text-xs font-bold text-primary bg-primary/6 rounded-xl hover:bg-primary/12 transition-colors">
+                        <span class="material-symbols-outlined text-sm">analytics</span>
+                        View Full Reports
+                    </a>
+                </div>
+            </div>
+
+            <!-- PO Status Mini Chart -->
+            <div class="card bg-white rounded-2xl p-5 border border-outline-variant/10 shadow-sm">
+                <h3 class="font-bold text-on-surface text-sm mb-1">Purchase Orders</h3>
+                <p class="text-xs text-on-surface-variant mb-4">By current status</p>
+                <div class="relative h-40">
+                    <canvas id="poMiniChart"></canvas>
+                </div>
+            </div>
+
+        </div><!-- /right col -->
+    </div><!-- /main grid -->
+
+</div><!-- /page-content -->
 </main>
 
+<!-- ══════════════ SCRIPTS ══════════════ -->
+<script>
+Chart.defaults.font.family = 'Sora';
+Chart.defaults.color = '#566166';
+
+// ── Data from Django ──
+const REVENUE   = {{ revenue_by_month|safe|default:"[0,0,0,0,0,0,0,0,0,0,0,0]" }};
+const ORDERS_M  = {{ orders_by_month|safe|default:"[0,0,0,0,0,0,0,0,0,0,0,0]" }};
+const MONTHS    = {{ month_labels|safe|default:"['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']" }};
+const PO_LABELS = {{ po_status_labels|safe|default:"[]" }};
+const PO_DATA   = {{ po_status_data|safe|default:"[]" }};
+
+// ── Sales Chart ──
+(function(){
+    const ctx = document.getElementById('salesChart');
+    if (!ctx) return;
+    const c = ctx.getContext('2d');
+    const grad = c.createLinearGradient(0, 0, 0, 220);
+    grad.addColorStop(0, 'rgba(0,82,220,0.18)');
+    grad.addColorStop(1, 'rgba(0,82,220,0)');
+    new Chart(ctx, {
+        data: {
+            labels: MONTHS,
+            datasets: [
+                {
+                    type: 'line',
+                    label: 'Revenue ($)',
+                    data: REVENUE,
+                    borderColor: '#0052dc',
+                    backgroundColor: grad,
+                    fill: true,
+                    tension: 0.45,
+                    pointRadius: 4,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: '#0052dc',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    borderWidth: 2.5,
+                    yAxisID: 'y',
+                    order: 1,
+                },
+                {
+                    type: 'bar',
+                    label: 'Orders',
+                    data: ORDERS_M,
+                    backgroundColor: 'rgba(98,91,119,0.18)',
+                    borderRadius: 6,
+                    borderSkipped: false,
+                    yAxisID: 'y1',
+                    order: 2,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    cornerRadius: 10,
+                    padding: 10,
+                    callbacks: {
+                        label: ctx => ctx.dataset.label === 'Revenue ($)'
+                            ? ' $' + ctx.parsed.y.toLocaleString()
+                            : ' ' + ctx.parsed.y + ' orders'
+                    }
+                }
+            },
+            scales: {
+                x: { grid: { display: false }, ticks: { font: { size: 10, weight: '600' } } },
+                y: {
+                    position: 'left',
+                    grid: { color: '#f0f4f7' },
+                    ticks: { font: { size: 10 }, callback: v => '$' + (v >= 1000 ? (v/1000).toFixed(0)+'k' : v) }
+                },
+                y1: {
+                    position: 'right',
+                    grid: { display: false },
+                    ticks: { font: { size: 10 }, precision: 0 }
+                }
+            }
+        }
+    });
+})();
+
+// ── PO Mini Donut ──
+(function(){
+    const ctx = document.getElementById('poMiniChart');
+    if (!ctx || !PO_LABELS.length) return;
+    const COLORS = ['#0052dc','#625b77','#16a34a','#d97706','#dc2626','#0891b2'];
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: PO_LABELS,
+            datasets: [{ data: PO_DATA, backgroundColor: COLORS.slice(0, PO_LABELS.length), borderWidth: 0, hoverOffset: 5 }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '68%',
+            plugins: {
+                legend: { position: 'right', labels: { font: { size: 10, weight: '600' }, padding: 10, boxWidth: 10, boxHeight: 10 } }
+            }
+        }
+    });
+})();
+
+// ── Animated progress bars ──
+function animateProgs() {
+    document.querySelectorAll('.prog[data-target]').forEach(el => {
+        const t = parseFloat(el.dataset.target) || 0;
+        setTimeout(() => { el.style.width = Math.min(t, 100) + '%'; }, 300);
+    });
+}
+animateProgs();
+</script>
+
 {% endblock %}
-</body></html>
