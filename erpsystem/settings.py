@@ -34,7 +34,8 @@ INSTALLED_APPS = [
     'reports',
     'sales',
     'user',
-    'hr.apps.HrConfig'
+    'hr.apps.HrConfig',
+    'settings'
 ]
 
 MIDDLEWARE = [

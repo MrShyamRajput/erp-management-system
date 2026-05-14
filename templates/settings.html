@@ -1,0 +1,1100 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Settings — ERP{% endblock %}
+
+{% block extra_head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<style>
+  /* ── Design tokens ─────────────────────────────────────────── */
+  :root {
+    --ink:        #0f1117;
+    --ink-2:      #3a3f4b;
+    --ink-3:      #6b7280;
+    --surface:    #ffffff;
+    --surface-2:  #f4f5f7;
+    --surface-3:  #eaecf0;
+    --accent:     #2563eb;
+    --accent-lt:  #eff6ff;
+    --accent-dk:  #1d4ed8;
+    --green:      #16a34a;
+    --green-lt:   #f0fdf4;
+    --amber:      #d97706;
+    --amber-lt:   #fffbeb;
+    --red:        #dc2626;
+    --red-lt:     #fef2f2;
+    --violet:     #7c3aed;
+    --violet-lt:  #f5f3ff;
+    --border:     rgba(0,0,0,0.08);
+    --radius:     12px;
+    --radius-sm:  8px;
+    --font:       'DM Sans', system-ui, sans-serif;
+    --sidebar-w:  240px;
+  }
+
+  /* ── Base resets ────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .settings-root {
+    font-family: var(--font);
+    color: var(--ink);
+    background: var(--surface-2);
+    min-height: 100vh;
+    padding-top: 96px;
+  }
+
+  /* ── Layout ─────────────────────────────────────────────────── */
+  .settings-layout {
+    display: flex;
+    gap: 28px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+    align-items: flex-start;
+  }
+
+  /* ── Sidebar ────────────────────────────────────────────────── */
+  .settings-sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+    position: sticky;
+    top: 112px;
+  }
+
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding: 8px 12px 6px;
+  }
+
+  .sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: background .15s, color .15s;
+  }
+
+  .sidebar-nav a:hover { background: var(--surface-2); color: var(--ink); }
+
+  .sidebar-nav a.active {
+    background: var(--accent-lt);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .sidebar-nav a .material-symbols-outlined {
+    font-size: 18px;
+    opacity: .75;
+  }
+
+  .sidebar-nav a.active .material-symbols-outlined { opacity: 1; }
+
+  /* ── Flash messages ─────────────────────────────────────────── */
+  .flash-stack {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+  }
+
+  .flash {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 20px rgba(0,0,0,.12);
+    pointer-events: auto;
+    animation: slideIn .25s ease;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(40px); opacity: 0; }
+    to   { transform: translateX(0);    opacity: 1; }
+  }
+
+  .flash.success { background: var(--green-lt);  color: var(--green); border: 1px solid #bbf7d0; }
+  .flash.error   { background: var(--red-lt);    color: var(--red);   border: 1px solid #fecaca; }
+  .flash.warning { background: var(--amber-lt);  color: var(--amber); border: 1px solid #fde68a; }
+  .flash.info    { background: var(--accent-lt); color: var(--accent);border: 1px solid #bfdbfe; }
+
+  .flash-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    opacity: .6;
+    font-size: 18px;
+    line-height: 1;
+    padding: 0 2px;
+  }
+  .flash-close:hover { opacity: 1; }
+
+  /* ── Main content ───────────────────────────────────────────── */
+  .settings-main { flex: 1; min-width: 0; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── Page header ────────────────────────────────────────────── */
+  .page-header {
+    margin-bottom: 24px;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .page-header p {
+    font-size: 14px;
+    color: var(--ink-3);
+    margin-top: 3px;
+  }
+
+  /* ── Cards ──────────────────────────────────────────────────── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title .material-symbols-outlined { font-size: 18px; color: var(--accent); }
+
+  /* ── Form grid ──────────────────────────────────────────────── */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  .form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-2);
+    letter-spacing: .03em;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 9px 12px;
+    border: 1px solid var(--surface-3);
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--surface);
+    outline: none;
+    transition: border .15s, box-shadow .15s;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 80px; }
+
+  /* ── Buttons ────────────────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background .15s, transform .1s;
+    text-decoration: none;
+  }
+
+  .btn:active { transform: scale(.97); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--accent-dk); }
+
+  .btn-danger {
+    background: var(--red-lt);
+    color: var(--red);
+    border: 1px solid rgba(220,38,38,.15);
+  }
+  .btn-danger:hover { background: #fee2e2; }
+
+  .btn-ghost {
+    background: var(--surface-2);
+    color: var(--ink-2);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { background: var(--surface-3); }
+
+  .btn .material-symbols-outlined { font-size: 16px; }
+
+  /* ── Stat cards ─────────────────────────────────────────────── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+  }
+
+  .stat-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+  }
+
+  .stat-card .stat-label {
+    font-size: 12px;
+    color: var(--ink-3);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .stat-card .stat-val {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .stat-card.green  .stat-val { color: var(--green); }
+  .stat-card.amber  .stat-val { color: var(--amber); }
+  .stat-card.red    .stat-val { color: var(--red); }
+  .stat-card.violet .stat-val { color: var(--violet); }
+  .stat-card.accent .stat-val { color: var(--accent); }
+
+  /* ── Department list ────────────────────────────────────────── */
+  .dept-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+
+  .dept-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+
+  .dept-name { font-size: 14px; font-weight: 500; color: var(--ink); }
+
+  .dept-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .dept-badge {
+    font-size: 12px;
+    color: var(--ink-3);
+    background: var(--surface-3);
+    padding: 2px 8px;
+    border-radius: 99px;
+  }
+
+  /* ── Leave policy cards ─────────────────────────────────────── */
+  .leave-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  @media (max-width: 600px) { .leave-grid { grid-template-columns: 1fr; } }
+
+  .leave-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    background: var(--surface-2);
+  }
+
+  .leave-card .lc-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .leave-icon {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .leave-icon.sick   { background: var(--red-lt);    color: var(--red); }
+  .leave-icon.annual { background: var(--green-lt);  color: var(--green); }
+
+  .leave-card .lc-title { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .leave-card .lc-sub   { font-size: 12px; color: var(--ink-3); }
+
+  .leave-card .lc-field { margin-bottom: 14px; }
+  .leave-card .lc-field label {
+    display: block;
+    font-size: 12px; font-weight: 600;
+    color: var(--ink-2);
+    margin-bottom: 5px;
+    letter-spacing: .03em;
+  }
+
+  .leave-card .lc-field input[type="number"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--surface-3);
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--surface);
+    outline: none;
+    transition: border .15s;
+  }
+
+  .leave-card .lc-field input[type="number"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+  }
+
+  /* ── Toggle switch ──────────────────────────────────────────── */
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .toggle-label { font-size: 13px; color: var(--ink-2); font-weight: 500; }
+
+  .toggle {
+    position: relative;
+    width: 38px; height: 22px;
+    flex-shrink: 0;
+  }
+
+  .toggle input { display: none; }
+
+  .toggle-track {
+    position: absolute;
+    inset: 0;
+    background: var(--surface-3);
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+
+  .toggle-track::after {
+    content: '';
+    position: absolute;
+    left: 3px; top: 3px;
+    width: 16px; height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform .2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  }
+
+  .toggle input:checked + .toggle-track { background: var(--accent); }
+  .toggle input:checked + .toggle-track::after { transform: translateX(16px); }
+
+  /* ── Working days ───────────────────────────────────────────── */
+  .wd-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .wd-row {
+    display: grid;
+    grid-template-columns: 110px auto 1fr 1fr;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: opacity .2s;
+  }
+
+  .wd-row.inactive { opacity: .45; }
+
+  .wd-day { font-size: 14px; font-weight: 600; color: var(--ink); }
+
+  .wd-time-group { display: flex; flex-direction: column; gap: 3px; }
+
+  .wd-time-group label {
+    font-size: 11px; font-weight: 600;
+    color: var(--ink-3);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  .wd-time-group input[type="time"] {
+    padding: 7px 10px;
+    border: 1px solid var(--surface-3);
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 13px;
+    color: var(--ink);
+    background: var(--surface);
+    outline: none;
+    width: 100%;
+    transition: border .15s;
+  }
+
+  .wd-time-group input[type="time"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+  }
+
+  /* ── Add department inline form ────────────────────────────── */
+  .inline-add {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .inline-add input {
+    flex: 1;
+    padding: 9px 12px;
+    border: 1px solid var(--surface-3);
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--surface);
+    outline: none;
+    transition: border .15s;
+  }
+
+  .inline-add input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+  }
+
+  /* ── Role pills ─────────────────────────────────────────────── */
+  .role-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .role-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 20px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    min-width: 100px;
+  }
+
+  .role-pill .rp-count { font-size: 22px; font-weight: 700; color: var(--ink); }
+  .role-pill .rp-label { font-size: 12px; color: var(--ink-3); font-weight: 500; text-transform: capitalize; }
+
+  /* ── Logo preview ───────────────────────────────────────────── */
+  .logo-upload-area {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 16px;
+    border: 1px dashed var(--surface-3);
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+  }
+
+  .logo-preview {
+    width: 64px; height: 64px;
+    border-radius: var(--radius-sm);
+    object-fit: contain;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .logo-upload-info p { font-size: 13px; color: var(--ink-2); }
+  .logo-upload-info span { font-size: 12px; color: var(--ink-3); }
+
+  /* ── Form footer ────────────────────────────────────────────── */
+  .form-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .settings-layout { flex-direction: column; padding: 0 1rem 2rem; }
+
+    .settings-sidebar {
+      width: 100%;
+      position: static;
+    }
+
+    .sidebar-nav { display: flex; flex-wrap: wrap; gap: 4px; }
+    .sidebar-nav a { padding: 7px 12px; font-size: 13px; }
+
+    .wd-row {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+    }
+    .wd-row .wd-day   { grid-column: 1; }
+    .wd-row .toggle   { grid-column: 2; justify-self: end; }
+    .wd-row .wd-time-group { grid-column: span 1; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="settings-root">
+
+  <!-- ── Flash messages ────────────────────────────────────── -->
+  <div class="flash-stack" id="flashStack">
+    {% for msg in messages %}
+      <div class="flash {{ msg.tags }}">
+        <span class="material-symbols-outlined" style="font-size:18px">
+          {% if msg.tags == 'success' %}check_circle
+          {% elif msg.tags == 'error' %}error
+          {% elif msg.tags == 'warning' %}warning
+          {% else %}info{% endif %}
+        </span>
+        {{ msg }}
+        <button class="flash-close" onclick="this.parentElement.remove()">✕</button>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="settings-layout">
+
+    <!-- ── Sidebar ──────────────────────────────────────────── -->
+    <aside class="settings-sidebar">
+      <div class="sidebar-label">Settings</div>
+      <nav class="sidebar-nav">
+        <a href="#" data-section="company"      class="{% if active_section == 'company' %}active{% endif %}">
+          <span class="material-symbols-outlined">business</span> Company
+        </a>
+        <a href="#" data-section="departments"  class="{% if active_section == 'departments' %}active{% endif %}">
+          <span class="material-symbols-outlined">account_tree</span> Departments
+        </a>
+        <a href="#" data-section="leave"        class="{% if active_section == 'leave' %}active{% endif %}">
+          <span class="material-symbols-outlined">beach_access</span> Leave Policy
+        </a>
+        <a href="#" data-section="working_days" class="{% if active_section == 'working_days' %}active{% endif %}">
+          <span class="material-symbols-outlined">schedule</span> Working Days
+        </a>
+        <a href="#" data-section="finance"      class="{% if active_section == 'finance' %}active{% endif %}">
+          <span class="material-symbols-outlined">receipt_long</span> Finance
+        </a>
+        <a href="#" data-section="users"        class="{% if active_section == 'users' %}active{% endif %}">
+          <span class="material-symbols-outlined">group</span> Users & Access
+        </a>
+      </nav>
+    </aside>
+
+    <!-- ── Main ─────────────────────────────────────────────── -->
+    <main class="settings-main">
+
+      <!-- ════════════════════════════════════════════════════ -->
+      <!--  1. COMPANY SETTINGS                                -->
+      <!-- ════════════════════════════════════════════════════ -->
+      <div class="section {% if active_section == 'company' %}active{% endif %}" id="sec-company">
+        <div class="page-header">
+          <h1>Company Settings</h1>
+          <p>Manage your organisation's profile and regional preferences.</p>
+        </div>
+
+        <div class="card">
+          <form method="post" action="{% url 'settings_app:save_company' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Logo upload -->
+            <div class="logo-upload-area">
+              {% if company.logo %}
+                <img src="{{ company.logo.url }}" alt="Company logo" class="logo-preview" id="logoPreview">
+              {% else %}
+                <div class="logo-preview" style="display:flex;align-items:center;justify-content:center;background:var(--surface-2)">
+                  <span class="material-symbols-outlined" style="font-size:28px;color:var(--ink-3)">business</span>
+                </div>
+              {% endif %}
+              <div class="logo-upload-info">
+                <p style="font-weight:600;margin-bottom:4px">Company Logo</p>
+                <label class="btn btn-ghost" style="cursor:pointer;font-size:13px;padding:7px 14px">
+                  <span class="material-symbols-outlined">upload</span>
+                  Upload logo
+                  <input type="file" name="logo" accept="image/*" style="display:none" onchange="previewLogo(this)">
+                </label>
+                <span style="display:block;margin-top:4px">PNG or JPG, max 2 MB</span>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group full">
+                <label>Company Name</label>
+                <input type="text" name="name" value="{{ company.name }}" placeholder="Acme Corp" required>
+              </div>
+
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" value="{{ company.email }}" placeholder="info@company.com">
+              </div>
+
+              <div class="form-group">
+                <label>Phone</label>
+                <input type="text" name="phone" value="{{ company.phone }}" placeholder="+91 98765 43210">
+              </div>
+
+              <div class="form-group full">
+                <label>Address</label>
+                <textarea name="address" placeholder="123 MG Road, Pune, Maharashtra 411001">{{ company.address }}</textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Currency</label>
+                <select name="currency">
+                  <option value="INR" {% if company.currency == 'INR' %}selected{% endif %}>INR — Indian Rupee</option>
+                  <option value="USD" {% if company.currency == 'USD' %}selected{% endif %}>USD — US Dollar</option>
+                  <option value="EUR" {% if company.currency == 'EUR' %}selected{% endif %}>EUR — Euro</option>
+                  <option value="GBP" {% if company.currency == 'GBP' %}selected{% endif %}>GBP — British Pound</option>
+                  <option value="AED" {% if company.currency == 'AED' %}selected{% endif %}>AED — UAE Dirham</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Timezone</label>
+                <select name="timezone">
+                  <option value="Asia/Kolkata"   {% if company.timezone == 'Asia/Kolkata' %}selected{% endif %}>Asia/Kolkata (IST)</option>
+                  <option value="UTC"             {% if company.timezone == 'UTC' %}selected{% endif %}>UTC</option>
+                  <option value="America/New_York"{% if company.timezone == 'America/New_York' %}selected{% endif %}>America/New_York (EST)</option>
+                  <option value="America/Chicago" {% if company.timezone == 'America/Chicago' %}selected{% endif %}>America/Chicago (CST)</option>
+                  <option value="America/Los_Angeles" {% if company.timezone == 'America/Los_Angeles' %}selected{% endif %}>America/Los_Angeles (PST)</option>
+                  <option value="Europe/London"   {% if company.timezone == 'Europe/London' %}selected{% endif %}>Europe/London (GMT)</option>
+                  <option value="Europe/Paris"    {% if company.timezone == 'Europe/Paris' %}selected{% endif %}>Europe/Paris (CET)</option>
+                  <option value="Asia/Dubai"      {% if company.timezone == 'Asia/Dubai' %}selected{% endif %}>Asia/Dubai (GST)</option>
+                  <option value="Asia/Singapore"  {% if company.timezone == 'Asia/Singapore' %}selected{% endif %}>Asia/Singapore (SGT)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Financial Year Start</label>
+                <input type="date" name="financial_year_start"
+                  value="{% if company.financial_year_start %}{{ company.financial_year_start|date:'Y-m-d' }}{% endif %}">
+              </div>
+            </div>
+
+            <div class="form-footer">
+              <button type="submit" class="btn btn-primary">
+                <span class="material-symbols-outlined">save</span>
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <!-- ════════════════════════════════════════════════════ -->
+      <!--  2. DEPARTMENT MANAGEMENT                           -->
+      <!-- ════════════════════════════════════════════════════ -->
+      <div class="section {% if active_section == 'departments' %}active{% endif %}" id="sec-departments">
+        <div class="page-header">
+          <h1>Department Management</h1>
+          <p>Add or remove departments. Departments with employees cannot be deleted.</p>
+        </div>
+
+        <!-- Existing departments -->
+        <div class="card">
+          <div class="card-title">
+            <span class="material-symbols-outlined">account_tree</span>
+            All Departments
+            <span style="margin-left:auto;font-size:12px;color:var(--ink-3);font-weight:400">{{ departments.count }} total</span>
+          </div>
+
+          {% if departments %}
+            <div class="dept-list">
+              {% for dept in departments %}
+              <div class="dept-row">
+                <div class="dept-name">{{ dept.name }}</div>
+                <div class="dept-meta">
+                  <span class="dept-badge">
+                    {{ dept.emp_count }} employee{{ dept.emp_count|pluralize }}
+                  </span>
+                  <form method="post" action="{% url 'settings_app:delete_department' dept.pk %}"
+                        onsubmit="return confirm('Delete department \'{{ dept.name }}\'?')">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" style="padding:5px 10px;font-size:12px"
+                      {% if dept.emp_count > 0 %}title="Has employees — cannot delete" disabled style="opacity:.4;cursor:not-allowed"{% endif %}>
+                      <span class="material-symbols-outlined" style="font-size:14px">delete</span>
+                    </button>
+                  </form>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p style="font-size:14px;color:var(--ink-3);text-align:center;padding:20px 0">No departments yet.</p>
+          {% endif %}
+        </div>
+
+        <!-- Add new department -->
+        <div class="card">
+          <div class="card-title">
+            <span class="material-symbols-outlined">add_circle</span>
+            Add Department
+          </div>
+          <form method="post" action="{% url 'settings_app:add_department' %}">
+            {% csrf_token %}
+            <div class="inline-add">
+              <input type="text" name="dept_name" placeholder="e.g. Marketing" required
+                     autocomplete="off" maxlength="100">
+              <button type="submit" class="btn btn-primary">
+                <span class="material-symbols-outlined">add</span>
+                Add
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <!-- ════════════════════════════════════════════════════ -->
+      <!--  3. LEAVE POLICY                                    -->
+      <!-- ════════════════════════════════════════════════════ -->
+      <div class="section {% if active_section == 'leave' %}active{% endif %}" id="sec-leave">
+        <div class="page-header">
+          <h1>Leave Policy</h1>
+          <p>Set the number of days allowed and carry-forward rules for each leave type.</p>
+        </div>
+
+        <div class="card">
+          <form method="post" action="{% url 'settings_app:save_leave_policy' %}">
+            {% csrf_token %}
+            <div class="leave-grid">
+
+              <!-- Sick Leave -->
+              {% with lp=leave_policies.SICK %}
+              <div class="leave-card">
+                <div class="lc-header">
+                  <div class="leave-icon sick">
+                    <span class="material-symbols-outlined">medical_services</span>
+                  </div>
+                  <div>
+                    <div class="lc-title">Sick Leave</div>
+                    <div class="lc-sub">For illness &amp; medical emergencies</div>
+                  </div>
+                </div>
+
+                <div class="lc-field">
+                  <label>Days Allowed / Year</label>
+                  <input type="number" name="days_sick" min="0" max="365"
+                         value="{{ lp.days_allowed|default:12 }}">
+                </div>
+
+                <div class="toggle-row">
+                  <span class="toggle-label">Carry Forward</span>
+                  <label class="toggle">
+                    <input type="checkbox" name="carry_forward_sick"
+                           {% if lp.carry_forward %}checked{% endif %}>
+                    <span class="toggle-track"></span>
+                  </label>
+                </div>
+              </div>
+              {% endwith %}
+
+              <!-- Annual Leave -->
+              {% with lp=leave_policies.ANNUAL %}
+              <div class="leave-card">
+                <div class="lc-header">
+                  <div class="leave-icon annual">
+                    <span class="material-symbols-outlined">beach_access</span>
+                  </div>
+                  <div>
+                    <div class="lc-title">Annual Leave</div>
+                    <div class="lc-sub">Planned vacation &amp; personal time</div>
+                  </div>
+                </div>
+
+                <div class="lc-field">
+                  <label>Days Allowed / Year</label>
+                  <input type="number" name="days_annual" min="0" max="365"
+                         value="{{ lp.days_allowed|default:12 }}">
+                </div>
+
+                <div class="toggle-row">
+                  <span class="toggle-label">Carry Forward</span>
+                  <label class="toggle">
+                    <input type="checkbox" name="carry_forward_annual"
+                           {% if lp.carry_forward %}checked{% endif %}>
+                    <span class="toggle-track"></span>
+                  </label>
+                </div>
+              </div>
+              {% endwith %}
+
+            </div>
+
+            <div class="form-footer">
+              <button type="submit" class="btn btn-primary">
+                <span class="material-symbols-outlined">save</span>
+                Save Policy
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <!-- ════════════════════════════════════════════════════ -->
+      <!--  4. WORKING DAYS & HOURS                            -->
+      <!-- ════════════════════════════════════════════════════ -->
+      <div class="section {% if active_section == 'working_days' %}active{% endif %}" id="sec-working_days">
+        <div class="page-header">
+          <h1>Working Days &amp; Hours</h1>
+          <p>Define which days are working days and set shift timings.</p>
+        </div>
+
+        <div class="card">
+          <form method="post" action="{% url 'settings_app:save_working_days' %}">
+            {% csrf_token %}
+
+            <div class="wd-list">
+              {% for wd in working_days %}
+              <div class="wd-row {% if not wd.is_working %}inactive{% endif %}" id="wdr-{{ wd.day }}">
+
+                <div class="wd-day">{{ wd.get_day_display }}</div>
+
+                <label class="toggle" title="Toggle working day">
+                  <input type="checkbox" name="working_{{ wd.day }}"
+                         {% if wd.is_working %}checked{% endif %}
+                         onchange="toggleWdRow('{{ wd.day }}', this.checked)">
+                  <span class="toggle-track"></span>
+                </label>
+
+                <div class="wd-time-group">
+                  <label>Start</label>
+                  <input type="time" name="start_{{ wd.day }}"
+                         value="{{ wd.work_start|time:'H:i' }}">
+                </div>
+
+                <div class="wd-time-group">
+                  <label>End</label>
+                  <input type="time" name="end_{{ wd.day }}"
+                         value="{{ wd.work_end|time:'H:i' }}">
+                </div>
+
+              </div>
+              {% endfor %}
+            </div>
+
+            <div class="form-footer">
+              <button type="submit" class="btn btn-primary">
+                <span class="material-symbols-outlined">save</span>
+                Save Schedule
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <!-- ════════════════════════════════════════════════════ -->
+      <!--  5. FINANCE SETTINGS (read-only)                    -->
+      <!-- ════════════════════════════════════════════════════ -->
+      <div class="section {% if active_section == 'finance' %}active{% endif %}" id="sec-finance">
+        <div class="page-header">
+          <h1>Finance Overview</h1>
+          <p>Current invoice status across the system.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="material-symbols-outlined">receipt_long</span>
+            Invoice Statistics
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-label">Total Invoices</div>
+              <div class="stat-val">{{ finance_stats.total }}</div>
+            </div>
+            <div class="stat-card green">
+              <div class="stat-label">Paid</div>
+              <div class="stat-val">{{ finance_stats.paid }}</div>
+            </div>
+            <div class="stat-card amber">
+              <div class="stat-label">Pending</div>
+              <div class="stat-val">{{ finance_stats.pending }}</div>
+            </div>
+            <div class="stat-card red">
+              <div class="stat-label">Overdue</div>
+              <div class="stat-val">{{ finance_stats.overdue }}</div>
+            </div>
+          </div>
+
+          <p style="margin-top:20px;font-size:13px;color:var(--ink-3)">
+            <span class="material-symbols-outlined" style="font-size:14px;vertical-align:middle">info</span>
+            Finance data is read-only here. Manage invoices from the Finance module.
+          </p>
+        </div>
+      </div>
+
+
+      <!-- ════════════════════════════════════════════════════ -->
+      <!--  6. USER & ACCESS OVERVIEW (read-only)              -->
+      <!-- ════════════════════════════════════════════════════ -->
+      <div class="section {% if active_section == 'users' %}active{% endif %}" id="sec-users">
+        <div class="page-header">
+          <h1>User &amp; Access Overview</h1>
+          <p>System-wide user counts and role distribution.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="material-symbols-outlined">group</span>
+            User Summary
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-card accent">
+              <div class="stat-label">Total Users</div>
+              <div class="stat-val">{{ user_stats.total }}</div>
+            </div>
+            <div class="stat-card green">
+              <div class="stat-label">Active</div>
+              <div class="stat-val">{{ user_stats.active }}</div>
+            </div>
+            <div class="stat-card red">
+              <div class="stat-label">Inactive</div>
+              <div class="stat-val">{{ user_stats.inactive }}</div>
+            </div>
+          </div>
+
+          <div class="card-title" style="margin-top:24px">
+            <span class="material-symbols-outlined">manage_accounts</span>
+            Users by Role
+          </div>
+          <div class="role-grid">
+            <div class="role-pill">
+  <span class="rp-count">{{ user_stats.admin }}</span>
+  <span class="rp-label">Admin</span>
+</div>
+<div class="role-pill">
+  <span class="rp-count">{{ user_stats.manager }}</span>
+  <span class="rp-label">Manager</span>
+</div>
+<div class="role-pill">
+  <span class="rp-count">{{ user_stats.employee }}</span>
+  <span class="rp-label">Employee</span>
+</div>
+<div class="role-pill">
+  <span class="rp-count">{{ user_stats.hr }}</span>
+  <span class="rp-label">HR</span>
+</div>
+          </div>
+
+          <p style="margin-top:20px;font-size:13px;color:var(--ink-3)">
+            <span class="material-symbols-outlined" style="font-size:14px;vertical-align:middle">info</span>
+            Manage user roles and permissions from the Users module.
+          </p>
+        </div>
+      </div>
+
+    </main><!-- /settings-main -->
+  </div><!-- /settings-layout -->
+</div><!-- /settings-root -->
+
+
+<script>
+  /* ── Sidebar navigation ──────────────────────────────────── */
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+  const sections = document.querySelectorAll('.section');
+
+  function activateSection(sectionId) {
+    navLinks.forEach(a => a.classList.toggle('active', a.dataset.section === sectionId));
+    sections.forEach(s => s.classList.toggle('active', s.id === 'sec-' + sectionId));
+    history.replaceState(null, '', '/settings/?section=' + sectionId);
+  }
+
+  navLinks.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      activateSection(a.dataset.section);
+    });
+  });
+
+  /* ── Logo preview ────────────────────────────────────────── */
+  function previewLogo(input) {
+    if (!input.files || !input.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      let preview = document.getElementById('logoPreview');
+      if (!preview) {
+        preview = document.createElement('img');
+        preview.id = 'logoPreview';
+        preview.className = 'logo-preview';
+        preview.alt = 'Company logo';
+        input.closest('.logo-upload-area').prepend(preview);
+        const placeholder = input.closest('.logo-upload-area').querySelector('div.logo-preview');
+        if (placeholder) placeholder.remove();
+      }
+      preview.src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+
+  /* ── Working day row opacity toggle ─────────────────────── */
+  function toggleWdRow(day, isWorking) {
+    document.getElementById('wdr-' + day).classList.toggle('inactive', !isWorking);
+  }
+
+  /* ── Auto-dismiss flash messages ────────────────────────── */
+  document.querySelectorAll('.flash').forEach(flash => {
+    setTimeout(() => {
+      flash.style.transition = 'opacity .4s';
+      flash.style.opacity = '0';
+      setTimeout(() => flash.remove(), 400);
+    }, 4000);
+  });
+</script>
+{% endblock %}

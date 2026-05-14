@@ -1,191 +1,934 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}HR Management{% endblock %}
+
 {% block content %}
+<style>
+  /* ── Design Tokens (matches usermanagement.html) ─────────── */
+  :root {
+    --ink:       #0f1117;
+    --ink-2:     #3a3f4b;
+    --ink-3:     #6b7280;
+    --surface:   #ffffff;
+    --surface-2: #f4f5f7;
+    --surface-3: #eaecf0;
+    --accent:    #2563eb;
+    --accent-lt: #eff6ff;
+    --accent-dk: #1d4ed8;
+    --green:     #16a34a;
+    --green-lt:  #f0fdf4;
+    --amber:     #d97706;
+    --amber-lt:  #fffbeb;
+    --red:       #dc2626;
+    --red-lt:    #fef2f2;
+    --violet:    #7c3aed;
+    --violet-lt: #f5f3ff;
+    --border:    rgba(0,0,0,0.08);
+    --shadow:    0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,.1);
+    --radius:    12px;
+    --radius-sm: 8px;
+    --font:      'DM Sans', system-ui, sans-serif;
+  }
+  .hr-wrap * { box-sizing: border-box; }
+  .hr-wrap {
+    font-family: var(--font);
+    background: var(--surface-2);
+    min-height: 100vh;
+    padding: 96px 2rem 3rem;
+    color: var(--ink);
+  }
 
-<div class="pt-24 pb-12 px-10 bg-surface min-h-screen">
+  /* ── Page header ─────────────────────────────────────────── */
+  .page-header {
+    margin-bottom: 2rem;
+    display: flex; align-items: flex-end;
+    justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .page-header h1 {
+    font-size: 1.625rem; font-weight: 700;
+    letter-spacing: -.02em; margin: 0 0 .25rem; color: var(--ink);
+  }
+  .page-header p { font-size: .875rem; color: var(--ink-3); margin: 0; }
+  .header-actions { display: flex; gap: .625rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .55rem 1.1rem; background: var(--accent); color: #fff;
+    border: none; border-radius: var(--radius-sm); font-size: .875rem;
+    font-weight: 600; cursor: pointer; white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(37,99,235,.35); transition: background .15s;
+  }
+  .btn-primary:hover { background: var(--accent-dk); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .55rem 1.1rem; background: var(--surface); color: var(--ink-2);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    font-size: .875rem; font-weight: 600; cursor: pointer; white-space: nowrap;
+    box-shadow: var(--shadow); transition: background .15s;
+  }
+  .btn-secondary:hover { background: var(--surface-3); }
+  .btn-primary .material-symbols-outlined,
+  .btn-secondary .material-symbols-outlined { font-size: 18px; }
 
-    <div class="grid grid-cols-12 gap-6 mb-8">
+  /* ── Modals ──────────────────────────────────────────────── */
+  .modal-backdrop {
+    display: none; position: fixed; inset: 0;
+    background: rgba(15,17,23,.45); z-index: 200;
+    align-items: center; justify-content: center; padding: 1rem;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal-box {
+    background: var(--surface); border-radius: var(--radius);
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    width: 100%; max-width: 560px; max-height: 90vh;
+    overflow-y: auto; animation: slideUp .2s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(16px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  .modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border);
+  }
+  .modal-title  { font-size: 1rem; font-weight: 700; color: var(--ink); }
+  .modal-body   { padding: 1.5rem; }
+  .modal-footer {
+    display: flex; justify-content: flex-end; gap: .75rem;
+    padding: 1.25rem 1.5rem; border-top: 1px solid var(--border);
+  }
+  .modal-close {
+    width: 32px; height: 32px; background: var(--surface-2);
+    border: none; border-radius: 6px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink-3); font-size: 1.1rem; transition: background .12s;
+  }
+  .modal-close:hover { background: var(--surface-3); }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-full  { grid-column: 1 / -1; }
+  @media (max-width: 520px) { .form-grid { grid-template-columns: 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: .35rem; }
+  .form-label { font-size: .78rem; font-weight: 600; color: var(--ink-2); }
+  .form-input {
+    padding: .55rem .875rem; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); font-size: .875rem; color: var(--ink);
+    background: var(--surface); outline: none; width: 100%;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .form-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+  }
+  select.form-input { appearance: none; cursor: pointer; }
+  textarea.form-input { resize: vertical; min-height: 80px; }
+  .btn-cancel {
+    padding: .55rem 1.1rem; background: var(--surface-2);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    font-size: .875rem; font-weight: 600; color: var(--ink-2);
+    cursor: pointer; transition: background .12s;
+  }
+  .btn-cancel:hover { background: var(--surface-3); }
+  .btn-submit {
+    padding: .55rem 1.4rem; background: var(--accent); border: none;
+    border-radius: var(--radius-sm); font-size: .875rem; font-weight: 600;
+    color: #fff; cursor: pointer;
+    box-shadow: 0 2px 6px rgba(37,99,235,.35); transition: background .12s;
+  }
+  .btn-submit:hover { background: var(--accent-dk); }
 
-        <!-- Attendance -->
-        <div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl p-8 shadow-sm">
-            <div class="flex justify-between items-center mb-6">
+  /* ── Stat cards ──────────────────────────────────────────── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem; margin-bottom: 1.75rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .stat-icon {
+    width: 44px; height: 44px; border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 1.25rem;
+  }
+  .si-blue   { background: var(--accent-lt);  color: var(--accent); }
+  .si-green  { background: var(--green-lt);   color: var(--green); }
+  .si-amber  { background: var(--amber-lt);   color: var(--amber); }
+  .si-red    { background: var(--red-lt);     color: var(--red); }
+  .si-violet { background: var(--violet-lt);  color: var(--violet); }
+  .stat-label {
+    font-size: .72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .06em;
+    color: var(--ink-3); margin-bottom: .25rem;
+  }
+  .stat-value {
+    font-size: 1.625rem; font-weight: 700;
+    letter-spacing: -.03em; color: var(--ink); line-height: 1;
+  }
+
+  /* ── Two-column layout ───────────────────────────────────── */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  @media (max-width: 1024px) { .main-grid { grid-template-columns: 1fr; } }
+
+  /* ── Card shell ──────────────────────────────────────────── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap; gap: .75rem;
+  }
+  .card-title { font-size: 1rem; font-weight: 700; color: var(--ink); margin: 0; }
+  .card-body  { padding: 1.25rem 1.5rem; }
+
+  /* ── Attendance mini-cards ───────────────────────────────── */
+  .att-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: .875rem; margin-bottom: 1.25rem;
+  }
+  .att-card {
+    background: var(--surface-2);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    border-left: 4px solid transparent;
+  }
+  .att-card.present { border-color: var(--green); }
+  .att-card.absent  { border-color: var(--red); }
+  .att-card.late    { border-color: var(--amber); }
+  .att-card.leave   { border-color: var(--accent); }
+  .att-card .lbl    { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); margin-bottom: .4rem; }
+  .att-card .val    { font-size: 2rem; font-weight: 800; letter-spacing: -.04em; line-height: 1; }
+  .att-card.present .val { color: var(--green); }
+  .att-card.absent  .val { color: var(--red); }
+  .att-card.late    .val { color: var(--amber); }
+  .att-card.leave   .val { color: var(--accent); }
+
+  /* ── Department list ─────────────────────────────────────── */
+  .dept-list { display: flex; flex-direction: column; gap: .5rem; }
+  .dept-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: .6rem .875rem;
+    background: var(--surface-2);
+    border-radius: var(--radius-sm);
+    font-size: .85rem;
+  }
+  .dept-name { font-weight: 600; color: var(--ink-2); display: flex; align-items: center; gap: .5rem; }
+  .dept-dot  { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .dept-badge {
+    font-size: .72rem; font-weight: 700;
+    background: var(--accent-lt); color: var(--accent);
+    padding: .15rem .6rem; border-radius: 9999px;
+  }
+  .dept-bar-wrap { margin-top: .35rem; height: 4px; background: var(--surface-3); border-radius: 9999px; }
+  .dept-bar      { height: 4px; background: var(--accent); border-radius: 9999px; transition: width .4s; }
+
+  /* ── Toolbar ─────────────────────────────────────────────── */
+  .toolbar {
+    display: flex; align-items: center; gap: .75rem;
+    flex-wrap: wrap;
+  }
+  .search-box {
+    display: flex; align-items: center; gap: .4rem;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: .45rem .75rem;
+    flex: 1; min-width: 160px;
+  }
+  .search-box input {
+    border: none; outline: none; background: transparent;
+    font-size: .825rem; color: var(--ink); width: 100%;
+  }
+  .search-box .material-symbols-outlined { font-size: 17px; color: var(--ink-3); }
+  .filter-select {
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: .45rem .75rem;
+    font-size: .825rem; color: var(--ink); cursor: pointer; outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right .55rem center;
+    padding-right: 1.8rem;
+  }
+
+  /* ── Employee Table ──────────────────────────────────────── */
+  .emp-table { width: 100%; border-collapse: collapse; white-space: nowrap; }
+  .emp-table thead tr { background: var(--surface-2); border-bottom: 1px solid var(--border); }
+  .emp-table th {
+    padding: .7rem 1.25rem; font-size: .7rem;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: .07em; color: var(--ink-3); text-align: left;
+  }
+  .emp-table td {
+    padding: .875rem 1.25rem; font-size: .85rem;
+    color: var(--ink-2); border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .emp-table tbody tr:last-child td { border-bottom: none; }
+  .emp-table tbody tr:hover { background: #fafbfc; }
+  .table-scroll { overflow-x: auto; }
+
+  .user-cell { display: flex; align-items: center; gap: .75rem; }
+  .user-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    object-fit: cover; flex-shrink: 0; background: var(--surface-3);
+    border: 2px solid var(--surface-3);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: .78rem; color: var(--accent);
+  }
+  .user-name  { font-weight: 600; font-size: .85rem; color: var(--ink); line-height: 1.2; }
+  .user-email { font-size: .72rem; color: var(--ink-3); margin-top: .1rem; }
+
+  /* badges */
+  .badge {
+    display: inline-block; padding: .2rem .6rem;
+    border-radius: 9999px; font-size: .7rem; font-weight: 600;
+  }
+  .badge-admin    { background: var(--red-lt);    color: #991b1b; }
+  .badge-manager  { background: var(--amber-lt);  color: #92400e; }
+  .badge-employee { background: var(--accent-lt); color: #1e40af; }
+  .badge-hr       { background: var(--violet-lt); color: #5b21b6; }
+  .badge-active   { background: var(--green-lt);  color: #166534; }
+  .badge-inactive { background: var(--surface-3); color: var(--ink-3); }
+
+  /* ── Leave Requests panel ────────────────────────────────── */
+  .leave-tabs {
+    display: flex; gap: .25rem; flex-wrap: wrap;
+  }
+  .leave-tab {
+    padding: .35rem .875rem; font-size: .78rem; font-weight: 600;
+    border-radius: 9999px; cursor: pointer; text-decoration: none;
+    color: var(--ink-3); background: var(--surface-2);
+    border: 1px solid transparent; transition: all .15s;
+    display: inline-flex; align-items: center; gap: .35rem;
+  }
+  .leave-tab:hover  { background: var(--surface-3); }
+  .leave-tab.active-tab { background: var(--accent); color: #fff; }
+  .leave-tab .cnt {
+    font-size: .65rem; background: rgba(255,255,255,.3);
+    padding: .05rem .4rem; border-radius: 9999px;
+  }
+  .leave-tab:not(.active-tab) .cnt {
+    background: var(--surface-3); color: var(--ink-3);
+  }
+
+  .leave-list { display: flex; flex-direction: column; gap: .875rem; }
+  .leave-card {
+    background: var(--surface-2); border-radius: var(--radius-sm);
+    padding: 1rem; border-left: 4px solid var(--accent);
+    border: 1px solid var(--border); border-left-width: 4px;
+    border-left-color: var(--accent);
+  }
+  .leave-card.status-APPROVED { border-left-color: var(--green); }
+  .leave-card.status-REJECTED { border-left-color: var(--red); }
+  .leave-card.status-PENDING  { border-left-color: var(--amber); }
+
+  .leave-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: .5rem; }
+  .leave-name { font-size: .875rem; font-weight: 700; color: var(--ink); }
+  .leave-type { font-size: .72rem; color: var(--ink-3); margin-top: .1rem; }
+  .leave-time { font-size: .72rem; color: var(--ink-3); white-space: nowrap; }
+  .leave-reason {
+    font-size: .78rem; color: var(--ink-2); margin-bottom: .75rem;
+    padding: .5rem .75rem; background: var(--surface); border-radius: 6px;
+    border: 1px solid var(--border); font-style: italic;
+  }
+  .leave-dates {
+    display: flex; gap: .5rem; margin-bottom: .75rem; flex-wrap: wrap;
+  }
+  .leave-date-pill {
+    font-size: .7rem; background: var(--surface-3); color: var(--ink-2);
+    padding: .15rem .6rem; border-radius: 9999px; font-weight: 500;
+    display: flex; align-items: center; gap: .25rem;
+  }
+  .leave-actions { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .btn-reject, .btn-approve {
+    padding: .4rem; font-size: .78rem; font-weight: 600;
+    border: none; border-radius: var(--radius-sm); cursor: pointer;
+    transition: opacity .15s;
+  }
+  .btn-reject  { background: var(--red-lt);   color: var(--red); }
+  .btn-approve { background: var(--green-lt); color: var(--green); }
+  .btn-reject:hover  { opacity: .8; }
+  .btn-approve:hover { opacity: .8; }
+
+  .leave-status-badge {
+    font-size: .7rem; font-weight: 700;
+    padding: .2rem .65rem; border-radius: 9999px;
+  }
+  .lsb-PENDING  { background: var(--amber-lt); color: #92400e; }
+  .lsb-APPROVED { background: var(--green-lt); color: #166534; }
+  .lsb-REJECTED { background: var(--red-lt);   color: #991b1b; }
+
+  /* flash */
+  .flash-bar {
+    padding: .75rem 1.25rem; border-radius: var(--radius-sm);
+    font-size: .85rem; margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .flash-success { background: var(--green-lt); color: #166534; }
+  .flash-error   { background: var(--red-lt);   color: #991b1b; }
+
+  /* empty */
+  .empty-row td {
+    text-align: center; padding: 3rem;
+    color: var(--ink-3); font-size: .875rem;
+  }
+  .empty-icon { font-size: 2.5rem; display: block; opacity: .25; margin: 0 auto .5rem; }
+
+  /* ── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .hr-wrap { padding: 80px 1rem 2rem; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .emp-table th:nth-child(4),
+    .emp-table td:nth-child(4) { display: none; }
+  }
+  @media (max-width: 480px) {
+    .att-grid { grid-template-columns: repeat(2, 1fr); }
+    .emp-table th:nth-child(3),
+    .emp-table td:nth-child(3) { display: none; }
+  }
+</style>
+
+<div class="hr-wrap">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1>HR Management</h1>
+      <p>{{ today|date:"l, F j, Y" }} &mdash; Real-time workforce overview</p>
+    </div>
+    <div class="header-actions">
+      <button type="button" id="openLeaveModal" class="btn-secondary">
+        <span class="material-symbols-outlined">event_note</span>
+        New Leave Request
+      </button>
+      <button type="button" id="openEmpModal" class="btn-primary">
+        <span class="material-symbols-outlined">person_add</span>
+        Add Employee
+      </button>
+    </div>
+  </div>
+
+  <!-- Flash messages -->
+  {% if messages %}
+    {% for message in messages %}
+    <div class="flash-bar {% if message.tags == 'error' %}flash-error{% else %}flash-success{% endif %}">
+      <span class="material-symbols-outlined" style="font-size:18px;">
+        {% if message.tags == 'error' %}error{% else %}check_circle{% endif %}
+      </span>
+      {{ message }}
+    </div>
+    {% endfor %}
+  {% endif %}
+
+  <!-- Stat Cards -->
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-icon si-blue"><span class="material-symbols-outlined">group</span></div>
+      <div>
+        <div class="stat-label">Total Staff</div>
+        <div class="stat-value">{{ total_employees }}</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon si-green"><span class="material-symbols-outlined">how_to_reg</span></div>
+      <div>
+        <div class="stat-label">Present Today</div>
+        <div class="stat-value">{{ present_count }}</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon si-red"><span class="material-symbols-outlined">person_off</span></div>
+      <div>
+        <div class="stat-label">Absent</div>
+        <div class="stat-value">{{ absent_count }}</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon si-amber"><span class="material-symbols-outlined">schedule</span></div>
+      <div>
+        <div class="stat-label">Late Arrival</div>
+        <div class="stat-value">{{ late_count }}</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon si-violet"><span class="material-symbols-outlined">event_busy</span></div>
+      <div>
+        <div class="stat-label">On Leave</div>
+        <div class="stat-value">{{ leave_count }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main two-column grid -->
+  <div class="main-grid">
+
+    <!-- LEFT COLUMN -->
+    <div style="display:flex;flex-direction:column;gap:1.25rem;">
+
+      <!-- Attendance Overview card -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Attendance Overview</h2>
+          <span style="font-size:.8rem;color:var(--ink-3);">{{ today|date:"d M Y" }}</span>
+        </div>
+        <div class="card-body">
+          <div class="att-grid">
+            <div class="att-card present">
+              <div class="lbl">Present</div>
+              <div class="val">{{ present_count }}</div>
+            </div>
+            <div class="att-card absent">
+              <div class="lbl">Absent</div>
+              <div class="val">{{ absent_count }}</div>
+            </div>
+            <div class="att-card late">
+              <div class="lbl">Late</div>
+              <div class="val">{{ late_count }}</div>
+            </div>
+            <div class="att-card leave">
+              <div class="lbl">On Leave</div>
+              <div class="val">{{ leave_count }}</div>
+            </div>
+          </div>
+
+          <!-- Attendance rate bar -->
+          {% if total_employees %}
+          <div style="margin-top:.5rem;">
+            <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--ink-3);margin-bottom:.35rem;">
+              <span>Attendance Rate</span>
+              <span style="font-weight:700;color:var(--ink);">
+                {% widthratio present_count total_employees 100 %}%
+              </span>
+            </div>
+            <div style="height:6px;background:var(--surface-3);border-radius:9999px;overflow:hidden;">
+              <div style="height:6px;background:var(--green);border-radius:9999px;width:{% widthratio present_count total_employees 100 %}%;transition:width .5s;"></div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Employee Directory card -->
+      <div class="card" id="employee-directory">
+        <div class="card-header">
+          <h2 class="card-title">Employee Directory</h2>
+          <form method="GET" id="empFilter" class="toolbar">
+            <div class="search-box">
+              <span class="material-symbols-outlined">search</span>
+              <input name="q" value="{{ request.GET.q }}" placeholder="Search employees…" autocomplete="off"
+                     onkeydown="if(event.key==='Enter')document.getElementById('empFilter').submit()">
+            </div>
+            <select name="dept" class="filter-select" onchange="document.getElementById('empFilter').submit();">
+              <option value="">All Depts</option>
+              {% for d in all_departments %}
+              <option value="{{ d.id }}" {% if request.GET.dept == d.id|stringformat:"s" %}selected{% endif %}>{{ d.name }}</option>
+              {% endfor %}
+            </select>
+            <select name="emp_status" class="filter-select" onchange="document.getElementById('empFilter').submit();">
+              <option value="">Any Status</option>
+              <option value="ACTIVE"   {% if request.GET.emp_status == "ACTIVE"   %}selected{% endif %}>Active</option>
+              <option value="INACTIVE" {% if request.GET.emp_status == "INACTIVE" %}selected{% endif %}>Inactive</option>
+            </select>
+            <!-- preserve leave_status tab -->
+            <input type="hidden" name="leave_status" value="{{ leave_status }}">
+          </form>
+        </div>
+        <div class="table-scroll">
+          <table class="emp-table">
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Department</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for emp in employees %}
+              <tr>
+                <td>
+                  <div class="user-cell">
+                    {% if emp.user.profile_image %}
+                      <img class="user-avatar" src="{{ emp.user.profile_image.url }}" alt="{{ emp.user.username }}" style="display:block;">
+                    {% else %}
+                      <div class="user-avatar">
+                        {{ emp.user.first_name|first|upper }}{{ emp.user.last_name|first|upper }}
+                      </div>
+                    {% endif %}
+                    <div>
+                      <div class="user-name">{{ emp.user.get_full_name|default:emp.user.username }}</div>
+                      <div class="user-email">{{ emp.user.email }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>{{ emp.department.name|default:"—" }}</td>
+                <td>
+                  {% if emp.user.role == "admin" %}
+                    <span class="badge badge-admin">Admin</span>
+                  {% elif emp.user.role == "manager" %}
+                    <span class="badge badge-manager">Manager</span>
+                  {% elif emp.user.role == "employee" %}
+                    <span class="badge badge-employee">Employee</span>
+                  {% elif emp.user.role == "hr" %}
+                    <span class="badge badge-hr">HR</span>
+                  {% else %}
+                    <span class="badge badge-employee">{{ emp.user.role|title }}</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if emp.status == "ACTIVE" %}
+                    <span class="badge badge-active">Active</span>
+                  {% else %}
+                    <span class="badge badge-inactive">Inactive</span>
+                  {% endif %}
+                </td>
+                <td style="text-align:right;">
+                  <div class="action-wrap" style="position:relative;display:inline-block;">
+                    <button class="btn-action" onclick="toggleDD(this)" aria-label="Actions"
+                      style="background:none;border:none;cursor:pointer;color:var(--ink-3);padding:.3rem;border-radius:6px;display:flex;align-items:center;transition:background .12s;">
+                      <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                    <div class="dd-menu" style="display:none;position:absolute;right:0;top:calc(100% + 4px);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow-md);min-width:140px;z-index:50;overflow:hidden;">
+                      <a href="#" style="display:flex;align-items:center;gap:.5rem;padding:.55rem 1rem;font-size:.8rem;color:var(--ink-2);text-decoration:none;transition:background .1s;"
+                         onmouseover="this.style.background='var(--surface-2)'" onmouseout="this.style.background=''">
+                        <span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit
+                      </a>
+                      <a href="#" style="display:flex;align-items:center;gap:.5rem;padding:.55rem 1rem;font-size:.8rem;color:var(--ink-2);text-decoration:none;transition:background .1s;"
+                         onmouseover="this.style.background='var(--surface-2)'" onmouseout="this.style.background=''">
+                        <span class="material-symbols-outlined" style="font-size:16px;">calendar_month</span> Attendance
+                      </a>
+                      <a href="#" style="display:flex;align-items:center;gap:.5rem;padding:.55rem 1rem;font-size:.8rem;color:var(--red);text-decoration:none;transition:background .1s;"
+                         onmouseover="this.style.background='var(--red-lt)'" onmouseout="this.style.background=''">
+                        <span class="material-symbols-outlined" style="font-size:16px;">delete</span> Remove
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% empty %}
+              <tr class="empty-row">
+                <td colspan="5">
+                  <span class="material-symbols-outlined empty-icon">manage_search</span>
+                  No employees found{% if request.GET.q %} for "{{ request.GET.q }}"{% endif %}.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:.875rem 1.25rem;border-top:1px solid var(--border);font-size:.8rem;color:var(--ink-3);background:var(--surface-2);">
+          {{ employees|length }} employee{{ employees|length|pluralize }} shown
+        </div>
+      </div>
+
+    </div><!-- /LEFT -->
+
+    <!-- RIGHT COLUMN -->
+    <div style="display:flex;flex-direction:column;gap:1.25rem;">
+
+      <!-- Department Distribution -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Departments</h2>
+          <span style="font-size:.8rem;color:var(--ink-3);">{{ departments|length }} total</span>
+        </div>
+        <div class="card-body">
+          {% if departments %}
+          <div class="dept-list">
+            {% for dept in departments %}
+            <div>
+              <div class="dept-row">
+                <span class="dept-name">
+                  <span class="dept-dot"></span>
+                  {{ dept.name }}
+                </span>
+                <span class="dept-badge">{{ dept.total }}</span>
+              </div>
+              {% if total_employees %}
+              <div class="dept-bar-wrap">
+                <div class="dept-bar" style="width:{% widthratio dept.total total_employees 100 %}%;"></div>
+              </div>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <p style="font-size:.85rem;color:var(--ink-3);text-align:center;padding:1.5rem 0;">No departments configured.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Leave Requests -->
+      <div class="card" id="leave-requests">
+        <div class="card-header">
+          <h2 class="card-title">Leave Requests</h2>
+          <div class="leave-tabs">
+            <a href="?leave_status=PENDING{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.dept %}&dept={{ request.GET.dept }}{% endif %}#leave-requests"
+               class="leave-tab {% if leave_status == 'PENDING' %}active-tab{% endif %}">
+              Pending <span class="cnt">{{ pending_count }}</span>
+            </a>
+            <a href="?leave_status=APPROVED{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.dept %}&dept={{ request.GET.dept }}{% endif %}#leave-requests"
+               class="leave-tab {% if leave_status == 'APPROVED' %}active-tab{% endif %}">
+              Approved <span class="cnt">{{ approved_count }}</span>
+            </a>
+            <a href="?leave_status=REJECTED{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.dept %}&dept={{ request.GET.dept }}{% endif %}#leave-requests"
+               class="leave-tab {% if leave_status == 'REJECTED' %}active-tab{% endif %}">
+              Rejected <span class="cnt">{{ rejected_count }}</span>
+            </a>
+          </div>
+        </div>
+        <div class="card-body">
+          {% if leave_requests %}
+          <div class="leave-list">
+            {% for req in leave_requests %}
+            <div class="leave-card status-{{ req.status }}">
+
+              <div class="leave-head">
                 <div>
-                    <h2 class="text-lg font-bold text-on-surface tracking-tight">Attendance Overview</h2>
-                    <p class="text-sm text-on-surface-variant">Real-time presence monitoring</p>
+                  <div class="leave-name">{{ req.employee.user.get_full_name|default:req.employee.user.username }}</div>
+                  <div class="leave-type">
+                    {{ req.get_leave_type_display }}
+                    {% if req.employee.department %}· {{ req.employee.department.name }}{% endif %}
+                  </div>
                 </div>
+                <div style="text-align:right;">
+                  <div class="leave-time">{{ req.created_at|timesince }} ago</div>
+                  <span class="leave-status-badge lsb-{{ req.status }}">{{ req.get_status_display }}</span>
+                </div>
+              </div>
+
+              <div class="leave-dates">
+                <span class="leave-date-pill">
+                  <span class="material-symbols-outlined" style="font-size:13px;">calendar_today</span>
+                  {{ req.start_date|date:"d M" }}
+                </span>
+                <span style="font-size:.8rem;color:var(--ink-3);align-self:center;">→</span>
+                <span class="leave-date-pill">
+                  <span class="material-symbols-outlined" style="font-size:13px;">event</span>
+                  {{ req.end_date|date:"d M Y" }}
+                </span>
+              </div>
+
+              {% if req.reason %}
+              <div class="leave-reason">"{{ req.reason|truncatechars:120 }}"</div>
+              {% endif %}
+
+              {% if req.status == "PENDING" %}
+              <form method="POST" action="{% url 'update_leave' req.pk %}" class="leave-actions">
+                {% csrf_token %}
+                <button type="submit" name="action" value="reject"  class="btn-reject">
+                  <span class="material-symbols-outlined" style="font-size:15px;vertical-align:-3px;">close</span> Decline
+                </button>
+                <button type="submit" name="action" value="approve" class="btn-approve">
+                  <span class="material-symbols-outlined" style="font-size:15px;vertical-align:-3px;">check</span> Approve
+                </button>
+              </form>
+              {% endif %}
+
             </div>
-
-            <div class="grid grid-cols-3 gap-6">
-
-                <div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-primary">
-                    <span class="text-xs font-semibold text-on-surface-variant block mb-1">PRESENT TODAY</span>
-                    <span class="text-3xl font-extrabold text-primary">{{ present_count }}</span>
-                </div>
-
-                <div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-error">
-                    <span class="text-xs font-semibold text-on-surface-variant block mb-1">ON LEAVE</span>
-                    <span class="text-3xl font-extrabold text-on-surface">{{ leave_count }}</span>
-                </div>
-
-                <div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-amber-400">
-                    <span class="text-xs font-semibold text-on-surface-variant block mb-1">LATE ARRIVAL</span>
-                    <span class="text-3xl font-extrabold text-on-surface">{{ late_count }}</span>
-                </div>
-
-            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div style="text-align:center;padding:2.5rem 0;">
+            <span class="material-symbols-outlined" style="font-size:2.5rem;display:block;opacity:.2;margin:0 auto .5rem;">event_available</span>
+            <p style="font-size:.875rem;color:var(--ink-3);">No {{ leave_status|lower }} leave requests.</p>
+          </div>
+          {% endif %}
         </div>
+      </div>
 
-        <!-- Department -->
-        <div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-xl p-8 shadow-sm flex flex-col items-center">
-            <h2 class="text-lg font-bold text-on-surface tracking-tight self-start mb-6">Department Distribution</h2>
+    </div><!-- /RIGHT -->
+  </div><!-- /main-grid -->
 
-            <div class="text-center">
-                <span class="block text-2xl font-bold">{{ employees|length }}</span>
-                <span class="text-xs text-on-surface-variant uppercase tracking-wider">Total</span>
-            </div>
+</div><!-- /hr-wrap -->
 
-            <div class="mt-6 w-full flex flex-wrap justify-center gap-x-4 gap-y-2">
-                {% for dept in departments %}
-                <div class="flex items-center gap-1.5">
-                    <div class="w-3 h-3 rounded-full bg-primary"></div>
-                    <span class="text-xs text-on-surface-variant">
-                        {{ dept.name }} ({{ dept.total }})
-                    </span>
-                </div>
-                {% empty %}
-                <span class="text-xs text-gray-400">No departments</span>
-                {% endfor %}
-            </div>
-        </div>
-
+<!-- ── Add Employee Modal ────────────────────────────────────── -->
+<div id="empModal" class="modal-backdrop" role="dialog" aria-labelledby="empModalTitle">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title" id="empModalTitle">Add Employee</span>
+      <button class="modal-close" data-close="empModal" aria-label="Close">✕</button>
     </div>
+    <form method="POST" action="{% url 'create_employee' %}">
+      {% csrf_token %}
+      <div class="modal-body">
+        <div class="form-grid">
 
-    <div class="grid grid-cols-12 gap-6">
+          <div class="form-group form-full">
+            <label class="form-label" for="emp_user_id">Select User *</label>
+            <select id="emp_user_id" name="user_id" class="form-input" required>
+              <option value="">— choose a user —</option>
+              {% for u in eligible_users %}
+              <option value="{{ u.pk }}">
+                {{ u.get_full_name|default:u.username }}
+                {% if u.email %}({{ u.email }}){% endif %}
+                — {{ u.role|title }}
+              </option>
+              {% empty %}
+              <option disabled>All users already have employee records</option>
+              {% endfor %}
+            </select>
+            <span style="font-size:.72rem;color:var(--ink-3);margin-top:.2rem;">
+              Only users without an existing employee record are shown.
+            </span>
+          </div>
 
-        <!-- Employee Table -->
-        <div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+          <div class="form-group">
+            <label class="form-label" for="emp_dept">Department</label>
+            <select id="emp_dept" name="department" class="form-input">
+              <option value="">— no department —</option>
+              {% for d in all_departments %}
+              <option value="{{ d.pk }}">{{ d.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
 
-            <div class="p-8 pb-4 flex justify-between items-center">
-                <h2 class="text-lg font-bold text-on-surface tracking-tight">Employee Directory</h2>
-            </div>
-
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-
-                    <thead>
-                        <tr class="bg-surface-container-low/50">
-                            <th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase">Employee</th>
-                            <th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase">Department</th>
-                            <th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase">Role</th>
-                            <th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase">Status</th>
-                            <th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase text-right">Actions</th>
-                        </tr>
-                    </thead>
-
-                    <tbody class="divide-y divide-surface-container-low">
-
-                        {% for emp in employees %}
-                        <tr class="hover:bg-surface-container-low/30 transition-colors">
-
-                            <td class="px-8 py-4">
-                                <div class="flex items-center gap-3">
-                                    <img class="w-10 h-10 rounded-full object-cover"
-                                        src="{% if emp.user.profile_image %}{{ emp.user.profile_image.url }}{% else %}https://via.placeholder.com/40{% endif %}">
-                                    <div>
-                                        <div class="font-semibold text-on-surface">
-                                            {{ emp.user.first_name }} {{ emp.user.last_name }}
-                                        </div>
-                                        <div class="text-xs text-on-surface-variant">
-                                            {{ emp.user.email }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td class="px-8 py-4 text-sm">
-                                {{ emp.department.name|default:"-" }}
-                            </td>
-
-                            <td class="px-8 py-4 text-sm">
-                                {{ emp.user.role }}
-                            </td>
-
-                            <td class="px-8 py-4">
-                                {% if emp.status == "ACTIVE" %}
-                                <span class="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs rounded-full">Active</span>
-                                {% else %}
-                                <span class="px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded-full">Inactive</span>
-                                {% endif %}
-                            </td>
-
-                            <td class="px-8 py-4 text-right">
-                                <span class="material-symbols-outlined">more_horiz</span>
-                            </td>
-
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="5" class="text-center py-6 text-gray-400">No employees found</td>
-                        </tr>
-                        {% endfor %}
-
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="p-6 border-t">
-                Showing {{ employees|length }} employees
-            </div>
+          <div class="form-group">
+            <label class="form-label" for="emp_status">Status</label>
+            <select id="emp_status" name="status" class="form-input">
+              <option value="ACTIVE">Active</option>
+              <option value="INACTIVE">Inactive</option>
+            </select>
+          </div>
 
         </div>
-
-        <!-- Leave Requests -->
-        <div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-xl p-8 shadow-sm">
-
-            <h2 class="text-lg font-bold mb-6">Leave Requests</h2>
-
-            <div class="space-y-4">
-
-                {% for req in leave_requests %}
-                <div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-primary/40">
-
-                    <div class="flex justify-between mb-2">
-
-                        <div>
-                            <div class="text-sm font-semibold">
-                                {{ req.employee.user.first_name }} {{ req.employee.user.last_name }}
-                            </div>
-                            <div class="text-xs text-on-surface-variant">
-                                {{ req.leave_type }}
-                            </div>
-                        </div>
-
-                        <span class="text-xs">
-                            {{ req.created_at|timesince }} ago
-                        </span>
-
-                    </div>
-
-                    <p class="text-xs mb-3">
-                        "{{ req.reason }}"
-                    </p>
-
-                    <div class="grid grid-cols-2 gap-2">
-                        <button class="bg-gray-200 text-xs py-1 rounded">Decline</button>
-                        <button class="bg-primary text-white text-xs py-1 rounded">Approve</button>
-                    </div>
-
-                </div>
-                {% empty %}
-                <p class="text-sm text-gray-400">No leave requests</p>
-                {% endfor %}
-
-            </div>
-
-        </div>
-
-    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-cancel" data-close="empModal">Cancel</button>
+        <button type="submit" class="btn-submit">Add Employee</button>
+      </div>
+    </form>
+  </div>
 </div>
 
+<!-- ── New Leave Request Modal ───────────────────────────────── -->
+<div id="leaveModal" class="modal-backdrop" role="dialog" aria-labelledby="leaveModalTitle">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title" id="leaveModalTitle">New Leave Request</span>
+      <button class="modal-close" data-close="leaveModal" aria-label="Close">✕</button>
+    </div>
+    <form method="POST" action="{% url 'create_leave_request' %}">
+      {% csrf_token %}
+      <div class="modal-body">
+        <div class="form-grid">
+
+          <div class="form-group form-full">
+            <label class="form-label" for="leave_emp">Employee *</label>
+            <select id="leave_emp" name="employee_id" class="form-input" required>
+              <option value="">— select employee —</option>
+              {% for emp in all_employees %}
+              <option value="{{ emp.pk }}">
+                {{ emp.user.get_full_name|default:emp.user.username }}
+                {% if emp.department %}— {{ emp.department.name }}{% endif %}
+              </option>
+              {% empty %}
+              <option disabled>No active employees found</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group form-full">
+            <label class="form-label" for="leave_type">Leave Type *</label>
+            <select id="leave_type" name="leave_type" class="form-input" required>
+              <option value="">— select type —</option>
+              <option value="SICK">Sick Leave</option>
+              <option value="ANNUAL">Annual Leave</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="leave_start">Start Date *</label>
+            <input id="leave_start" name="start_date" type="date" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="leave_end">End Date *</label>
+            <input id="leave_end" name="end_date" type="date" class="form-input" required>
+          </div>
+
+          <div class="form-group form-full">
+            <label class="form-label" for="leave_reason">Reason</label>
+            <textarea id="leave_reason" name="reason" class="form-input" placeholder="Brief reason for the leave request…"></textarea>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-cancel" data-close="leaveModal">Cancel</button>
+        <button type="submit" class="btn-submit">Submit Request</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// ── Generic modal open/close ─────────────────────────────────
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+document.getElementById('openEmpModal').addEventListener('click',   () => openModal('empModal'));
+document.getElementById('openLeaveModal').addEventListener('click', () => openModal('leaveModal'));
+
+document.querySelectorAll('[data-close]').forEach(btn => {
+  btn.addEventListener('click', () => closeModal(btn.dataset.close));
+});
+document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+  backdrop.addEventListener('click', e => {
+    if (e.target === backdrop) closeModal(backdrop.id);
+  });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
+  }
+});
+
+// Set today as min date for leave request
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('leave_start').min = today;
+document.getElementById('leave_end').min   = today;
+document.getElementById('leave_start').addEventListener('change', function() {
+  document.getElementById('leave_end').min = this.value;
+});
+
+// ── Dropdown for employee actions ────────────────────────────
+function toggleDD(btn) {
+  const menu = btn.nextElementSibling;
+  document.querySelectorAll('.dd-menu').forEach(m => {
+    if (m !== menu) m.style.display = 'none';
+  });
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.action-wrap')) {
+    document.querySelectorAll('.dd-menu').forEach(m => m.style.display = 'none');
+  }
+});
+
+// ── Auto-dismiss flash messages ──────────────────────────────
+setTimeout(() => {
+  document.querySelectorAll('.flash-bar').forEach(el => {
+    el.style.transition = 'opacity .4s';
+    el.style.opacity = '0';
+    setTimeout(() => el.remove(), 400);
+  });
+}, 4000);
+</script>
 {% endblock %}
